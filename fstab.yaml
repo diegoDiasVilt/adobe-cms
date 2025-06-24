@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p136102-e1403942.adobeaemcloud.com/bin/franklin.delivery/diegoDiasVilt/adobe_cms/main"
+    url: "https://author-p136102-e1403942.adobeaemcloud.com/bin/franklin.delivery/diegoDiasVilt/adobe-cms/main"
     type: "markup"
     suffix: ".html"
