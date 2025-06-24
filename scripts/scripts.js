@@ -1,4 +1,5 @@
 import {
+  sampleRUM,
   loadHeader,
   loadFooter,
   decorateButtons,
@@ -6,11 +7,12 @@ import {
   decorateSections,
   decorateBlocks,
   decorateTemplateAndTheme,
-  waitForFirstImage,
-  loadSection,
-  loadSections,
+  waitForLCP,
+  loadBlocks,
   loadCSS,
 } from './aem.js';
+
+const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 /**
  * Moves all the attributes from a given elmenet to another given element.
@@ -59,6 +61,18 @@ async function loadFonts() {
 }
 
 /**
+ * creates an element from html string
+ * @param {string} html
+ * @returns {HTMLElement}
+ */
+export function htmlToElement(html) {
+  const template = document.createElement('template');
+  const trimmedHtml = html.trim(); // Never return a text node of whitespace as the result
+  template.innerHTML = trimmedHtml;
+  return template.content.firstElementChild;
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -90,13 +104,13 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'en';
+  document.documentElement.lang = 'pt-BR';
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
-    await loadSection(main.querySelector('.section'), waitForFirstImage);
+    await waitForLCP(LCP_BLOCKS);
   }
 
   try {
@@ -115,7 +129,7 @@ async function loadEager(doc) {
  */
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
-  await loadSections(main);
+  await loadBlocks(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
@@ -126,6 +140,10 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  sampleRUM('lazy');
+  sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
+  sampleRUM.observe(main.querySelectorAll('picture > img'));
 }
 
 /**
@@ -134,8 +152,9 @@ async function loadLazy(doc) {
  */
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => import('./delayed.js'), 3000);
+  window.setTimeout(() => import('./delayed.js'), 1500);
   // load anything that can be postponed to the latest here
+  import('./sidekick.js').then(({ initSidekick }) => initSidekick());
 }
 
 async function loadPage() {
@@ -144,4 +163,111 @@ async function loadPage() {
   loadDelayed();
 }
 
+/**
+ * Extract author information from the author page.
+ * @param {HTMLElement} block
+ */
+export function extractAuthorInfo(block) {
+  const authorInfo = [...block.children].map((row) => row.firstElementChild);
+  return {
+    authorImage: authorInfo[0]?.querySelector('img')?.getAttribute('src'),
+    authorName: authorInfo[1]?.textContent.trim(),
+    authorTitle: authorInfo[2]?.textContent.trim(),
+    authorCompany: authorInfo[3]?.textContent.trim(),
+    authorDescription: authorInfo[4],
+    authorSocialLinkText: authorInfo[5]?.textContent.trim(),
+    authorSocialLinkURL: authorInfo[6]?.textContent.trim(),
+  };
+}
+
+/**
+ * Fetch the author information from the author page.
+ * @param {HTMLAnchorElement} anchor || {string} link
+ */
+export async function fetchAuthorBio(anchor) {
+  const link = anchor.href ? anchor.href : anchor;
+  return fetch(link)
+    .then((response) => response.text())
+    .then((html) => {
+      const parser = new DOMParser();
+      const htmlDoc = parser.parseFromString(html, 'text/html');
+      const authorInfoEl = htmlDoc.querySelector('.author-bio');
+      if (!authorInfoEl) {
+        return null;
+      }
+      const authorInfo = extractAuthorInfo(authorInfoEl);
+      return authorInfo;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
 loadPage();
+
+export function isInEditor() {
+  return window?.location?.hostname?.startsWith('author');
+}
+
+// a diferença é que este ignora tbm a tela de preview do AEM
+export function enhancedIsInEditor() {
+  return document.querySelectorAll('.adobe-ue-edit')?.length > 0;
+}
+
+export function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+export function randomString(len) {
+  const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  let randomString = '';
+  for (let i = 0; i < len; i++) {
+    const randomPoz = Math.floor(Math.random() * charSet.length);
+    randomString += charSet.substring(randomPoz, randomPoz + 1);
+  }
+  return randomString;
+}
+
+let lastHeight = 0;
+function resize() {
+  const { height } = document.getElementsByTagName('html')[0].getBoundingClientRect();
+  if (lastHeight !== height) {
+    lastHeight = height;
+    window.parent.postMessage(['setHeight', height + 10], '*');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  setInterval(resize, 1000);
+});
+
+export function decodeBase64(base64) {
+  let text = null;
+  try {
+    text = atob(base64);
+  }catch(error){
+    // string is not base64
+    return base64;
+  }
+    const length = text.length;
+  const bytes = new Uint8Array(length);
+  for (let i = 0; i < length; i++) {
+    bytes[i] = text.charCodeAt(i);
+  }
+  const decoder = new TextDecoder(); // default is utf-8
+  return decoder.decode(bytes);
+}
+
+export function handleRichTextElement(textElement) {
+  const elementToInjectHTML = textElement?.querySelector("div:last-child");
+  elementToInjectHTML.innerHTML = decodeBase64(textElement?.textContent)
+  return textElement?.outerHTML;
+}
+
+export function inIFrame() {
+    return window.location !== window.parent.location
+}

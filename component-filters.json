@@ -2,32 +2,62 @@
   {
     "id": "main",
     "components": [
-      "section"
+      "section",
+      "grid"
     ]
   },
   {
     "id": "section",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title",
-      "hero",
-      "cards",
-      "columns",
-      "fragment"
+      "timelines",
+      "texto-rico",
+      "code-block",
+      "image-compare",
+      "video",
+      "titulo",
+      "imagem",
+      "button-modal",
+      "quote",
+      "embed",
+      "sanfona",
+      "galeria",
+      "folhaDeCreditos",
+      "olho",
+      "abas",
+      "podcast",
+      "indice",
+      "banner",
+      "quadro-box"
     ]
   },
   {
-    "id": "cards",
+    "id": "tab-section",
     "components": [
-      "card"
+      "timelines",
+      "texto-rico",
+      "code-block",
+      "image-compare",
+      "video",
+      "titulo",
+      "imagem",
+      "button-modal",
+      "quote",
+      "embed",
+      "sanfona",
+      "galeria",
+      "olho"
     ]
   },
   {
-    "id": "columns",
+    "id": "grid",
     "components": [
-      "column"
+      "texto-rico",
+      "code-block",
+      "image-compare",
+      "video",
+      "imagem",
+      "olho",
+      "playground"
     ]
   },
   {
@@ -37,6 +67,53 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "timelines",
+    "components": [
+      "timelineItem"
+    ]
+  },
+  {
+    "id": "sanfona",
+    "components": [
+      "sanfonaItem"
+    ]
+  },
+  {
+    "id": "quadro-box",
+    "components": [
+      "quadro-box-item"
+    ]
+  },
+  {
+    "id": "folhaDeCreditos",
+    "components": [
+      "direitosReservados",
+      "informacoesDosResponsaveis",
+      "disclaimer",
+      "fichaCatalografica",
+      "rodapeFolhaDeCreditos"
+    ]
+  },
+  {
+    "id": "galeria",
+    "components": [
+      "galeriaItemImg",
+      "galeriaItemTxt"
+    ]
+  },
+  {
+    "id": "abas",
+    "components": [
+      "abaItem"
+    ]
+  },
+  {
+    "id": "indice",
+    "components": [
+      "indiceItem"
     ]
   }
 ]
