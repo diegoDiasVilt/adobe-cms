@@ -1,13 +1,19 @@
-import { enhancedIsInEditor, inIFrame } from '../../scripts/scripts.js';
+import { enhancedIsInEditor, inIFrame, decodeBase64 } from '../../scripts/scripts.js';
+
+const base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+function decode64innerHTML(tag) {
+  const inner = tag.innerHTML;
+  if (typeof inner === 'string' && base64regex.test(inner)) tag.innerHTML = decodeBase64(inner);
+}
 
 export default function decorate(block) {
   const titulo = block.children[0];
   const tituloText = block.children[0].textContent;
   const imagemCapa = block.children[1];
   const id = block.children[2];
-  if (id && id?.querySelectorAll("div")?.length < 3) {
+  if (id && id?.querySelectorAll('div')?.length < 3) {
     id.remove();
-    block.setAttribute("id", id?.textContent?.trim())
+    block.setAttribute('id', id?.textContent?.trim());
   }
 
   const capa = document.createElement('div');
@@ -30,6 +36,8 @@ export default function decorate(block) {
     const typeText = type.textContent;
     type.remove();
     child.classList.add(typeText);
+    child.querySelectorAll('p').forEach(decode64innerHTML);
+    const cdd = child.children[2];
     switch (typeText) {
       case 'disclaimer':
         child.children[0].classList.add('disclaimer__title');
@@ -39,7 +47,6 @@ export default function decorate(block) {
         child.children[0].classList.add('fichaCatalografica__title');
         child.children[1].classList.add('fichaCatalografica__content');
 
-        const cdd = child.children[2];
         cdd.classList.add('fichaCatalografica__cdd');
         cdd.querySelector('p').textContent = `CDD ${cdd.textContent}`;
         break;
