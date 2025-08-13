@@ -4,15 +4,15 @@ import {
 
 function handleIndiceItem(indiceItem) {
   const anchor = document.createElement('a');
-
-  if (indiceItem?.linkTo) anchor.setAttribute('onclick', `(function scrollIntoView() {
-    var element = document.getElementById('${indiceItem?.linkTo}');
+  anchor.addEventListener('click', () => {
+    var element = document.getElementById(indiceItem?.linkTo);
     var headerOffset = 200;
     var elementPosition = element.offsetTop;
     var offsetPosition = elementPosition - headerOffset;
     document.documentElement.scrollTop = offsetPosition;
-    document.body.scrollTop = offsetPosition;
-    })();`);
+    document.body.scrollTop = offsetPosition; // For Safari
+  })
+
   if (window.self !== window.top) anchor.setAttribute('target', '_parent');
   else anchor.setAttribute('target', '_self');
 
