@@ -277,12 +277,12 @@ window.addEventListener('message', function (e) {
   var data = e.data[1];
   switch (eventName) {
     case 'navBarHeight':
-      this.document.querySelectorAll('.block').forEach(element => {
+      this.document.querySelectorAll('.block')?.forEach(element => {
         element.setAttribute('style', `scroll-margin-top: ${data}px`);
       });
 
-      this.document.querySelector(".img-modal img").setAttribute('style', `scroll-margin-top: ${data}px`);
-      this.document.querySelector(".modal-content").setAttribute('style', `scroll-margin-top: ${data}px`);
+      this.document.querySelector(".img-modal img")?.setAttribute('style', `scroll-margin-top: ${data}px`);
+      this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
 
       break;
   }
