@@ -273,6 +273,7 @@ export function inIFrame() {
 }
 
 window.addEventListener('message', function (e) {
+  console.log(e.data)
   var eventName = e.data[0];
   var data = e.data[1];
   switch (eventName) {
