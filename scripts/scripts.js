@@ -249,11 +249,11 @@ export function decodeBase64(base64) {
   let text = null;
   try {
     text = atob(base64);
-  }catch(error){
+  } catch (error) {
     // string is not base64
     return base64;
   }
-    const length = text.length;
+  const length = text.length;
   const bytes = new Uint8Array(length);
   for (let i = 0; i < length; i++) {
     bytes[i] = text.charCodeAt(i);
@@ -269,5 +269,21 @@ export function handleRichTextElement(textElement) {
 }
 
 export function inIFrame() {
-    return window.location !== window.parent.location
+  return window.location !== window.parent.location
 }
+
+window.addEventListener('message', function (e) {
+  var eventName = e.data[0];
+  var data = e.data[1];
+  switch (eventName) {
+    case 'navBarHeight':
+      this.document.querySelectorAll('.block').forEach(element => {
+        element.setAttribute('style', `scroll-margin-top: ${data}px`);
+      });
+
+      this.document.querySelector(".img-modal img").setAttribute('style', `scroll-margin-top: ${data}px`);
+      this.document.querySelector(".modal-content").setAttribute('style', `scroll-margin-top: ${data}px`);
+
+      break;
+  }
+}, false);
