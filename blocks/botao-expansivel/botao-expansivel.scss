@@ -37,6 +37,7 @@
         opacity: 0;
         transition: opacity 500ms ease;
         z-index: 20;
+        scroll-margin-top: 150px;
         /* Modal Content */ 
         &-content {
           background-color: #fefefe; 

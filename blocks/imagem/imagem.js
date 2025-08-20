@@ -92,8 +92,12 @@ export default function decorate(block) {
       modalElement.style.display = 'block';
       setTimeout(() => {
         modalElement.style.opacity = 1;
-        modalElement.querySelector("img").scrollIntoView();
-        window.parent.postMessage(['scrollTo', modalElement.querySelector("img").getBoundingClientRect().top + 150], '*');
+        const img = modalElement.querySelector("img");
+        const navBar = 150;
+
+        img.scrollIntoView();
+
+        window.parent.postMessage(['scrollTo', img.getBoundingClientRect().top + navBar], '*');
       }, 100);
     });
 

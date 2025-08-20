@@ -107,14 +107,25 @@ export default function decorate(block) {
 
   const contentSectionElement = modalElement.querySelector('.modal-content');
   button.addEventListener('click', () => {
-    modalElement.querySelectorAll('.modal-content')[0].style.top = `${button.getBoundingClientRect().top}px`;
+    const modalContent = document.querySelectorAll(".modal-content")[0];
+    modalContent.style.top = `${button.getBoundingClientRect().top}px`;
     modalElement.style.display = 'block';
     modalElement.style.visibility = 'visible';
+
     setTimeout(() => {
       modalElement.style.opacity = 1;
+      const rect = modalContent.getBoundingClientRect();
+      const navBar = 150;
+      
+      modalContent.scrollIntoView();
+      window.parent.postMessage(
+        ['scrollTo', navBar + window.scrollY],
+        '*'
+      );
       contentSectionElement.classList.add('active');
-    }, 100);
-  });
+          }, 100);
+    });
+
 
   modalElement.addEventListener('click', (e) => {
     if (e.target === modalElement || e.target?.className.includes('fa-xmark')) {
