@@ -276,13 +276,18 @@ window.addEventListener('message', function (e) {
   var eventName = e?.data?.event;
   var data = e?.data?.payload;
   if (eventName === "set_navbar_height") {
-    this.setTimeout(() => {
+    let counter = 0
+    const intervalId = setInterval(() => {
+      if (counter >= 3) {
+        clearInterval(intervalId);
+      }
       this.document.querySelectorAll('.block')?.forEach(element => {
         element.setAttribute('style', `scroll-margin-top: ${data}px`);
       });
   
       this.document.querySelector(".img-modal img")?.setAttribute('style', `scroll-margin-top: ${data}px`);
       this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
-    }, 3000);
+      counter++;
+    }, 1000);
   }
 }, false);
