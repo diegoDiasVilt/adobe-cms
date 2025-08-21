@@ -283,6 +283,6 @@ window.addEventListener('message', function (e) {
   
       this.document.querySelector(".img-modal img")?.setAttribute('style', `scroll-margin-top: ${data}px`);
       this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
-    }, 3000);
+    }, 1000);
   }
 }, false);
