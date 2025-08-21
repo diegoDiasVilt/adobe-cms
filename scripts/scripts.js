@@ -273,6 +273,7 @@ export function inIFrame() {
 }
 
 window.addEventListener('message', function (e) {
+  console.log(e)
   var eventName = e?.data?.event;
   var data = e?.data?.payload;
   if (eventName === "set_navbar_height") {
@@ -288,6 +289,8 @@ window.addEventListener('message', function (e) {
       this.document.querySelector(".img-modal img")?.setAttribute('style', `scroll-margin-top: ${data}px`);
       this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
       counter++;
+      console.log(counter)
+
     }, 1000);
   }
 }, false);
