@@ -273,18 +273,16 @@ export function inIFrame() {
 }
 
 window.addEventListener('message', function (e) {
-  console.log(e.data)
-  var eventName = e.data[0];
-  var data = e.data[1];
-  switch (eventName) {
-    case 'navBarHeight':
+  var eventName = e?.data?.event;
+  var data = e?.data?.payload;
+  if (eventName === "set_navbar_height") {
+    this.setTimeout(() => {
       this.document.querySelectorAll('.block')?.forEach(element => {
         element.setAttribute('style', `scroll-margin-top: ${data}px`);
       });
-
+  
       this.document.querySelector(".img-modal img")?.setAttribute('style', `scroll-margin-top: ${data}px`);
       this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
-
-      break;
+    }, 3000);
   }
 }, false);

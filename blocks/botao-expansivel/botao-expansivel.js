@@ -115,13 +115,9 @@ export default function decorate(block) {
     setTimeout(() => {
       modalElement.style.opacity = 1;
       const rect = modalContent.getBoundingClientRect();
-      const navBar = 150;
       
       modalContent.scrollIntoView();
-      window.parent.postMessage(
-        ['scrollTo', navBar + window.scrollY],
-        '*'
-      );
+      window.parent.postMessage(['scrollTo', modalContent.getBoundingClientRect().top],'*');
       contentSectionElement.classList.add('active');
           }, 100);
     });
