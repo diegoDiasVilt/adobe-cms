@@ -273,7 +273,7 @@ export function inIFrame() {
 }
 
 window.addEventListener('message', function (e) {
-  console.log(e)
+  console.log(e.data)
   var eventName = e?.data?.event;
   var data = e?.data?.payload;
   if (eventName === "set_navbar_height") {
