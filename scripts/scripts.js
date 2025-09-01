@@ -272,6 +272,18 @@ export function inIFrame() {
   return window.location !== window.parent.location
 }
 
+export function createOptimizedPicture(pic) {
+  pic.querySelectorAll('source, img').forEach((el) => {
+    const attr = el.tagName === 'SOURCE' ? 'srcset' : 'src';
+    const val = el.getAttribute(attr);
+    if (val && /\bformat=webply\b/.test(val)) {
+      el.setAttribute(attr, val.replace(/\bformat=webply\b/g, 'format=webp'));
+    }
+  });
+  return pic;
+}
+
+
 window.addEventListener('message', function (e) {
   console.log(e.data)
   var eventName = e?.data?.event;
