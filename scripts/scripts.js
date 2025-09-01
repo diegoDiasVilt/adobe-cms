@@ -277,7 +277,7 @@ export function createOptimizedPicture(pic) {
     const attr = el.tagName === 'SOURCE' ? 'srcset' : 'src';
     const val = el.getAttribute(attr);
     if (val && /\bformat=webply\b/.test(val)) {
-      el.setAttribute(attr, val.replace(/\bformat=webply\b/g, 'format=webp'));
+      el.setAttribute(attr, val.replace(/\bformat=webply\b/g, 'format=png'));
     }
   });
   return pic;
