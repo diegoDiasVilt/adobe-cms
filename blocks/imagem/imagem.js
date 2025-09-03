@@ -80,6 +80,7 @@ export default function decorate(block) {
             <div class="img-modal">
                 <div class="img-modal-content">
                     ${pictureElement.outerHTML}
+                    console.log("Picture Element: ", pictureElement.outerHTML);
                     <div class="img-modal-content-footer">
                         <div class="img-modal-content-footer-wrapper">
                             <span>${titleText}</span>
