@@ -100,7 +100,7 @@
   display: none !important;
 }
 .imagem .img-modal-content picture img {
-  width: -webkit-fill-available;
+  width: min(100%, 100vw);
   max-width: 1260px;
 }
 .imagem .img-modal-content-footer {
