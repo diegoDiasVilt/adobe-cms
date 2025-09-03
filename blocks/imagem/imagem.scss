@@ -101,9 +101,9 @@
                 display: none !important;
               }
               img {
-                 display: block;
-                 width: min(100vw, 1260px);
-                 height: auto;
+                width: min(100%, 100vw);
+                max-width: 1260px;
+                height: auto;
               }
           }
           &-footer{

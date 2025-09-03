@@ -61,10 +61,7 @@
   opacity: 1;
 }
 .imagem .img-modal {
-  display: flex
-  justify-content: center;
-  align-items: center;
-  overflow: auto; /* ainda permite scroll se imagem for muito grande */; /* Hidden by default */
+  display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
@@ -88,7 +85,7 @@
   max-width: calc(100% - 50px);
   position: relative;
   display: block;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 .imagem .img-modal-content picture {
   cursor: unset !important;
@@ -100,9 +97,8 @@
   display: none !important;
 }
 .imagem .img-modal-content picture img {
-     display: block;
-     width: min(100vw, 1260px);
-     height: auto;
+  width: min(100%, 100vw);
+  max-width: 1260px;
 }
 .imagem .img-modal-content-footer {
   position: absolute;
