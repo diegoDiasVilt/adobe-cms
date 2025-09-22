@@ -306,3 +306,16 @@ window.addEventListener('message', function (e) {
     }, 1000);
   }
 }, false);
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  setTimeout(() => {
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
+    document.head.appendChild(script);
+    window.MathJax = {
+      loader: { load: ['input/mml', 'output/chtml'] }, // Entrada MathML, saída HTML/CSS
+      startup: {
+        typeset: true // processa automaticamente ao carregar
+      }
+    };
+  }, 1500);});
