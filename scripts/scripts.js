@@ -283,6 +283,36 @@ export function createOptimizedPicture(pic) {
   return pic;
 }
 
+function makeConceitosClickable() {
+  const conceitosChave = document.querySelectorAll('conceito-chave:not([data-clickable])');
+
+  if (conceitosChave.length > 0) {
+    console.log(`Found ${conceitosChave.length} new <conceito-chave> tags. Making them clickable.`);
+
+    conceitosChave.forEach((conceito, index) => {
+      conceito.setAttribute('data-clickable', 'true');
+
+      conceito.addEventListener('click', () => {
+        console.log(`Conceito-chave clicked!`);
+        console.log(`  -> Text: "${conceito.textContent}"`);
+        console.log('  -> Full Element:', conceito);
+      });
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  makeConceitosClickable();
+  const observer = new MutationObserver(() => {
+    makeConceitosClickable();
+  });
+
+  observer.observe(document.body, {
+    childList: true, 
+    subtree: true   
+  });
+});
+
 
 window.addEventListener('message', function (e) {
   console.log(e.data)
@@ -297,7 +327,7 @@ window.addEventListener('message', function (e) {
       this.document.querySelectorAll('.block')?.forEach(element => {
         element.setAttribute('style', `scroll-margin-top: ${data}px`);
       });
-  
+
       this.document.querySelector(".img-modal img")?.setAttribute('style', `scroll-margin-top: ${data}px`);
       this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
       counter++;

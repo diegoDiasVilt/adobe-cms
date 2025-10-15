@@ -128,6 +128,22 @@ pre {
   overflow: scroll;
 }
 
+conceito-chave {
+    color: #0056b3; /* A distinct blue color */
+    background-color: #5bc0de;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    cursor: pointer; /* Changes the mouse cursor to a pointer on hover */
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+conceito-chave:hover {
+    color: #007bff;
+    background-color: #eef6ff; /* A light blue background on hover */
+}
+
 main pre {
   background-color: var(--light-color);
   padding: 1em;
