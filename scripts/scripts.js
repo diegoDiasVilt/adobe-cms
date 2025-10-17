@@ -283,28 +283,57 @@ export function createOptimizedPicture(pic) {
   return pic;
 }
 
-function makeConceitosClickable() {
-  const conceitosChave = document.querySelectorAll('conceito-chave:not([data-clickable])');
+function makeConceitosInteractive() {
+  const conceitosChave = document.querySelectorAll('conceito-chave:not([data-processed])');
 
   if (conceitosChave.length > 0) {
-    console.log(`Found ${conceitosChave.length} new <conceito-chave> tags. Making them clickable.`);
 
-    conceitosChave.forEach((conceito, index) => {
-      conceito.setAttribute('data-clickable', 'true');
+    conceitosChave.forEach((conceito) => {
 
-      conceito.addEventListener('click', () => {
-        console.log(`Conceito-chave clicked!`);
-        console.log(`  -> Text: "${conceito.textContent}"`);
-        console.log('  -> Full Element:', conceito);
-      });
+      if (conceito.parentElement.tagName === 'SPAN') {
+        const span = conceito.parentElement;
+
+        span.replaceWith(...span.childNodes);
+      }
+
+      conceito.setAttribute('data-processed', 'true');
+
+      const tooltipTextValue = conceito.getAttribute('interacao');
+      if (tooltipTextValue) {
+        const tooltip = document.createElement('span');
+        tooltip.classList.add('conceito-tooltip-text');
+        tooltip.textContent = tooltipTextValue;
+        conceito.appendChild(tooltip);
+      }
+      
+      if (!conceito.hasAttribute('data-click-listener')) {
+          conceito.setAttribute('data-click-listener', 'true');
+          conceito.addEventListener('click', () => {
+            const keyConceptText = conceito.childNodes[0].nodeType === Node.TEXT_NODE
+              ? conceito.childNodes[0].nodeValue.trim()
+              : '';
+            
+            const payload = {
+              keyConcept: keyConceptText,
+              bloomTaxonomy: conceito.getAttribute('taxonomia'),
+              interactionMessage: conceito.getAttribute('interacao')
+            };
+
+            window.parent.postMessage({
+              event: 'key_concept_request',
+              payload: payload
+            }, '*');
+          });
+      }
     });
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  makeConceitosClickable();
+  makeConceitosInteractive(); 
+  
   const observer = new MutationObserver(() => {
-    makeConceitosClickable();
+    makeConceitosInteractive();
   });
 
   observer.observe(document.body, {

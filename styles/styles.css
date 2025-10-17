@@ -128,20 +128,92 @@ pre {
   overflow: scroll;
 }
 
+@keyframes figma-shine-combined {
+  0% {
+    background-position: 100% bottom, 100% 0;
+  }
+  100% {
+    background-position: 0% bottom, 0% 0;
+  }
+}
+
 conceito-chave {
-    color: #0056b3; /* A distinct blue color */
-    background-color: #5bc0de;
-    text-decoration: underline;
-    text-decoration-style: dotted;
-    cursor: pointer; /* Changes the mouse cursor to a pointer on hover */
-    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    
+    position: relative; 
+    cursor: pointer;
     padding: 2px 4px;
     border-radius: 4px;
+    transition: background-color 0.3s ease;
+    background-color: transparent;
+    
+    background-image: 
+      linear-gradient(90deg, rgba(108, 126, 240, 0) 0%, rgb(108, 126, 240) 50%, rgba(108, 126, 240, 0) 100%),
+      linear-gradient(90deg, rgba(108, 126, 240, 0) 0%, rgba(108, 126, 240, 0.16) 50%, rgba(108, 126, 240, 0) 100%);
+    background-size: 
+      200% 4px,
+      200% 100%;
+    background-position: 
+      0 bottom,
+      0 0;
+    background-repeat: no-repeat;
+    animation: figma-shine-combined 3s linear infinite alternate;
 }
 
 conceito-chave:hover {
-    color: #007bff;
-    background-color: #eef6ff; /* A light blue background on hover */
+    animation: none;
+    background-image: none;
+    background-color: #E5EDFA;
+}
+
+.conceito-tooltip-text {
+    visibility: hidden;
+    width: max-content;
+    max-width: 292px;
+    
+    background: #004ECC;
+    color: #FFFFFF;
+    border: 1px solid #DEE2E6;
+    box-shadow: 0px 0px 10.2px rgba(33, 37, 41, 0.41);
+    border-radius: 8px;
+    
+    padding: 8px 10px 8px 42px;
+
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAUmSURBVHgBrVVrbBRVFP7uzOzu7Hvbpe9uu6UbS2grhaqFtsYiFNGoELUhiqZolJgYEeIvCSZqjDFRQ6L/UAkSJRofoDHG4oNig8RCKQWhXWjp0m7b7bLP7mt253Gdlm1iyhYh8SR3ZnLPne875zv33AvcvnEL3v+LMbOPJpfLor7I5oaWAwv8ZLEfF3VkQensqCmqrKqwWXdW2507gilRyWRmmBQxKTajZo8vGvzxj6GT57PrlVslmJvvWNW6igfb2+/1MVQRUW4zSWmFcNOxGL3HeQdmJIp4YoYoHFf728WeoVwEzGIEzdXVBR5/5HTX8BU6mUwgRRl4o1EuIghIS2kSigWJKIRJqdlI65wru7PgNwTMIrc0SrGxKDAWCSIjSZxZLWciI8BpNkFDJciKgng6hUhKgF6nIXaeNxaUOv50j18eWQiWaycoKypKWiciKVUdPXgiIiml0bmsHusdRci3G8GZjTBZ87C/5yS+7h+CQcsjIbHGbAZ0YbQ32H01VduvxdOQZBmimqRJBQhmFHzoHsWXI1NQWA0kwuKtJ7diqc2AuCBQl1l/oN5aYftPie4sKjIOjIlfaVQMtbKMQf0warUoNy3BJocNZSYdtITi8IVRMLwZoWgYaXUmmGZ9Pk1kbygUkm+awbnp6YSeMD/ERMoV63Woz7MiKVAU6lJ4c3AcJ9xXMR0IwRL24VR/HzyRFBIykSssfN7w8HAaOQp6wxxPr3XWFxrhicUlq4bD03cVY53LiffXrkRdSR6ql5bj07EACi0G5Gs18tWAnz0/6V2XS5Fcu4j6BEFgWW1UlJmHBC6tdDS5MD2WIYFICK4StdAl5eisd8FkL6dd/b1MktN/0Dvy12c5sHISzGURTcVPMhplX1uDYwMnmIpPXRlHyFAKz/AVcCm1LxRZDKcF9siAt/vcRN/WLNYtN9rcwmQy6YtMRR8J+GWssOdjJDEJn7MKbrMB0UBI4w1G3vg7MLBWXapVh5wzUixuc10Z9s+Ex2MxQKNDZ0UFVucBjuSM0tLUgoNH3O9kMTKLgdyMAGsaO+oslasvnpseoWmZwqp2cVlSxiqnixzo7j7Shz4ROWT5t7E3c+564b3ezw9/7Fhu1tKuiUniVzMJqqPXFyffZIz3R6cGU1jQubeSAZknNipSZcMz+4iNkZhGmwl5WgatyxzoH5+QX9nzxQCu687dDsEsMG1r21aw7dlDnk9OjFMpNg5d7cO42yiivcaJ6nw7IPiZ4z8fK3j9W/dudb2Uxcl59M9LNBuF4nS26TY/t++QZdmD+6/JCYt3KkG0whg5dmYUr95bBU7Hg1IFF0ZHyIBYJBYaitu37357g5BI94wOnQrmCHiOYBZc2vz8oZ2Nj77cI3Lx5TomoRQVmNhgMEEa1YYqrqnFpaQV63kPJM6AS5eHwDc/xnZ9f1SpbWgob9rYsaP9iV1brNbC7gunf/HPBzyvNx54cfAMbw6srCggkoZjOELInCM+E8eSJRbwWg38sh5bzn+EeDCMVGgSB/Wr4WjZhLNnh7GhvVHNC9ReVslEpjzv7u6se20+cLLxpd9PmExycyYl0gK7niyx8WBUAkopWPZ6IAzDICEoeKq1DGUpL8ylZTj6Ux+OM1Ww6yTVz4FTz6xYLCkZ7cWcXiv/uutxZ/ssCWPL45u16rnM6whJJDMIR5NgSfbmUGRVVAqikkHKYHLQDVO+FQl1q65Zno+xi25oWHbOr6h3B6/lOL/XI9M01u/9znNsNoN/ALhUL34H2Uq7AAAAAElFTkSuQmCC);
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+
+    text-align: left;
+    position: absolute;
+    z-index: 10;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    font-family: 'Roboto', var(--body-font-family);
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: normal;
+    pointer-events: none;
+}
+
+.conceito-tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #004ECC transparent transparent transparent;
+}
+
+conceito-chave:hover .conceito-tooltip-text {
+    visibility: visible;
+    opacity: 1;
 }
 
 main pre {
