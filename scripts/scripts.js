@@ -283,6 +283,65 @@ export function createOptimizedPicture(pic) {
   return pic;
 }
 
+function makeConceitosInteractive() {
+  const conceitosChave = document.querySelectorAll('conceito-chave:not([data-processed])');
+
+  if (conceitosChave.length > 0) {
+
+    conceitosChave.forEach((conceito) => {
+
+      if (conceito.parentElement.tagName === 'SPAN') {
+        const span = conceito.parentElement;
+
+        span.replaceWith(...span.childNodes);
+      }
+
+      conceito.setAttribute('data-processed', 'true');
+
+      const tooltipTextValue = conceito.getAttribute('interacao');
+      if (tooltipTextValue) {
+        const tooltip = document.createElement('span');
+        tooltip.classList.add('conceito-tooltip-text');
+        tooltip.textContent = tooltipTextValue;
+        conceito.appendChild(tooltip);
+      }
+      
+      if (!conceito.hasAttribute('data-click-listener')) {
+          conceito.setAttribute('data-click-listener', 'true');
+          conceito.addEventListener('click', () => {
+            const keyConceptText = conceito.childNodes[0].nodeType === Node.TEXT_NODE
+              ? conceito.childNodes[0].nodeValue.trim()
+              : '';
+            
+            const payload = {
+              keyConcept: keyConceptText,
+              bloomTaxonomy: conceito.getAttribute('taxonomia'),
+              interactionMessage: conceito.getAttribute('interacao')
+            };
+
+            window.parent.postMessage({
+              event: 'key_concept_request',
+              payload: payload
+            }, '*');
+          });
+      }
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  makeConceitosInteractive(); 
+  
+  const observer = new MutationObserver(() => {
+    makeConceitosInteractive();
+  });
+
+  observer.observe(document.body, {
+    childList: true, 
+    subtree: true   
+  });
+});
+
 
 window.addEventListener('message', function (e) {
   console.log(e.data)
@@ -297,7 +356,7 @@ window.addEventListener('message', function (e) {
       this.document.querySelectorAll('.block')?.forEach(element => {
         element.setAttribute('style', `scroll-margin-top: ${data}px`);
       });
-  
+
       this.document.querySelector(".img-modal img")?.setAttribute('style', `scroll-margin-top: ${data}px`);
       this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
       counter++;
