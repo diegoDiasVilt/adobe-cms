@@ -342,6 +342,79 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+let readingRuler = null;
+const RULER_HEIGHT_PX = 42; 
+let rulerEnabled = false;
+let lastMouseY = 0;
+let isMouseOverImage = false;
+let isMouseOverMain = false;
+
+function createReadingRuler() {
+  if (!readingRuler) {
+    readingRuler = document.createElement('div');
+    readingRuler.id = 'reading-ruler';
+    readingRuler.style.position = 'fixed';
+    readingRuler.style.top = '0';
+    readingRuler.style.left = '0';
+    readingRuler.style.width = '100%';
+    readingRuler.style.height = `${RULER_HEIGHT_PX}px`;
+    readingRuler.style.backgroundColor = 'rgba(187, 187, 187, 0.2)';
+    readingRuler.style.pointerEvents = 'none';
+    readingRuler.style.zIndex = '9998';
+    readingRuler.style.display = 'none';
+    readingRuler.style.willChange = 'transform, display';
+    document.body.appendChild(readingRuler);
+  }
+}
+
+function updateRulerPosition() {
+  if (!rulerEnabled) return;
+
+  if (readingRuler) {
+    if (isMouseOverImage || !isMouseOverMain) {
+      readingRuler.style.display = 'none';
+    } else {
+      readingRuler.style.display = 'block';
+    }
+
+    const yPos = lastMouseY - (RULER_HEIGHT_PX / 2);
+    readingRuler.style.transform = `translateY(${yPos}px)`;
+  }
+
+  requestAnimationFrame(updateRulerPosition);
+}
+
+function storeMousePosition(e) {
+  lastMouseY = e.clientY;
+  isMouseOverImage = !!e.target.closest('img, picture');
+  isMouseOverMain = !!e.target.closest('main');
+}
+
+function enableRuler() {
+  createReadingRuler();
+
+  if (!rulerEnabled) {
+    rulerEnabled = true;
+    
+    document.addEventListener('mousemove', storeMousePosition);
+
+    if (readingRuler) readingRuler.style.display = 'block';
+
+    requestAnimationFrame(updateRulerPosition);
+  }
+}
+
+function disableRuler() {
+  if (rulerEnabled) {
+    rulerEnabled = false;
+    
+    document.removeEventListener('mousemove', storeMousePosition);
+  }
+
+  if (readingRuler) {
+    readingRuler.style.display = 'none';
+  }
+}
 
 window.addEventListener('message', function (e) {
   console.log(e.data)
@@ -363,6 +436,14 @@ window.addEventListener('message', function (e) {
       console.log(counter)
 
     }, 1000);
+  }
+
+  if (eventName === "set_ruler_visibility") {
+    if (data === true) {
+      enableRuler();
+    } else if (data === false) {
+      disableRuler();
+    }
   }
 }, false);
 
