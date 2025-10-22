@@ -582,9 +582,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
     document.head.appendChild(script);
     window.MathJax = {
-      loader: { load: ['input/mml', 'output/chtml'] },
+      loader: { load: ['input/mml', 'output/chtml'] }, // Entrada MathML, saída HTML/CSS
       startup: {
-        typeset: true
+        typeset: true // processa automaticamente ao carregar
       }
     };
   }, 1500);});
