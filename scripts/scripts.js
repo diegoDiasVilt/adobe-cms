@@ -416,6 +416,42 @@ function disableRuler() {
   }
 }
 
+let originalFontSizes = new WeakMap();
+let isFontSizesStored = false;
+const FONT_SCALE_TARGETS = 'p, h1, h2, h3, h4, h5, h6, li, a, span, td, th, div';
+
+function storeOriginalFontSizes() {
+  if (isFontSizesStored) return;
+
+  document.querySelectorAll(FONT_SCALE_TARGETS).forEach((el) => {
+    if (!originalFontSizes.has(el)) {
+      const size = window.getComputedStyle(el).fontSize;
+      originalFontSizes.set(el, parseFloat(size));
+    }
+  });
+  isFontSizesStored = true;
+  console.log(`Tamanhos de fonte originais armazenados para ${document.querySelectorAll(FONT_SCALE_TARGETS).length} elementos.`);
+}
+
+function applyFontSizeDelta(delta) {
+  storeOriginalFontSizes();
+  
+  document.querySelectorAll(FONT_SCALE_TARGETS).forEach((el) => {
+    if (originalFontSizes.has(el)) {
+      const originalSize = originalFontSizes.get(el);
+      el.style.fontSize = `${originalSize + delta}px`;
+    }
+  });
+}
+
+function resetFontSizes() {
+  document.querySelectorAll(FONT_SCALE_TARGETS).forEach((el) => {
+    if (el.style.fontSize) {
+      el.style.fontSize = '';
+    }
+  });
+}
+
 window.addEventListener('message', function (e) {
   console.log(e.data)
   var eventName = e?.data?.event;
@@ -445,6 +481,99 @@ window.addEventListener('message', function (e) {
       disableRuler();
     }
   }
+  if (eventName === "set_kindle_alignment") {
+    const styleId = 'kindle-alignment-style';
+    let alignmentStyleElement = document.getElementById(styleId);
+
+    if (!alignmentStyleElement) {
+      alignmentStyleElement = document.createElement('style');
+      alignmentStyleElement.id = styleId;
+      document.head.appendChild(alignmentStyleElement);
+    }
+
+    if (data === 'left' || data === 'justify') {
+      alignmentStyleElement.innerHTML = `
+        * {
+          text-align: ${data} !important;
+        }
+      `;
+    } else {
+      alignmentStyleElement.innerHTML = '';
+    }
+  }
+
+  if (eventName === "set_kindle_font_type") {
+    const styleId = 'kindle-font-type-style';
+    let fontStyleElement = document.getElementById(styleId);
+
+    if (!fontStyleElement) {
+      fontStyleElement = document.createElement('style');
+      fontStyleElement.id = styleId;
+      document.head.appendChild(fontStyleElement);
+    }
+
+    let fontFamily = '';
+
+    switch (data) {
+      case 'helvetica':
+        fontFamily = 'Helvetica, Arial, sans-serif';
+        break;
+      case 'verdana':
+        fontFamily = 'Verdana, Geneva, sans-serif';
+        break;
+      case 'georgia':
+        fontFamily = 'Georgia, serif';
+        break;
+      case 'times new roman':
+        fontFamily = '"Times New Roman", Times, serif';
+        break;
+      case 'dyslexic':
+        fontFamily = 'OpenDyslexic, sans-serif';
+        break;
+      case 'default':
+      default:
+        fontStyleElement.innerHTML = '';
+        return;
+    }
+    
+    fontStyleElement.innerHTML = `
+      /* 1. Aplica a fonte do usuário em TUDO */
+      * {
+        font-family: ${fontFamily} !important;
+      }
+
+      i[class*="fa-"], .fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands {
+        font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "FontAwesome" !important;
+      }
+    `;
+  }
+
+  if (eventName === "set_kindle_font_size") {
+    let delta = 0;
+
+    switch (data) {
+      case '16':
+        delta = -4;
+        break;
+      case '24':
+        delta = 4;
+        break;
+      case '28':
+        delta = 8;
+        break;
+      case '32':
+        delta = 12;
+        break;
+      case '20':
+      case 'default':
+      default:
+        resetFontSizes();
+        return;
+    }
+
+    applyFontSizeDelta(delta);
+  }
+
 }, false);
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -453,9 +582,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
     document.head.appendChild(script);
     window.MathJax = {
-      loader: { load: ['input/mml', 'output/chtml'] }, // Entrada MathML, saída HTML/CSS
+      loader: { load: ['input/mml', 'output/chtml'] },
       startup: {
-        typeset: true // processa automaticamente ao carregar
+        typeset: true
       }
     };
   }, 1500);});
