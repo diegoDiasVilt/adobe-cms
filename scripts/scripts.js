@@ -567,11 +567,11 @@ window.addEventListener('message', function (e) {
       case '20':
       case 'default':
       default:
-        resetFontSizes(); // Chama a função de reset original
+        resetFontSizes();
         return;
     }
 
-    applyFontSizeDelta(delta); // Chama a função de delta original
+    applyFontSizeDelta(delta);
   }
   if (eventName === "set_kindle_theme") {
     const body = document.body;
@@ -641,9 +641,8 @@ window.addEventListener('message', function (e) {
   }
 
   if (eventName === "set_kindle_letters_space") {
-    let letterSpace = 'normal'; // CSS default
+    let letterSpace = 'normal';
     switch (data) {
-      // Casos 5% e 15% adicionados
       case '5%':
         letterSpace = '0.05em';
         break;
