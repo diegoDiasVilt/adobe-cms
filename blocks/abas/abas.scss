@@ -1,50 +1,58 @@
-.abas{
-  .abas-header{
-      ul{
-          display: flex;
-          flex-wrap: wrap; 
-          list-style-type:none;
-          padding:0px;
-          margin:0px;
-          li{
-              a{
-                  padding: 0.2rem 1.5rem;
-                  cursor: pointer;
-                  color: #0041a9;
-                  font-size: 18px;
-                  line-height: 1.88;
-                  text-decoration: none;
-                  &:hover{
-                      color: #343a40;;
-                  }
-                  &.active{
-                      background-color: #007ABF;
-                      color: #fff;
-                      border-radius: 0.25rem;
-  
-                  }
-              }
+.abas {
+  --abas-link-color: #0041a9;
+  --abas-link-hover-color: #343a40;
+  --abas-active-bg-color: #007ABF;
+  --abas-active-text-color: #fff;
+
+  .abas-header {
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      list-style-type: none;
+      padding: 0px;
+      margin: 0px;
+      li {
+        a {
+          padding: 0.2rem 1.5rem;
+          cursor: pointer;
+          color: var(--abas-link-color);
+          font-size: 18px;
+          line-height: 1.88;
+          text-decoration: none;
+          transition: color 0.2s ease, background-color 0.2s ease;
+          &:hover {
+            color: var(--abas-link-hover-color);
           }
+          &.active {
+            background-color: var(--abas-active-bg-color);
+            color: var(--abas-active-text-color);
+            border-radius: 0.25rem;
+          }
+        }
       }
+    }
   }
-  .hidden{
+  .hidden {
     display: none;
   }
 }
 
-.abas.deep-purple{
-  .abas-header{
-      ul{
+.abas.deep-purple {
+  --abas-active-bg-color: #b982ff;
+}
 
-          li{
-              a{
-                  &:hover{
-                  }
-                  &.active{
-                      background-color: #b982ff;
-                  }
-              }
-          }
-      }
-  }
+body.theme-sepia .abas:not(.deep-purple),
+body.theme-gray .abas:not(.deep-purple),
+body.theme-dark .abas:not(.deep-purple) {
+  --abas-link-color: var(--text-color);
+  --abas-link-hover-color: var(--text-color); // Trocar a cor do hover, quando tiver mais cores
+  --abas-active-bg-color: var(--text-color);
+  --abas-active-text-color: var(--background-color);
+}
+
+body.theme-white .abas:not(.deep-purple) {
+  --abas-link-color: #0041a9;
+  --abas-link-hover-color: #343a40;
+  --abas-active-bg-color: #007ABF;
+  --abas-active-text-color: #fff;
 }

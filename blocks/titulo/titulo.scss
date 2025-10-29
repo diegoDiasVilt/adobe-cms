@@ -1,52 +1,91 @@
- .titulo{
-    color: #00368c;
-    h1,h2,h3,h4,h5,h6{
-        margin-bottom: 0.5rem;
-        i{
-            margin-right: 5px ;
-        }
-        strong{
-            font-weight: 600; 
-        }
-    }
-    &.background{
-        div{
-            div{
-                width: fit-content;
-                background-color: #00368c;
-                padding: 0 10px;
-                line-height: 3em;
-                h1,h2,h3,h4,h5,h6{
-                    text-transform: uppercase;
-                    color: #fff;
-                    fill: #fff;
-                }
-            }
-        }
-    }
+.titulo {
+   --titulo-accent-color: #00368c;
+   --titulo-accent-text-color: #fff;
+   --titulo-text-color: var(--titulo-accent-color);
+
+   --titulo-font-family: var(--heading-font-family);
+   --titulo-font-style: normal;
+   --titulo-letter-spacing: normal;
+
+   color: var(--titulo-text-color);
+   transition: color 0.2s ease;
+
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   h6 {
+     margin-bottom: 0.5rem;
+     font-family: var(--titulo-font-family);
+     font-style: var(--titulo-font-style);
+     letter-spacing: var(--titulo-letter-spacing);
+     transition: color 0.2s ease;
+
+     i {
+       margin-right: 5px;
+     }
+
+     strong {
+       font-weight: 600;
+     }
+   }
+
+   &.background {
+     div {
+       div {
+         width: fit-content;
+         background-color: var(--titulo-accent-color);
+         padding: 0 10px;
+         line-height: 3em;
+         transition: background-color 0.2s ease;
+
+         h1,
+         h2,
+         h3,
+         h4,
+         h5,
+         h6 {
+           text-transform: uppercase;
+           color: var(--titulo-accent-text-color);
+           fill: var(--titulo-accent-text-color);
+         }
+       }
+     }
+   }
  }
 
-.titulo.deep-purple{
-    color: #3a3a3a;
-    h1,h2,h3,h4,h5,h6{
-        font-family: "Orbitron-Regular";
-        color: #3a3a3a;
-        font-style: oblique;
-        letter-spacing: 5px;
+.titulo.deep-purple {
+
+  --titulo-accent-color: #423188;
+  --titulo-accent-text-color: #fff;
+  --titulo-text-color: #3a3a3a; /* .deep-purple sem fundo é texto escuro */
+
+  --titulo-font-family: "Orbitron-Regular";
+  --titulo-font-style: oblique;
+  --titulo-letter-spacing: 5px;
+  
+  h1,h2,h3,h4,h5,h6 {
+    color: var(--titulo-text-color);
+  }
+
+  &.background {
+    h1,h2,h3,h4,h5,h6 {
+      font-style: var(--titulo-font-style);
     }
-   &.background{
-       div{
-           div{
-               width: fit-content;
-               background-color: #423188;
-               border-radius: 4px;
-               padding: 0 10px;
-               line-height: 3rem;
-               h1,h2,h3,h4,h5,h6{
-                   color: #fff;
-                   font-style: oblique;
-               }
-           }
-       }
-   }
+  }
+}
+
+body.theme-sepia .titulo:not(.deep-purple),
+body.theme-gray .titulo:not(.deep-purple),
+body.theme-dark .titulo:not(.deep-purple) {
+  --titulo-accent-color: var(--text-color);
+  --titulo-accent-text-color: var(--background-color);
+  --titulo-text-color: var(--text-color);
+}
+
+body.theme-white .titulo:not(.deep-purple) {
+  --titulo-accent-color: #00368c;
+  --titulo-accent-text-color: #fff;
+  --titulo-text-color: var(--titulo-accent-color);
 }

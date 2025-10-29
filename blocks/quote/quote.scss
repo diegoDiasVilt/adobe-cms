@@ -1,119 +1,133 @@
 .quote {
-    margin-top: 40px;
-    section {
+  /* Variáveis locais para o componente */
+  --quote-author-bg: #dbe3ec;
+  --quote-author-text: var(--text-color, #3a3a3a);
+  --quote-author-caption: #6c757d;
+  --quote-accent-color: #00368c;
+
+  margin-top: 40px;
+  section {
+    display: flex;
+    align-items: flex-start;
+
+    @media (max-width: 575px) {
+      flex-direction: column;
+    }
+  }
+
+  &-author {
+    background-color: var(--quote-author-bg); 
+    border-radius: 10px;
+    padding: 20px 35px;
+    transition: background-color 0.2s ease; 
+
+    img {
+      width: 80px;
+      margin-right: 30px;
+
+
+      @media (max-width: 767px) {
+        width: 40px;
+      }
+
+      @media (max-width: 575px) {
+        margin: 0;
+      }
+    }
+
+    blockquote {
+      margin: 0;
+      color: var(--quote-author-text);
+      font-family: "Open Sans";
+      font-size: 18px;
+      line-height: 1.88;
+      margin-bottom: 16px;
+      transition: color 0.2s ease;
+
+      p {
+        margin: 0;
+      }
+
+      footer {
         display: flex;
-        align-items: flex-start;
-        
+        padding: 0;
+        background: none;
+        color: var(--quote-author-caption);
+        font-size: 14px;
+        margin: 0;
+        transition: color 0.2s ease;
+
+        &:before {
+          content: "— ";
+        }
+
+        cite {
+          margin-left: 2px;
+        }
+      }
+    }
+  }
+
+  &-phrase {
+    flex-direction: column;
+
+    i {
+      font-size: 30px;
+      color: var(--quote-accent-color);
+      transition: color 0.2s ease; 
+    }
+
+    blockquote {
+      margin: 0;
+      line-height: 1.88;
+
+      p {
+        color: var(--quote-accent-color);
+        font-size: 21px;
+        font-style: italic;
+        margin: 8px 0 0;
+        transition: color 0.2s ease; 
+
         @media (max-width: 575px) {
-            flex-direction: column;
+          font-size: 19px;
         }
+      }
+
+      cite {
+        display: none;
+      }
+
+      &:after {
+        content: "";
+        display: flex;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-bottom: solid 3px var(--quote-accent-color);
+        width: 50px;
+        transition: border-color 0.2s ease; /* Transição suave */
+      }
     }
-    
-    &-author { 
-        background-color: #dbe3ec;
-        border-radius: 10px;
-        padding: 20px 35px;
+  }
 
-        img {
-            width: 80px;
-            margin-right: 30px;
+  &.deep-purple {
+    --quote-author-bg: #b982ff;
+    --quote-accent-color: #b982ff;
+  }
+}
 
-            
-            @media (max-width: 767px) {
-                width: 40px;
-            }
+body.theme-sepia .quote,
+body.theme-gray .quote,
+body.theme-dark .quote {
+  --quote-author-bg: var(--background-color);
+  --quote-author-text: var(--text-color);
+  --quote-author-caption: var(--text-color); /* Legenda usa cor principal */
 
-            @media (max-width: 575px) {
-                margin: 0;
-            }
-        }
+  --quote-accent-color: var(--text-color);
+}
 
-        blockquote {
-            margin: 0;
-            color: #3a3a3a;
-            font-family: "Open Sans";
-            font-size: 18px;
-            line-height: 1.88;
-            margin-bottom: 16px;
-
-            p {
-                margin: 0;
-            }
-            
-            footer {
-                display: flex;
-                padding: 0;
-                background: none;
-                color: #6c757d;
-                font-size: 14px;
-                margin: 0;
-
-                &:before {
-                    content: "— ";
-                }
-
-                cite {
-                    margin-left: 2px;
-                }
-            }
-        }
-    }
-    
-    &-phrase {
-        flex-direction: column;
-
-        i {
-            font-size: 30px;
-            color: #00368c;
-        }
-
-        blockquote {
-            margin: 0;
-            line-height: 1.88;
-
-            p {
-                color: #00368c;
-                font-size: 21px;
-                font-style: italic;
-                margin: 8px 0 0;
-
-                @media (max-width: 575px) {
-                    font-size: 19px;
-                }
-            }
-
-            cite {
-                display: none;
-            }
-
-            &:after {
-                content: "";
-                display: flex;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                border-bottom: solid 3px #00368c;
-                width: 50px;
-            }
-        }
-    }
-
-    &.deep-purple { 
-        .quote-author { 
-            background-color: #b982ff;
-        }
-        
-        .quote-phrase { 
-            blockquote {
-                p {
-                    color: #b982ff;
-                }
-                &::after {
-                    border-color: #b982ff;
-                }
-            }
-            i::before {
-                color: #b982ff;
-            }
-        }
-    }
+body.theme-white .quote {
+  --quote-author-bg: #dbe3ec;
+  --quote-author-text: var(--text-color, #3a3a3a);
+  --quote-author-caption: #6c757d;
+  --quote-accent-color: #00368c;
 }

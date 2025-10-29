@@ -573,7 +573,96 @@ window.addEventListener('message', function (e) {
 
     applyFontSizeDelta(delta);
   }
+  if (eventName === "set_kindle_theme") {
+    const body = document.body;
+    const themeClasses = ['theme-white', 'theme-sepia', 'theme-gray', 'theme-dark'];
+    
+    body.classList.remove(...themeClasses);
 
+    switch (data) {
+      case 'white':
+        body.classList.add('theme-white');
+        break;
+      case 'sepia':
+        body.classList.add('theme-sepia');
+        break;
+      case 'gray':
+        body.classList.add('theme-gray');
+        break;
+      case 'dark':
+        body.classList.add('theme-dark');
+        break;
+      case 'default':
+      default:
+        break;
+    }
+  }
+
+  if (eventName === "set_kindle_line_space") {
+    let lineHeight = '140%';
+    switch (data) {
+      case '168%':
+      case '196%':
+      case '224%':
+      case '252%':
+        lineHeight = data;
+        break;
+      case '140%':
+      case 'default':
+      default:
+        lineHeight = '140%';
+        break;
+    }
+    document.documentElement.style.setProperty('--kindle-line-height', lineHeight);
+  }
+
+  if (eventName === "set_kindle_word_space") {
+    let wordSpace = 'normal';
+    switch (data) {
+      case '5%':
+        wordSpace = '0.05em';
+        break;
+      case '10%':
+        wordSpace = '0.10em';
+        break;
+      case '15%':
+        wordSpace = '0.15em';
+        break;
+      case '20%':
+        wordSpace = '0.20em';
+        break;
+      case '0%':
+      case 'default':
+      default:
+        wordSpace = 'normal';
+        break;
+    }
+    document.documentElement.style.setProperty('--kindle-word-space', wordSpace);
+  }
+
+  if (eventName === "set_kindle_letters_space") {
+    let letterSpace = 'normal';
+    switch (data) {
+      case '5%':
+        letterSpace = '0.05em';
+        break;
+      case '10%':
+        letterSpace = '0.10em';
+        break;
+      case '15%':
+        letterSpace = '0.15em';
+        break;
+      case '20%':
+        letterSpace = '0.20em';
+        break;
+      case '0%':
+      case 'default':
+      default:
+        letterSpace = 'normal';
+        break;
+    }
+    document.documentElement.style.setProperty('--kindle-letter-space', letterSpace);
+  }
 }, false);
 
 document.addEventListener('DOMContentLoaded', (event) => {

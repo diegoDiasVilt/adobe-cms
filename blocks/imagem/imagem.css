@@ -83,8 +83,10 @@
   padding: 3px;
   border: 1px solid #888;
   max-width: calc(100% - 50px);
-  width: fit-content;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
   display: block;
   margin-top: 20px;
 }
@@ -99,8 +101,8 @@
 }
 .imagem .img-modal-content picture img {
   width: min(100%, 100vw);
-  height: auto;
   max-width: 1260px;
+  height: auto;
 }
 .imagem .img-modal-content-footer {
   position: absolute;
