@@ -102,6 +102,33 @@
   }
 }
 
+body[class*="theme-"] .folha-de-creditos .folha {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+/* Regra Padrão para .capa (Inversão de Cores) */
+/* Aplica-se a Sépia, Cinza e Escuro */
+body.theme-sepia .folha-de-creditos .capa,
+body.theme-gray .folha-de-creditos .capa,
+body.theme-dark .folha-de-creditos .capa {
+  background-image: none; /* Remove o gradiente */
+  background-color: var(--text-color); /* Fundo = Cor do Texto do Tema */
+
+  .capa__title h1 {
+    color: var(--background-color); /* Texto = Cor do Fundo do Tema */
+  }
+}
+
+body.theme-white .folha-de-creditos .capa {
+  /* Reseta para o gradiente original */
+  background-image: url(https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/pattern-ld.png), linear-gradient(45deg, #007ABF, #0055A5), linear-gradient(180deg, #fff, #fff);
+  
+  .capa__title h1 {
+    color: #ffffff; /* Reseta para a cor de texto original */
+  }
+}
+
 .folha-de-creditos.deep-purple {
   .capa {
     background-image: url(https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/pattern-ld.png), linear-gradient(45deg, #d9c5f5, #b982ff), linear-gradient(180deg, #fff, #fff);

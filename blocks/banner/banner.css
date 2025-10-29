@@ -1,5 +1,10 @@
+.banner {
+  --banner-bg-pattern: url("https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/pattern-ld.png");
+  --banner-bg-gradient: linear-gradient(45deg, #001f50 30%, #00368c 100%);
+  --banner-text-color: #fff;
+}
 .banner .capa {
-  background-image: url("https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/pattern-ld.png"), linear-gradient(45deg, #001f50 30%, #00368c 100%);
+  background-image: var(--banner-bg-pattern), var(--banner-bg-gradient);
   overflow: hidden;
   position: relative;
   display: flex;
@@ -12,6 +17,7 @@
   left: 50%;
   margin: 0;
   margin-left: -50vw;
+  transition: background-color 0.2s ease;
 }
 .banner .capa.isInEditor {
   min-height: unset;
@@ -21,9 +27,12 @@
 .banner .capa h3,
 .banner .capa h4,
 .banner .capa h5,
-.banner .capa h6 {
+.banner .capa h6,
+.banner .capa p {
   margin: 0;
   line-height: 1;
+  color: var(--banner-text-color);
+  transition: color 0.2s ease;
 }
 .banner .capa__box {
   max-width: 1200px;
@@ -32,8 +41,7 @@
   margin: 0 auto;
   align-items: center;
 }
-
-@media (width <= 992px) {
+@media (max-width: 992px) {
   .banner .capa {
     padding-top: 0;
     padding-bottom: 80px;
@@ -44,14 +52,27 @@
     margin-bottom: 0;
   }
 }
-
-@media (width <= 575px) {
-  .banner::after {
+@media (max-width: 575px) {
+  .banner:after {
     height: 40px;
     transform: translateY(-40px);
   }
 }
 
-.banner.deep-purple .capa {
-  background-image: url("https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/pattern-ld.png"), linear-gradient(45deg, #001f50 30%, #b982ff 100%);
+.banner.deep-purple {
+  --banner-bg-gradient: linear-gradient(45deg, #001f50 30%, #b982ff 100%);
+}
+
+body.theme-sepia .banner:not(.deep-purple) .capa,
+body.theme-gray .banner:not(.deep-purple) .capa,
+body.theme-dark .banner:not(.deep-purple) .capa {
+  background-image: none !important;
+  background-color: var(--text-color);
+  --banner-text-color: var(--background-color);
+}
+
+body.theme-white .banner:not(.deep-purple) .capa {
+  background-image: var(--banner-bg-pattern), var(--banner-bg-gradient);
+  background-color: transparent;
+  --banner-text-color: #fff;
 }

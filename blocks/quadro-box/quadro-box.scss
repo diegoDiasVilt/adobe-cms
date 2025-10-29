@@ -1,14 +1,20 @@
 .quadro-box {
+  --quadro-box-bg-color: transparent;
+  --quadro-box-text-color: var(--text-color, #3a3a3a);
+  --quadro-box-caption-color: #6c757d;
+
   width: 100%;
   margin: 20px auto;
   font-family: sans-serif;
+  color: var(--quadro-box-text-color);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-radius: 8px; 
 
   &-main {
     &-section {
       display: flex;
       gap: 20px;
       padding: 25px;
-      border-radius: 8px;
       margin-bottom: 20px;
     }
 
@@ -60,7 +66,6 @@
     display: grid;
     gap: 20px;
     padding: 20px;
-    border-radius: 8px;
 
     &.columns-1 {
       grid-template-columns: 1fr;
@@ -81,6 +86,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+      background-color: var(--quadro-box-bg-color) !important;
     }
 
     .columns-1 {
@@ -145,9 +151,10 @@
       p {
         text-align: center;
         font-size: 80%;
-        color: #6c757d;
+        color: var(--quadro-box-caption-color);
         margin: 10px 0;
         line-height: 1;
+        transition: color 0.2s ease;
       }
     }
 
@@ -214,5 +221,29 @@
 }
 
 .quadro-box.deep-purple {
-    background-color: #b982ff;
+  --quadro-box-bg-color: #b982ff;
+  --quadro-box-text-color: #fff; 
+  --quadro-box-caption-color: #fff; 
+}
+
+body.theme-sepia .quadro-box:not(.deep-purple),
+body.theme-gray .quadro-box:not(.deep-purple),
+body.theme-dark .quadro-box:not(.deep-purple) {
+  --quadro-box-bg-color: var(--text-color);
+  --quadro-box-text-color: var(--background-color);
+  --quadro-box-caption-color: var(--background-color);
+
+  .quadro-box-item-image p {
+    opacity: 0.7;
+  }
+}
+
+body.theme-white .quadro-box:not(.deep-purple) {
+  --quadro-box-bg-color: transparent;
+  --quadro-box-text-color: var(--text-color, #3a3a3a);
+  --quadro-box-caption-color: #6c757d;
+
+  .quadro-box-item-image p {
+    opacity: 1;
+  }
 }
