@@ -4,7 +4,7 @@
     margin: 15px 0;
   }
   &:not(.image-only){
-    border: 1px solid #dee2e6;
+    border: 1px solid var(--background-color);
     padding: 15px;
     &.one-text-many-images,&.one-image-many-texts{
       display: grid;

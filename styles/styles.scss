@@ -11,7 +11,6 @@
  */
 
 :root {
-  /* colors */
   --link-color: #035fe6;
   --link-hover-color: #136ff6;
   --background-color: white;
@@ -50,6 +49,22 @@
   size-adjust: 100.06%;
   ascent-override: 95%;
   src: local('Arial');
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('../fonts/OpenDyslexic-Regular.woff2') format('woff2'),
+       url('../fonts/OpenDyslexic-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/styles/fonts/OpenDyslexic-Bold.woff2') format('woff2'),
+       url('/styles/fonts/OpenDyslexic-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
 }
 
 @media (width >= 900px) {

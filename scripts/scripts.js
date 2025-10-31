@@ -586,13 +586,15 @@ window.addEventListener('message', function (e) {
       case 'sepia':
         body.classList.add('theme-sepia');
         break;
-      case 'gray':
+      case 'neutral':
         body.classList.add('theme-gray');
         break;
       case 'dark':
         body.classList.add('theme-dark');
         break;
       case 'default':
+        body.classList.remove(...themeClasses);
+        break;
       default:
         break;
     }

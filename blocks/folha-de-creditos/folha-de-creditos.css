@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .folha-de-creditos .capa {
   background-image: url(https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/pattern-ld.png), linear-gradient(45deg, #007ABF, #0055A5), linear-gradient(180deg, #fff, #fff);
   overflow: hidden;
@@ -91,8 +90,6 @@ body[class*=theme-] .folha-de-creditos .folha {
   color: var(--text-color) !important;
 }
 
-/* Regra Padrão para .capa (Inversão de Cores) */
-/* Aplica-se a Sépia, Cinza e Escuro */
 body.theme-sepia .folha-de-creditos .capa,
 body.theme-gray .folha-de-creditos .capa,
 body.theme-dark .folha-de-creditos .capa {

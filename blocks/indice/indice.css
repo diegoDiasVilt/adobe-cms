@@ -135,7 +135,6 @@ body.theme-dark .indice .capa__box__content__anchor-list a {
   color: var(--background-color) !important;
 }
 
-/* 2.2 Reset para o tema branco (garante o estado original) */
 body.theme-white .indice .capa__box__content__anchor-list a {
   color: #3a3a3a !important;
   background-color: #e3e3e3 !important;

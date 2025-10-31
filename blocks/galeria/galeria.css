@@ -5,7 +5,7 @@
   margin: 15px 0;
 }
 .galeria:not(.image-only) {
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--background-color);
   padding: 15px;
 }
 .galeria:not(.image-only).one-text-many-images, .galeria:not(.image-only).one-image-many-texts {

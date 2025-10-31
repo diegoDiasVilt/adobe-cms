@@ -107,8 +107,6 @@ body[class*="theme-"] .folha-de-creditos .folha {
   color: var(--text-color) !important;
 }
 
-/* Regra Padrão para .capa (Inversão de Cores) */
-/* Aplica-se a Sépia, Cinza e Escuro */
 body.theme-sepia .folha-de-creditos .capa,
 body.theme-gray .folha-de-creditos .capa,
 body.theme-dark .folha-de-creditos .capa {
