@@ -1,5 +1,5 @@
 .quadro-box {
-  --quadro-box-bg-color: transparent;
+  --quadro-box-bg-color: #b5d4ed;
   --quadro-box-text-color: var(--text-color, #3a3a3a);
   --quadro-box-caption-color: #6c757d;
   width: 100%;
@@ -191,7 +191,7 @@ body.theme-dark .quadro-box:not(.deep-purple) .quadro-box-item-image p {
 }
 
 body.theme-white .quadro-box:not(.deep-purple) {
-  --quadro-box-bg-color: transparent;
+  --quadro-box-bg-color: #b5d4ed;
   --quadro-box-text-color: var(--text-color, #3a3a3a);
   --quadro-box-caption-color: #6c757d;
 }
