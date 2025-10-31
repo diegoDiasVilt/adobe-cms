@@ -430,7 +430,6 @@ function storeOriginalFontSizes() {
     }
   });
   isFontSizesStored = true;
-  console.log(`Tamanhos de fonte originais armazenados para ${document.querySelectorAll(FONT_SCALE_TARGETS).length} elementos.`);
 }
 
 function applyFontSizeDelta(delta) {
@@ -450,6 +449,41 @@ function resetFontSizes() {
       el.style.fontSize = '';
     }
   });
+}
+
+function resetCustomizations() {
+  
+  // Reseta a Régua de Leitura
+  disableRuler(); //
+
+  // Reseta o Alinhamento
+  const alignmentStyleElement = document.getElementById('kindle-alignment-style'); //
+  if (alignmentStyleElement) {
+    alignmentStyleElement.innerHTML = ''; //
+  }
+
+  // Reseta o Tipo da Fonte
+  const fontStyleElement = document.getElementById('kindle-font-type-style'); //
+  if (fontStyleElement) {
+    fontStyleElement.innerHTML = ''; //
+  }
+
+  // Reseta o Tamanho da Fonte
+  resetFontSizes(); //
+
+  // Reseta o Tema
+  const body = document.body;
+  const themeClasses = ['theme-white', 'theme-sepia', 'theme-gray', 'theme-dark']; //
+  body.classList.remove(...themeClasses); //
+
+  // Reseta o Espaçamento entre Linhas
+  document.documentElement.style.setProperty('--kindle-line-height', '140%'); //
+
+  // Reseta o Espaçamento entre Palavras
+  document.documentElement.style.setProperty('--kindle-word-space', 'normal'); //
+
+  // Reseta o Espaçamento entre Letras
+  document.documentElement.style.setProperty('--kindle-letter-space', 'normal'); //
 }
 
 window.addEventListener('message', function (e) {
@@ -549,26 +583,10 @@ window.addEventListener('message', function (e) {
   }
 
   if (eventName === "set_kindle_font_size") {
-    let delta = 0;
+    let delta = data-20;
 
-    switch (data) {
-      case '16':
-        delta = -4;
-        break;
-      case '24':
-        delta = 4;
-        break;
-      case '28':
-        delta = 8;
-        break;
-      case '32':
-        delta = 12;
-        break;
-      case '20':
-      case 'default':
-      default:
-        resetFontSizes();
-        return;
+    if (delta === 0) {
+      resetFontSizes();
     }
 
     applyFontSizeDelta(delta);
@@ -664,6 +682,9 @@ window.addEventListener('message', function (e) {
         break;
     }
     document.documentElement.style.setProperty('--kindle-letter-space', letterSpace);
+  }
+  if (eventName === 'set_kindle_reset') {
+    resetCustomizations();
   }
 }, false);
 
