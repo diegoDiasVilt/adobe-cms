@@ -459,7 +459,11 @@ function resetCustomizations() {
   // Reseta o Alinhamento
   const alignmentStyleElement = document.getElementById('kindle-alignment-style'); //
   if (alignmentStyleElement) {
-    alignmentStyleElement.innerHTML = ''; //
+    alignmentStyleElement.innerHTML = `
+        * {
+          text-align: left !important;
+        }
+      `;;
   }
 
   // Reseta o Tipo da Fonte
