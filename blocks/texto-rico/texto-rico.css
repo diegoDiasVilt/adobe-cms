@@ -1,3 +1,9 @@
+.texto-rico {
+  --table-border-color: #939393;
+  --caption-text-color: #6c757d;
+  --text-font-family: var(--body-font-family);
+  font-family: var(--text-font-family);
+}
 .texto-rico table {
   width: 100%;
   border-spacing: 0px;
@@ -5,9 +11,10 @@
   font-size: 18px;
 }
 .texto-rico table td {
-  border: 1px solid #939393;
+  border: 1px solid var(--table-border-color);
   padding: 0.75rem;
   vertical-align: top;
+  transition: border-color 0.2s ease;
 }
 .texto-rico figure:has(img) {
   display: grid;
@@ -16,14 +23,37 @@
 .texto-rico figure:has(img) figcaption {
   text-align: center;
   font-size: 80%;
-  color: #6c757d;
+  color: var(--caption-text-color);
   margin: 10px 0;
   line-height: 1;
+  transition: color 0.2s ease, opacity 0.2s ease;
 }
 .texto-rico figure:has(img) img {
   margin: 0 auto;
 }
 
 .texto-rico.deep-purple {
-  font-family: "Orbitron-Regular";
+  --text-font-family: "Orbitron-Regular";
+}
+
+body.theme-sepia .texto-rico:not(.deep-purple),
+body.theme-gray .texto-rico:not(.deep-purple),
+body.theme-dark .texto-rico:not(.deep-purple) {
+  --table-border-color: var(--text-color);
+  --caption-text-color: var(--text-color);
+  color: var(--text-color) !important;
+}
+body.theme-sepia .texto-rico:not(.deep-purple) figure:has(img) figcaption,
+body.theme-gray .texto-rico:not(.deep-purple) figure:has(img) figcaption,
+body.theme-dark .texto-rico:not(.deep-purple) figure:has(img) figcaption {
+  opacity: 0.7;
+}
+
+body.theme-white .texto-rico:not(.deep-purple) {
+  --table-border-color: #939393;
+  --caption-text-color: #6c757d;
+  color: var(--text-color) !important;
+}
+body.theme-white .texto-rico:not(.deep-purple) figure:has(img) figcaption {
+  opacity: 1;
 }
