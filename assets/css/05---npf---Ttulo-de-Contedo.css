@@ -1,0 +1,27 @@
+@media only print {
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    text-shadow: none !important;
+    filter: none !important;
+    -ms-filter: none !important;
+  }
+}
+
+@media only print {
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    text-shadow: none !important;
+    filter: none !important;
+    -ms-filter: none !important;
+  }
+}
+
+@media only print {
+  .marcador {
+    padding-left: 10px;
+    border-left: solid 6px #000;
+  }
+}
+

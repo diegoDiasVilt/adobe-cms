@@ -1,0 +1,17 @@
+.box-numeros {
+  width: 100%;
+}
+
+.texto-form-cinza {
+  font-size: 60%;
+  color: #6d6d6d;
+}
+
+.d-print-none.py-5 {
+}
+
+#formulariocss {
+  position: relative;
+  background-color: #fff !important;
+}
+

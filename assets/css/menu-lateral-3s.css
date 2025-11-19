@@ -1,0 +1,201 @@
+@media only print {
+  img {
+    max-width: 100%;
+  }
+}
+
+@media only print {
+  a {
+    word-wrap: break-word;
+  }
+}
+
+li ul {
+  list-style: url('data:image/gif;base64,R0lGODlhBQAKAIABAAAAAP///yH5BAEAAAEALAAAAAAFAAoAAAIIjI+ZwKwPUQEAOw==');
+}
+
+.main-leftsidebar-div {
+  position: fixed;
+  width: 50px;
+  top: 0;
+  height: 100vh;
+  background: white;
+  box-shadow: 0px 2px 10px 0px;
+  transition: 0.2s 0.5s;
+  z-index: 1;
+}
+
+@media (max-width: 575.98px) {
+  .main-leftsidebar-div {
+    position: fixed;
+    width: 35px;
+    top: 0;
+    height: 100vh;
+    background: white;
+    box-shadow: 0px 2px 10px 0px;
+    transition: 0.2s 0.5s;
+    z-index: 1;
+  }
+}
+
+.main-leftsidebar-div:hover {
+  width: 195px;
+  transition: .5s;
+}
+
+.main-leftsidebar-div li .leftsidebarmenu {
+  visibility: hidden;
+  transition: 0s 0.3s;
+  position: absolute;
+}
+
+.main-leftsidebar-div li:hover .leftsidebarmenu {
+  background: white;
+  visibility: visible;
+  margin: 40px 0 0 -140px !important;
+  box-shadow: 0px 2px 8px 0px;
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .main-leftsidebar-div li:hover .leftsidebarmenu.u4 {
+    background: white;
+    visibility: visible;
+    margin: -40px 0 0 -50px !important;
+    box-shadow: 0px 2px 8px 0px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .main-leftsidebar-div li:hover .leftsidebarmenu {
+    background: white;
+    visibility: visible;
+    margin: -15px 0 0 -50px !important;
+    box-shadow: 0px 2px 8px 0px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .main-leftsidebar-div li:hover .leftsidebarmenu.sidebar-third-menu-div {
+    background: white;
+    visibility: visible;
+    margin: 0px 0 0 -50px !important;
+    box-shadow: 0px 2px 8px 0px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .main-leftsidebar-div li:hover .leftsidebarmenu.sidebar-third-menu-div.u4s3 {
+    background: white;
+    visibility: visible;
+    margin: -45px 0 0 -50px !important;
+    box-shadow: 0px 2px 8px 0px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .main-leftsidebar-div li:hover .leftsidebarmenu.sidebar-third-menu-div.u3s3 {
+    background: white;
+    visibility: visible;
+    margin: -20px 0 0 -50px !important;
+    box-shadow: 0px 2px 8px 0px;
+  }
+}
+
+.leftsidebarmenu {
+  position: relative;
+}
+
+.leftsidebarmenu ul {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.leftsidebarmenu li {
+  position: static;
+}
+
+.sidebar-first-menu {
+  min-height: auto;
+  max-height: 88vh;
+  margin-top: 56px;
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .sidebar-first-menu {
+    min-height: auto;
+    max-height: 88vh;
+    margin-top: 20px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sidebar-first-menu {
+    min-height: auto;
+    max-height: 88vh;
+    margin-top: 20px !important;
+  }
+}
+
+.sidebar-first-menu img {
+  height: 35px;
+  width: 25px;
+  margin: 0px 0px 0px 12px;
+  align-self: center;
+  vertical-align: middle;
+}
+
+@media (max-width: 575.98px) {
+  .sidebar-first-menu img {
+    height: 35px;
+    width: 25px;
+    margin: 0px 0px 0px 5px;
+    align-self: center;
+    vertical-align: middle;
+  }
+}
+
+.sidebar-first-menu a {
+  width: 240px;
+  color: grey;
+  /*margin-left: 1px;*/
+  vertical-align: middle;
+  line-height: normal;
+}
+
+.sidebar-first-menu li {
+  padding: 0.3rem 0rem !important;
+  line-height: normal;
+}
+
+.sidebar-first-menu li:hover {
+  background-color: rgba(7,7,7,0.06);
+  border-left: 5px solid rgb(38,46,119);
+  border-radius: 6px;
+}
+
+.sidebar-second-menu {
+  min-height: auto;
+  max-height: 140px;
+  width: 162px;
+}
+
+.sidebar-second-menu li:hover {
+  background-color: rgba(7,7,7,0.06);
+  border-left: 5px solid rgb(133,135,150);
+}
+
+.sidebar-second-menu li:hover .sidebar-third-menu-div {
+  visibility: visible !important;
+}
+
+.sidebar-third-menu {
+  min-height: auto;
+  max-height: 240px;
+  width: 235px;
+}
+
+.sidebar-third-menu-div {
+  margin: 40px 0 0 0 !important;
+  visibility: hidden !important;
+}
+

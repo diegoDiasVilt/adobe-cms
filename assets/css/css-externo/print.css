@@ -1,0 +1,220 @@
+@media only print {
+  .image-bg {
+    background-image: none;
+    overflow: hidden;
+    position: relative;
+    min-height: auto !important;
+  }
+}
+
+@media only print {
+  .image-bg-fmt {
+    background-image: none;
+    overflow: hidden;
+    position: relative;
+    min-height: auto !important;
+  }
+}
+
+@media only print {
+  .banner-conteudo {
+    height: auto;
+    width: auto;
+    position: relative;
+  }
+}
+
+@media only print {
+  .banner-conteudo_cover {
+    position: relative;
+    height: auto;
+  }
+}
+
+@media only print {
+  .item {
+    position: relative;
+    height: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: left;
+    -ms-flex-pack: left;
+    justify-content: left;
+    padding: 20px;
+    background: 0 0;
+  }
+}
+
+@media only print {
+  .titulo-banner.h2 {
+    text-align: left !important;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    font-size: 2.3rem;
+    color: rgba(0,0,0,0.75);
+  }
+}
+
+@media only print {
+  .titulo-banner.h1 {
+    text-align: left !important;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    font-size: 5rem;
+    color: #000;
+  }
+}
+
+@media only print {
+  .container.conteudo-bloco:first-child {
+    top: auto;
+    position: relative;
+    z-index: 900;
+    margin-bottom: 0;
+  }
+}
+
+@media only print {
+  body {
+    margin: 0;
+    padding: 0;
+    line-height: 1.8em;
+  }
+}
+
+@media only print {
+  @page {
+    margin: 1.5cm;
+  }
+}
+
+@media only print {
+  nav, footer, video, audio, object, embed {
+    display: none;
+  }
+}
+
+@media only print {
+  img {
+    max-width: 100%;
+  }
+}
+
+@media only print {
+  body {
+    line-height: 2 !important;
+    font: 18pt Open Sans;
+    color: #000 !important;
+  }
+}
+
+@media only print {
+  .text-primary {
+    color: #000 !important;
+  }
+}
+
+@media only print {
+  .marcador {
+    padding-left: 10px;
+    border-left: solid 6px #000;
+  }
+}
+
+@media only print {
+  .marcador-fmt {
+    padding-left: 10px;
+    border-left: solid 6px #000;
+  }
+}
+
+@media only print {
+  a {
+    word-wrap: break-word;
+  }
+}
+
+@media only print {
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+}
+
+@media only print {
+  .page-break {
+    page-break-before: always;
+  }
+}
+
+@media only print {
+  .olho {
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+  }
+}
+
+@media only print {
+  .olho-fmt {
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+  }
+}
+
+@media only print {
+  .blockquote::before {
+    color: #000000 !important;
+  }
+}
+
+@media only print {
+  .blockquote {
+    padding-left: 20px;
+    font-size: 1rem !important;
+    border-color: #000000;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-width: 0px;
+    border-top: 0px;
+    border-bottom: 0px;
+    position: relative;
+    display: block;
+  }
+}
+
+@media only print {
+  .card {
+    border: 2px solid rgb(0,0,0) !important;
+  }
+}
+
+@media only print {
+  .text-white {
+    color: #000 !important;
+    text-align: left !important;
+  }
+}
+
+@media only print {
+  .hljs {
+    border-left: 15px solid #000000;
+    display: block;
+    overflow-x: auto;
+    padding: 0.8em;
+    background: #ffffff !important;
+  }
+}
+
+@media only print {
+  .table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #cccccc !important;
+  }
+}
+

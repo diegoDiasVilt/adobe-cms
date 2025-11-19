@@ -1,0 +1,121 @@
+.image-bg-fmt {
+  background-image: url("https://cm-kls-content.s3.amazonaws.com/DESEN_WEBAULA/BOOTSTRAP/pattern-ld.png"), linear-gradient(45deg, #12cbc4, #1289a7), linear-gradient(180deg, #fff, #fff);
+  overflow: hidden;
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  background-attachment: fixed;
+  padding-bottom: 100px;
+  padding-top: 80px;
+}
+
+.text-primary-fmt {
+  color: #008390;
+}
+
+.olho-fmt {
+  padding: 20px;
+  border-bottom: 1px solid #008390;
+  border-top: 1px solid #008390;
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 1.7;
+  font-size: 1.3rem;
+  margin: 48px;
+}
+
+.marcador-fmt {
+  padding-left: 10px;
+  border-left: solid 6px #008390;
+}
+
+.icone-mais-fmt {
+  line-height: 100%;
+  font-size: 1.2rem;
+  color: #008390;
+}
+
+.btn-primary-fmt {
+  color: #fff;
+  background-color: #008390;
+  border-color: #008390;
+}
+
+.btn-primary-fmt:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(38, 142, 201, 0.5);
+}
+
+.btn-primary-fmt:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #00555d;
+  border-color: #00555d;
+}
+
+.btn-primary-fmt:focus, .btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(0,96,106,0.5);
+}
+
+.btn-primary-fmt:hover {
+  color: #fff;
+  background-color: #00606a;
+  border-color: #00606a;
+}
+
+.blockquote-fmt::before {
+  font-family: "Palanquin";
+  position: absolute;
+  left: -65px;
+  top: -65px;
+  font-size: 110px !important;
+  font-weight: bold;
+  color: #008390;
+  content: "“";
+}
+
+.font-size-icon-fmt {
+  margin: 0px !important;
+  color: #008390;
+  font-size: 6rem;
+  display: block;
+}
+
+.carousel-control-prev-fmt:hover, .carousel-control-prev-fmt:focus, .carousel-control-next-fmt:hover, .carousel-control-next-fmt:focus {
+  color: #008390;
+  text-decoration: none;
+  outline: 0;
+  opacity: 0.9;
+}
+
+.carousel-control-prev, .carousel-control-next {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
+  color: #008390;
+  text-align: center;
+  opacity: 0.5;
+  transition: opacity 0.15s ease;
+}
+
+.a-fmt {
+  color: #008390;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.a-fmt:hover {
+  color: #008390;
+}
+
+.hljs {
+  border-left: 15px solid #d0d0d0;
+  display: block;
+  overflow-x: auto;
+  padding: 0.8em;
+  background: #ffffff !important;
+}
+
