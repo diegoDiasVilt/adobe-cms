@@ -12,6 +12,13 @@ import {
   loadCSS,
 } from './aem.js';
 
+const IS_PDF = new URLSearchParams(window.location.search).get('mode') === 'pdf';
+
+if (IS_PDF) {
+  document.body.classList.add('pdf-mode');
+  window.isPdfMode = true;
+}
+
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 /**
@@ -31,6 +38,30 @@ export function moveAttributes(from, to, attributes) {
       from.removeAttribute(attr);
     }
   });
+}
+
+/**
+ * Helper to load MathJax
+ * Refactored to allow immediate loading for PDF mode
+ */
+function loadMathJax() {
+  if (window.mathJaxLoaded) return; // Prevent double loading
+  window.mathJaxLoaded = true;
+
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
+  // If PDF mode, we might want to wait for onload
+  if (IS_PDF) {
+     script.async = false; // Force synchronous-like behavior if possible
+  }
+  document.head.appendChild(script);
+  
+  window.MathJax = {
+    loader: { load: ['input/mml', 'output/chtml'] },
+    startup: {
+      typeset: true 
+    }
+  };
 }
 
 /**
@@ -141,6 +172,15 @@ async function loadLazy(doc) {
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
 
+  if (IS_PDF) {
+    const images = main.querySelectorAll('img');
+    images.forEach(img => {
+      img.setAttribute('loading', 'eager');
+      // If you use data-src patterns, swap them here
+      if (img.dataset.src) img.src = img.dataset.src;
+    });
+  }
+
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
@@ -151,16 +191,28 @@ async function loadLazy(doc) {
  * without impacting the user experience.
  */
 function loadDelayed() {
-  // eslint-disable-next-line import/no-cycle
+  if (IS_PDF) return;
+
   window.setTimeout(() => import('./delayed.js'), 1500);
-  // load anything that can be postponed to the latest here
+  
+  window.setTimeout(() => loadMathJax(), 1500);
+
   import('./sidekick.js').then(({ initSidekick }) => initSidekick());
 }
 
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
-  loadDelayed();
+  if (IS_PDF) {
+    loadMathJax();
+    await new Promise(r => setTimeout(r, 1000));
+    
+    // This runs only when everything is ready.
+    console.log('PDF_GENERATION_READY'); // Signal for a scraper if needed
+    console.log(document.documentElement.outerHTML);
+  } else {
+    loadDelayed();
+  }
 }
 
 /**
@@ -241,9 +293,11 @@ function resize() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', (event) => {
-  setInterval(resize, 1000);
-});
+if (!IS_PDF) {
+  document.addEventListener('DOMContentLoaded', (event) => {
+    setInterval(resize, 1000);
+  });
+}
 
 export function decodeBase64(base64) {
   let text = null;
@@ -452,139 +506,248 @@ function resetFontSizes() {
   });
 }
 
-window.addEventListener('message', function (e) {
-  console.log(e.data)
-  var eventName = e?.data?.event;
-  var data = e?.data?.payload;
-  if (eventName === "set_navbar_height") {
-    let counter = 0
-    const intervalId = setInterval(() => {
-      if (counter >= 3) {
-        clearInterval(intervalId);
-      }
-      this.document.querySelectorAll('.block')?.forEach(element => {
-        element.setAttribute('style', `scroll-margin-top: ${data}px`);
-      });
+function resetCustomizations() {
+  
+  // Reseta a Régua de Leitura
+  disableRuler(); //
 
-      this.document.querySelector(".img-modal img")?.setAttribute('style', `scroll-margin-top: ${data}px`);
-      this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
-      counter++;
-      console.log(counter)
-
-    }, 1000);
-  }
-
-  if (eventName === "set_ruler_visibility") {
-    if (data === true) {
-      enableRuler();
-    } else if (data === false) {
-      disableRuler();
-    }
-  }
-  if (eventName === "set_kindle_alignment") {
-    const styleId = 'kindle-alignment-style';
-    let alignmentStyleElement = document.getElementById(styleId);
-
-    if (!alignmentStyleElement) {
-      alignmentStyleElement = document.createElement('style');
-      alignmentStyleElement.id = styleId;
-      document.head.appendChild(alignmentStyleElement);
-    }
-
-    if (data === 'left' || data === 'justify') {
-      alignmentStyleElement.innerHTML = `
+  // Reseta o Alinhamento
+  const alignmentStyleElement = document.getElementById('kindle-alignment-style'); //
+  if (alignmentStyleElement) {
+    alignmentStyleElement.innerHTML = `
         * {
-          text-align: ${data} !important;
+          text-align: left !important;
+        }
+      `;;
+  }
+
+  // Reseta o Tipo da Fonte
+  const fontStyleElement = document.getElementById('kindle-font-type-style'); //
+  if (fontStyleElement) {
+    fontStyleElement.innerHTML = ''; //
+  }
+
+  // Reseta o Tamanho da Fonte
+  resetFontSizes(); //
+
+  // Reseta o Tema
+  const body = document.body;
+  const themeClasses = ['theme-white', 'theme-sepia', 'theme-gray', 'theme-dark']; //
+  body.classList.remove(...themeClasses);
+  forceRichTextTheme('default');
+
+  // Reseta o Espaçamento entre Linhas
+  document.documentElement.style.setProperty('--kindle-line-height', '140%'); //
+
+  // Reseta o Espaçamento entre Palavras
+  document.documentElement.style.setProperty('--kindle-word-space', 'normal'); //
+
+  // Reseta o Espaçamento entre Letras
+  document.documentElement.style.setProperty('--kindle-letter-space', 'normal'); //
+}
+
+if (!IS_PDF) {
+  window.addEventListener('message', function (e) {
+    console.log(e.data)
+    var eventName = e?.data?.event;
+    var data = e?.data?.payload;
+    if (eventName === "set_navbar_height") {
+      let counter = 0
+      const intervalId = setInterval(() => {
+        if (counter >= 3) {
+          clearInterval(intervalId);
+        }
+        this.document.querySelectorAll('.block')?.forEach(element => {
+          element.setAttribute('style', `scroll-margin-top: ${data}px`);
+        });
+
+        this.document.querySelector(".img-modal img")?.setAttribute('style', `scroll-margin-top: ${data}px`);
+        this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
+        counter++;
+        console.log(counter)
+
+      }, 1000);
+    }
+
+    if (eventName === "set_ruler_visibility") {
+      if (data === true) {
+        enableRuler();
+      } else if (data === false) {
+        disableRuler();
+      }
+    }
+    if (eventName === "set_kindle_alignment") {
+      const styleId = 'kindle-alignment-style';
+      let alignmentStyleElement = document.getElementById(styleId);
+
+      if (!alignmentStyleElement) {
+        alignmentStyleElement = document.createElement('style');
+        alignmentStyleElement.id = styleId;
+        document.head.appendChild(alignmentStyleElement);
+      }
+
+      if (data === 'left' || data === 'justify') {
+        alignmentStyleElement.innerHTML = `
+          * {
+            text-align: ${data} !important;
+          }
+        `;
+      } else {
+        alignmentStyleElement.innerHTML = '';
+      }
+    }
+
+    if (eventName === "set_kindle_font_type") {
+      const styleId = 'kindle-font-type-style';
+      let fontStyleElement = document.getElementById(styleId);
+
+      if (!fontStyleElement) {
+        fontStyleElement = document.createElement('style');
+        fontStyleElement.id = styleId;
+        document.head.appendChild(fontStyleElement);
+      }
+
+      let fontFamily = '';
+
+      switch (data) {
+        case 'helvetica':
+          fontFamily = 'Helvetica, Arial, sans-serif';
+          break;
+        case 'verdana':
+          fontFamily = 'Verdana, Geneva, sans-serif';
+          break;
+        case 'georgia':
+          fontFamily = 'Georgia, serif';
+          break;
+        case 'times new roman':
+          fontFamily = '"Times New Roman", Times, serif';
+          break;
+        case 'dyslexic':
+          fontFamily = 'OpenDyslexic, sans-serif';
+          break;
+        case 'default':
+        default:
+          fontStyleElement.innerHTML = '';
+          return;
+      }
+      
+      fontStyleElement.innerHTML = `
+        /* 1. Aplica a fonte do usuário em TUDO */
+        * {
+          font-family: ${fontFamily} !important;
+        }
+
+        i[class*="fa-"], .fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands {
+          font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "FontAwesome" !important;
         }
       `;
-    } else {
-      alignmentStyleElement.innerHTML = '';
-    }
-  }
-
-  if (eventName === "set_kindle_font_type") {
-    const styleId = 'kindle-font-type-style';
-    let fontStyleElement = document.getElementById(styleId);
-
-    if (!fontStyleElement) {
-      fontStyleElement = document.createElement('style');
-      fontStyleElement.id = styleId;
-      document.head.appendChild(fontStyleElement);
     }
 
-    let fontFamily = '';
+    if (eventName === "set_kindle_font_size") {
+      let delta = data-20;
 
-    switch (data) {
-      case 'helvetica':
-        fontFamily = 'Helvetica, Arial, sans-serif';
-        break;
-      case 'verdana':
-        fontFamily = 'Verdana, Geneva, sans-serif';
-        break;
-      case 'georgia':
-        fontFamily = 'Georgia, serif';
-        break;
-      case 'times new roman':
-        fontFamily = '"Times New Roman", Times, serif';
-        break;
-      case 'dyslexic':
-        fontFamily = 'OpenDyslexic, sans-serif';
-        break;
-      case 'default':
-      default:
-        fontStyleElement.innerHTML = '';
-        return;
-    }
-    
-    fontStyleElement.innerHTML = `
-      /* 1. Aplica a fonte do usuário em TUDO */
-      * {
-        font-family: ${fontFamily} !important;
-      }
-
-      i[class*="fa-"], .fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands {
-        font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "FontAwesome" !important;
-      }
-    `;
-  }
-
-  if (eventName === "set_kindle_font_size") {
-    let delta = 0;
-
-    switch (data) {
-      case '16':
-        delta = -4;
-        break;
-      case '24':
-        delta = 4;
-        break;
-      case '28':
-        delta = 8;
-        break;
-      case '32':
-        delta = 12;
-        break;
-      case '20':
-      case 'default':
-      default:
+      if (delta === 0) {
         resetFontSizes();
-        return;
+      }
+
+      applyFontSizeDelta(delta);
+    }
+    if (eventName === "set_kindle_theme") {
+      const body = document.body;
+      const themeClasses = ['theme-white', 'theme-sepia', 'theme-gray', 'theme-dark'];
+      
+      body.classList.remove(...themeClasses);
+
+      switch (data) {
+        case 'white':
+          body.classList.add('theme-white');
+          break;
+        case 'sepia':
+          body.classList.add('theme-sepia');
+          break;
+        case 'neutral':
+          body.classList.add('theme-gray');
+          break;
+        case 'dark':
+          body.classList.add('theme-dark');
+          break;
+        case 'default':
+          body.classList.remove(...themeClasses);
+          break;
+        default:
+          break;
+      }
+
+      forceRichTextTheme(data);
     }
 
-    applyFontSizeDelta(delta);
-  }
-
-}, false);
-
-document.addEventListener('DOMContentLoaded', (event) => {
-  setTimeout(() => {
-    var script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
-    document.head.appendChild(script);
-    window.MathJax = {
-      loader: { load: ['input/mml', 'output/chtml'] }, // Entrada MathML, saída HTML/CSS
-      startup: {
-        typeset: true // processa automaticamente ao carregar
+    if (eventName === "set_kindle_line_space") {
+      let lineHeight = '140%';
+      switch (data) {
+        case '168%':
+        case '196%':
+        case '224%':
+        case '252%':
+          lineHeight = data;
+          break;
+        case '140%':
+        case 'default':
+        default:
+          lineHeight = '140%';
+          break;
       }
-    };
-  }, 1500);});
+      document.documentElement.style.setProperty('--kindle-line-height', lineHeight);
+    }
+
+    if (eventName === "set_kindle_word_space") {
+      let wordSpace = 'normal';
+      switch (data) {
+        case '5%':
+          wordSpace = '0.05em';
+          break;
+        case '10%':
+          wordSpace = '0.10em';
+          break;
+        case '15%':
+          wordSpace = '0.15em';
+          break;
+        case '20%':
+          wordSpace = '0.20em';
+          break;
+        case '0%':
+        case 'default':
+        default:
+          wordSpace = 'normal';
+          break;
+      }
+      document.documentElement.style.setProperty('--kindle-word-space', wordSpace);
+    }
+
+    if (eventName === "set_kindle_letters_space") {
+      let letterSpace = 'normal';
+      switch (data) {
+        case '5%':
+          letterSpace = '0.05em';
+          break;
+        case '10%':
+          letterSpace = '0.10em';
+          break;
+        case '15%':
+          letterSpace = '0.15em';
+          break;
+        case '20%':
+          letterSpace = '0.20em';
+          break;
+        case '0%':
+        case 'default':
+        default:
+          letterSpace = 'normal';
+          break;
+      }
+      document.documentElement.style.setProperty('--kindle-letter-space', letterSpace);
+    }
+    if (eventName === 'set_kindle_reset') {
+      resetCustomizations();
+    }
+  }, false);
+}
