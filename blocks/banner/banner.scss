@@ -1,6 +1,10 @@
 .banner {
+  --banner-bg-pattern: url("https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/pattern-ld.png");
+  --banner-bg-gradient: linear-gradient(45deg, #001f50 30%, #00368c 100%);
+  --banner-text-color: #fff; 
+
   .capa {
-    background-image: url("https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/pattern-ld.png"), linear-gradient(45deg, #001f50 30%, #00368c 100%);
+    background-image: var(--banner-bg-pattern), var(--banner-bg-gradient);
     overflow: hidden;
     position: relative;
     display: flex;
@@ -13,6 +17,7 @@
     left: 50%;
     margin: 0;
     margin-left: -50vw;
+    transition: background-color 0.2s ease;
 
     &.isInEditor {
       min-height: unset;
@@ -23,9 +28,12 @@
     h3,
     h4,
     h5,
-    h6 {
+    h6,
+    p {
       margin: 0;
       line-height: 1;
+      color: var(--banner-text-color);
+      transition: color 0.2s ease; 
     }
 
     &__box {
@@ -59,7 +67,20 @@
 }
 
 .banner.deep-purple {
-  .capa {
-    background-image: url("https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/pattern-ld.png"), linear-gradient(45deg, #001f50 30%, #b982ff 100%);
-  }
+  --banner-bg-gradient: linear-gradient(45deg, #001f50 30%, #b982ff 100%);
+}
+
+body.theme-sepia .banner:not(.deep-purple) .capa,
+body.theme-gray .banner:not(.deep-purple) .capa,
+body.theme-dark .banner:not(.deep-purple) .capa { 
+  background-image: none !important;
+  background-color: var(--text-color); 
+  --banner-text-color: var(--background-color); 
+}
+
+body.theme-white .banner:not(.deep-purple) .capa {
+  background-image: var(--banner-bg-pattern), var(--banner-bg-gradient);
+  background-color: transparent;
+
+  --banner-text-color: #fff; 
 }

@@ -484,7 +484,6 @@ function storeOriginalFontSizes() {
     }
   });
   isFontSizesStored = true;
-  console.log(`Tamanhos de fonte originais armazenados para ${document.querySelectorAll(FONT_SCALE_TARGETS).length} elementos.`);
 }
 
 function applyFontSizeDelta(delta) {
@@ -495,6 +494,57 @@ function applyFontSizeDelta(delta) {
       const originalSize = originalFontSizes.get(el);
       el.style.fontSize = `${originalSize + delta}px`;
     }
+  });
+}
+
+function forceRichTextTheme(payload) {
+  const richTextBlocks = document.querySelectorAll('.texto-rico');
+  if (richTextBlocks.length === 0) return;
+
+  let newColor = '';
+  let isReset = false;
+  switch (payload) {
+    case 'sepia':
+      newColor = '#3D3025';
+      break;
+    case 'neutral':
+      newColor = '#F2F2F2';
+      break;
+    case 'dark':
+      newColor = '#E6E6E6';
+      break;
+    case 'white':
+      newColor = '#212529';
+      break;
+    case 'default':
+    default:
+      isReset = true;
+      break;
+  }
+
+  richTextBlocks.forEach(block => {
+    const allElements = block.querySelectorAll('p, span, li, a, h1, h2, h3, h4, h5, h6, strong, em, div, td, th');
+    
+    allElements.forEach(el => {
+      if (isReset) {
+        if (el.dataset.originalColor) {
+          el.style.setProperty('color', el.dataset.originalColor);
+          el.removeAttribute('data-original-Color');
+        } else {
+          if (el.style.getPropertyPriority('color') === 'important') {
+            el.style.removeProperty('color');
+          }
+        }
+      } else {
+        const currentInlineColor = el.style.color;
+        
+        if (currentInlineColor && !el.dataset.originalColor && el.style.getPropertyPriority('color') !== 'important') {
+          el.dataset.originalColor = currentInlineColor;
+        }
+        
+        el.style.setProperty('color', newColor, 'important');
+      }
+    });
   });
 }
 

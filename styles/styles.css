@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 :root {
-  /* colors */
   --link-color: #035fe6;
   --link-hover-color: #136ff6;
   --background-color: white;
@@ -34,6 +33,9 @@
   --heading-font-size-xs: 18px;
   /* nav height */
   --nav-height: 64px;
+  --kindle-line-height: 140%;
+  --kindle-word-space: normal;
+  --kindle-letter-space: normal;
 }
 
 @font-face {
@@ -41,6 +43,18 @@
   size-adjust: 100.06%;
   ascent-override: 95%;
   src: local("Arial");
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("../fonts/OpenDyslexic-Regular.woff2") format("woff2"), url("../fonts/OpenDyslexic-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("/styles/fonts/OpenDyslexic-Bold.woff2") format("woff2"), url("/styles/fonts/OpenDyslexic-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
 }
 @media (width >= 900px) {
   :root {
@@ -201,6 +215,39 @@ conceito-chave:hover {
 conceito-chave:hover .conceito-tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+body, body * {
+  line-height: var(--kindle-line-height) !important;
+  word-spacing: var(--kindle-word-space) !important;
+  letter-spacing: var(--kindle-letter-space) !important;
+  transition: line-height 0.2s ease, word-spacing 0.2s ease, letter-spacing 0.2s ease;
+}
+
+i[class*=fa-], .fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands {
+  line-height: 1 !important;
+  word-spacing: normal !important;
+  letter-spacing: normal !important;
+}
+
+body.theme-sepia {
+  --background-color: #FFF8EA;
+  --text-color: #3D3025;
+}
+
+body.theme-gray {
+  --background-color: #3F3F41;
+  --text-color: #F2F2F2;
+}
+
+body.theme-dark {
+  --background-color: #0D0D0D;
+  --text-color: #E6E6E6;
+}
+
+body.theme-white {
+  --background-color: #FFFFFF;
+  --text-color: #212529;
 }
 
 main pre {

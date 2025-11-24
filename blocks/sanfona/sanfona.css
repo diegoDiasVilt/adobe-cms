@@ -1,72 +1,88 @@
+@charset "UTF-8";
 .sanfona {
+  --sanfona-header-bg: #dbe3ec; /* Cor da barra do header */
+  --sanfona-header-text: var(--text-color, #3a3a3a); /* Cor do texto do header */
+  --sanfona-body-bg: #fff; /* Fundo do conteúdo */
+  --sanfona-body-text: var(--text-color, #3a3a3a); /* Texto do conteúdo */
+  --sanfona-caption-text: #6c757d; /* Texto da legenda */
   margin-top: 40px;
 }
-
 .sanfona .accordion-item {
-  background-color: #dbe3ec;
+  background-color: var(--sanfona-header-bg);
+  transition: background-color 0.2s ease;
 }
-
 .sanfona .accordion-item-header {
   padding: 0.75rem 1.25rem;
 }
-
 .sanfona .accordion-item-header h5 {
   margin: 0;
   text-transform: uppercase;
   font-size: 1.25rem;
   font-weight: 500;
 }
-
 .sanfona .accordion-item-header h5 a {
   width: 100%;
   display: flex;
   justify-content: space-between;
   cursor: pointer;
   text-decoration: none;
+  color: var(--sanfona-header-text);
+  transition: color 0.2s ease;
 }
-
 .sanfona .accordion-item-header h5 a:hover {
-  color: var(--text-color);
+  color: var(--sanfona-header-text);
 }
-
 .sanfona .accordion-item-header h5 a:hover span {
   text-decoration: underline;
 }
-
 .sanfona .accordion-item-body {
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), padding 0.5s ease;
-  border: solid 2px #dbe3ec;
+  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), padding 0.5s ease, background-color 0.2s ease;
+  border: solid 2px var(--sanfona-header-bg);
   border-radius: 3px;
-  background-color: #fff;
+  background-color: var(--sanfona-body-bg);
   padding: 0 1.25rem;
 }
-
 .sanfona .accordion-item-body-text {
   font-size: 18px;
+  color: var(--sanfona-body-text);
 }
-
 .sanfona .accordion-item-body-image p {
   text-align: center;
   font-size: 80%;
-  color: #6c757d;
+  color: var(--sanfona-caption-text);
   margin: 10px 0;
   line-height: 1;
 }
-
 .sanfona .accordion-item-body-image picture {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-
 .sanfona .accordion-item.active .accordion-item-body {
   max-height: 200vw;
   transition: max-height 0.5s ease-in-out;
   padding: 0.75rem 1.25rem;
 }
+.sanfona.deep-purple {
+  --sanfona-header-bg: #b982ff;
+}
 
-.sanfona.deep-purple .accordion-item {
-  background-color: #b982ff;
+body.theme-sepia .sanfona,
+body.theme-gray .sanfona,
+body.theme-dark .sanfona {
+  --sanfona-header-bg: var(--text-color);
+  --sanfona-header-text: var(--background-color);
+  --sanfona-body-bg: var(--background-color);
+  --sanfona-body-text: var(--text-color);
+  --sanfona-caption-text: var(--text-color);
+}
+
+body.theme-white .sanfona {
+  --sanfona-header-bg: #dbe3ec;
+  --sanfona-header-text: var(--text-color, #3a3a3a);
+  --sanfona-body-bg: #fff;
+  --sanfona-body-text: var(--text-color, #3a3a3a);
+  --sanfona-caption-text: #6c757d;
 }
