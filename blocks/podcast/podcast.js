@@ -11,6 +11,13 @@ export default function decorate(block) {
   const title = block?.children[5];
   const description = block?.children[6];
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const isPdfParam = urlParams.get('mode') === 'pdf';
+  if (isPdfParam) {
+    document.body.classList.add('pdf-mode');
+  }
+  const isPdf = document.body.classList.contains('pdf-mode') || isPdfParam;
+
   block.textContent = '';
 
   if (businessKey) {
@@ -22,51 +29,57 @@ export default function decorate(block) {
   }
 
   if (mediastreamId) {
-    const script = document.createElement('script');
-    script.src = 'https://player.cdn.mdstrm.com/lightning_player/api.js';
-    script.setAttribute('data-container', randomElementID);
-    script.setAttribute('data-type', 'media');
-    script.setAttribute('data-id', mediastreamId);
-    script.setAttribute('data-app-name', 'appName');
-    script.setAttribute('id', `${randomElementID}-player`);
-    // script.setAttribute("data-loaded", "playerLoaded")
+    if (isPdf) {
+      const placeholderDiv = document.createElement('div');
+      placeholderDiv.classList.add('podcast-placeholder');
+      block.append(placeholderDiv);
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://player.cdn.mdstrm.com/lightning_player/api.js';
+      script.setAttribute('data-container', randomElementID);
+      script.setAttribute('data-type', 'media');
+      script.setAttribute('data-id', mediastreamId);
+      script.setAttribute('data-app-name', 'appName');
+      script.setAttribute('id', `${randomElementID}-player`);
+      // script.setAttribute("data-loaded", "playerLoaded")
 
-    document.head.appendChild(script);
+      document.head.appendChild(script);
 
-    const playerDiv = document.createElement('div');
-    playerDiv.setAttribute('id', randomElementID);
-    block.append(playerDiv);
+      const playerDiv = document.createElement('div');
+      playerDiv.setAttribute('id', randomElementID);
+      block.append(playerDiv);
 
-    let mdstrmPlayer = null;
+      let mdstrmPlayer = null;
 
-    script.addEventListener('playerloaded', ({ detail: player }) => {
-      mdstrmPlayer = player;
-    });
+      script.addEventListener('playerloaded', ({ detail: player }) => {
+        mdstrmPlayer = player;
+      });
 
-    let isThefirstError = true; // esse booleano é pq da um erro 'fake', então esse não precisa ser enviado
-    let isThefirstTimeShowingDuration = true; // esse booleano é pq da um erro 'fake', então esse não precisa ser enviado
-    const intervalId = setInterval(() => {
-      if (mdstrmPlayer) {
-        window.parent.postMessage(['onPlayerReady', { mediastreamId }], '*');
-        mdstrmPlayer.on('seeked', () => { window.parent.postMessage(['onSeeked', { mediastreamId, time: mdstrmPlayer?.currentTime }], '*'); });
-        mdstrmPlayer.on('timeupdate', (time) => {
-          window.parent.postMessage(['onTimeUpdate', { mediastreamId, time }], '*');
-          if (isThefirstTimeShowingDuration) {
-            window.parent.postMessage(['videoDuration', { mediastreamId, duration: mdstrmPlayer?.duration }], '*');
-            isThefirstTimeShowingDuration = false;
-          }
-        });
-        mdstrmPlayer.on('error', (error) => {
-          if (isThefirstError) {
-            isThefirstError = false;
-            return;
-          }
-          window.parent.postMessage(['onError', { mediastreamId, error }], '*');
-        });
+      let isThefirstError = true;
+      let isThefirstTimeShowingDuration = true;
+      const intervalId = setInterval(() => {
+        if (mdstrmPlayer) {
+          window.parent.postMessage(['onPlayerReady', { mediastreamId }], '*');
+          mdstrmPlayer.on('seeked', () => { window.parent.postMessage(['onSeeked', { mediastreamId, time: mdstrmPlayer?.currentTime }], '*'); });
+          mdstrmPlayer.on('timeupdate', (time) => {
+            window.parent.postMessage(['onTimeUpdate', { mediastreamId, time }], '*');
+            if (isThefirstTimeShowingDuration) {
+              window.parent.postMessage(['videoDuration', { mediastreamId, duration: mdstrmPlayer?.duration }], '*');
+              isThefirstTimeShowingDuration = false;
+            }
+          });
+          mdstrmPlayer.on('error', (error) => {
+            if (isThefirstError) {
+              isThefirstError = false;
+              return;
+            }
+            window.parent.postMessage(['onError', { mediastreamId, error }], '*');
+          });
 
-        clearInterval(intervalId);
-      }
-    }, 1500);
+          clearInterval(intervalId);
+        }
+      }, 1500);
+    }
   }
 
   if (description && description.textContent.trim()) {

@@ -232,3 +232,35 @@ body.theme-white .timelines-wrapper {
   --timeline-text-color: var(--text-color, #3a3a3a);
   --timeline-caption-color: #6c757d;
 }
+
+// PDF MODE
+body.pdf-mode {
+  .timelines {
+    .timeline {
+      &-right, &-left {
+        
+        .timeline-item-wrapper {
+          transition: none !important;
+          transform: none !important;
+        }
+
+        &::before {
+          opacity: 1 !important;
+          transition: none !important;
+        }
+        &.invisible {
+          .timeline-item-wrapper {
+            transform: none !important;
+          }
+          &::before {
+            opacity: 1 !important;
+          }
+        }
+      }
+      &-item {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+    }
+  }
+}

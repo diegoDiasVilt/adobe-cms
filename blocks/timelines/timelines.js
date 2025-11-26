@@ -1,30 +1,38 @@
 import { decodeBase64 } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const isPdfParam = urlParams.get('mode') === 'pdf';
+  if (isPdfParam) {
+    document.body.classList.add('pdf-mode');
+  }
+  const isPdf = document.body.classList.contains('pdf-mode') || isPdfParam;
+
   // o primeiro elemento será sempre a propriedade startAt
   const startAtElement = block?.children[0];
   const id = block?.children[1];
   const startAtValue = startAtElement.firstElementChild.firstElementChild.innerHTML;
 
-  // removendo do DOM pois é apenas uma propriedade,
   startAtElement.remove();
 
   if (id?.querySelectorAll('div')?.length < 3) {
     id.remove();
     block.setAttribute('id', id?.textContent?.trim());
   }
-
-  const observer = new IntersectionObserver(((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting === true) {
-        entry?.target?.classList?.remove('invisible');
-        entry?.target?.classList?.add('visible');
-      } else if (entry.isIntersecting === false && window.scrollY < entry.target.getBoundingClientRect().top + window.scrollY) {
-        entry?.target?.classList?.remove('visible');
-        entry?.target?.classList?.add('invisible');
-      }
-    });
-  }), { threshold: [0.40] });
+  let observer;
+  if (!isPdf) {
+    observer = new IntersectionObserver(((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting === true) {
+          entry?.target?.classList?.remove('invisible');
+          entry?.target?.classList?.add('visible');
+        } else if (entry.isIntersecting === false && window.scrollY < entry.target.getBoundingClientRect().top + window.scrollY) {
+          entry?.target?.classList?.remove('visible');
+          entry?.target?.classList?.add('invisible');
+        }
+      });
+    }), { threshold: [0.40] });
+  }
 
   function processRichTextContent(element) {
     const paragraphs = element.querySelectorAll('p');
@@ -37,7 +45,19 @@ export default function decorate(block) {
   let i = startAtValue === 'right' ? 0 : 1;
 
   Object.values(block?.children).forEach((child) => {
-    if (i % 2 === 0) { child.className = 'timeline-item timeline-right invisible'; } else { child.className = 'timeline-item timeline-left invisible'; }
+    if (isPdf) {
+      if (i % 2 === 0) { 
+        child.className = 'timeline-item timeline-right visible'; 
+      } else { 
+        child.className = 'timeline-item timeline-left visible'; 
+      }
+    } else {
+      if (i % 2 === 0) { 
+        child.className = 'timeline-item timeline-right invisible'; 
+      } else { 
+        child.className = 'timeline-item timeline-left invisible'; 
+      }
+    }
 
     const title = child?.children[0];
     const subtitle = child?.children[1];
@@ -105,7 +125,9 @@ export default function decorate(block) {
 
     child.appendChild(timelineItemWrapper);
 
-    observer.observe(child);
+    if (!isPdf && observer) {
+      observer.observe(child);
+    }
     i++;
   });
 }

@@ -171,3 +171,22 @@ body.theme-white .timelines-wrapper {
   --timeline-text-color: var(--text-color, #3a3a3a);
   --timeline-caption-color: #6c757d;
 }
+
+body.pdf-mode .timelines .timeline-right .timeline-item-wrapper, body.pdf-mode .timelines .timeline-left .timeline-item-wrapper {
+  transition: none !important;
+  transform: none !important;
+}
+body.pdf-mode .timelines .timeline-right::before, body.pdf-mode .timelines .timeline-left::before {
+  opacity: 1 !important;
+  transition: none !important;
+}
+body.pdf-mode .timelines .timeline-right.invisible .timeline-item-wrapper, body.pdf-mode .timelines .timeline-left.invisible .timeline-item-wrapper {
+  transform: none !important;
+}
+body.pdf-mode .timelines .timeline-right.invisible::before, body.pdf-mode .timelines .timeline-left.invisible::before {
+  opacity: 1 !important;
+}
+body.pdf-mode .timelines .timeline-item {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}

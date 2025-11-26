@@ -17,3 +17,20 @@
 .podcast.deep-purple {
   font-family: "Orbitron-Regular";
 }
+
+body.pdf-mode .podcast {
+  display: block;
+  text-align: center;
+}
+body.pdf-mode .podcast .podcast-placeholder {
+  display: block;
+  width: 100%;
+  margin: 20px auto;
+  height: 0;
+  padding-bottom: 45%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/VideoTemplate.svg");
+  background-color: transparent;
+}
