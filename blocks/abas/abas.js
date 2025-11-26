@@ -1,7 +1,7 @@
 import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  
+
   const urlParams = new URLSearchParams(window.location.search);
   const isPdfParam = urlParams.get('mode') === 'pdf';
   if (isPdfParam) {
@@ -34,25 +34,19 @@ export default function decorate(block) {
     });
 
     tabs.push({ title: titleText, body: element });
-
-    // 2. Logic Split: PDF vs Interactive
     if (isPdf) {
       // PDF MODE: Do NOT hide the content.
-      // Instead, create a header so the user knows what this section is.
       const pdfTitle = document.createElement('h3');
       pdfTitle.classList.add('pdf-tab-title');
       pdfTitle.textContent = titleText;
       element.insertBefore(pdfTitle, element.firstChild);
       
-      // Ensure specific PDF class for styling
       element.classList.add('pdf-tab-content');
     } else {
-      // STANDARD MODE: Hide all except the first one
       if (index !== 0) { element.classList.add('hidden'); }
     }
   });
 
-  // 3. Only generate the Tab Navigation Buttons if NOT in PDF mode
   if (!isPdf) {
     const outputHtml = htmlToElement(`
     <div class="abas-header">

@@ -7,12 +7,9 @@ export default function decorate(block) {
   const mediastreamId = block?.children[1]?.textContent?.trim();
   const title = block?.children[5]?.textContent?.trim();
   const description = block?.children[6]?.textContent?.trim();
-
-  // FIX: Check URL params directly in addition to the body class
   const urlParams = new URLSearchParams(window.location.search);
   const isPdfParam = urlParams.get('mode') === 'pdf';
   
-  // If URL param exists, ensure body has the class so CSS selectors work
   if (isPdfParam) {
     document.body.classList.add('pdf-mode');
   }
@@ -31,13 +28,11 @@ export default function decorate(block) {
 
   if (mediastreamId) {
     if (isPdf) {
-      // Render the placeholder div
       const placeholderDiv = document.createElement('div');
       placeholderDiv.classList.add('video-placeholder');
       block.append(placeholderDiv);
     } 
     else {
-      // Render the Video Player
       const script = document.createElement('script');
       script.src = 'https://player.cdn.mdstrm.com/lightning_player/api.js';
       script.setAttribute('data-container', randomElementID);

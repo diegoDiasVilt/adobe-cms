@@ -44,7 +44,7 @@ export default function decorate(block) {
     loadedCount += 1;
     if (loadedCount >= totalImgs) {
       loader.classList.remove('loading');
-      wrapper.classList.remove('loadable'); // Shows content
+      wrapper.classList.remove('loadable');
     }
   };
 
@@ -62,7 +62,6 @@ export default function decorate(block) {
   }
 
   if (isPdf) {
-    // Force specific styles for PDF
     resizeDiv.style.width = '50%';
     divider.style.display = 'none'; 
     return; 

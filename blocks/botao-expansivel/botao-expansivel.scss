@@ -195,9 +195,7 @@ body.theme-white .botao-expansivel {
   }
 }
 
-// ----------------------------------------------------
-// PDF MODE STYLES
-// ----------------------------------------------------
+// PDF MODE
 body.pdf-mode {
   .botao-expansivel {
     display: block;
@@ -205,17 +203,15 @@ body.pdf-mode {
     margin-top: 30px;
     margin-bottom: 30px;
     
-    // Hide original elements just in case
     .btn-modal, .modal {
         display: none !important;
     }
 
     .pdf-expanded-content {
-        // Look like a section box in PDF
         border: 1px solid #ccc;
-        background-color: #fff; // or transparent if you prefer
+        background-color: #fff;
         padding: 20px;
-        page-break-inside: avoid; // Keep title and some text together
+        page-break-inside: avoid;
         border-radius: 4px;
 
         .pdf-content-title {
@@ -231,8 +227,6 @@ body.pdf-mode {
             font-size: 1rem;
             line-height: 1.6;
             color: #444;
-
-            // Handle images nicely
             .pdf-img-wrapper {
                 margin: 20px 0;
                 text-align: center;

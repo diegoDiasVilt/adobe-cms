@@ -1,7 +1,6 @@
 import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // 1. Detect PDF Mode
   const urlParams = new URLSearchParams(window.location.search);
   const isPdfParam = urlParams.get('mode') === 'pdf';
   if (isPdfParam) {
@@ -73,8 +72,6 @@ export default function decorate(block) {
 
   block.textContent = '';
 
-  // --- LOGIC SPLIT ---
-
   if (isPdf) {
     // 2. PDF MODE: Render content directly
     const pdfContainer = htmlToElement(`
@@ -107,7 +104,6 @@ export default function decorate(block) {
     block.append(pdfContainer);
 
   } else {
-    // 3. STANDARD MODE: Render Button + Modal
     const button = htmlToElement(`<a class="btn-modal">${ctaText}</a>`);
     block.append(button);
 

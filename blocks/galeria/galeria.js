@@ -34,7 +34,6 @@ function handleText(textElement) {
 }
 
 export default function decorate(block) {
-  // 1. Detect PDF Mode
   const urlParams = new URLSearchParams(window.location.search);
   const isPdfParam = urlParams.get('mode') === 'pdf';
   if (isPdfParam) {
@@ -79,7 +78,6 @@ export default function decorate(block) {
     element.remove();
   });
 
-  // 2. Define Classes based on Mode
   const containerClass = isPdf ? 'pdf-gallery-container' : 'splide';
   const trackClass = isPdf ? 'pdf-gallery-track' : 'splide__track';
   const listClass = isPdf ? 'pdf-gallery-list' : 'splide__list';
@@ -107,7 +105,6 @@ export default function decorate(block) {
     </div>
   `;
 
-  // 3. Render Content
   switch (variantText) {
     case 'image-only':
       block.innerHTML += wrapSplide(
@@ -174,7 +171,6 @@ export default function decorate(block) {
       break;
   }
 
-  // 4. Initialize Splide ONLY if NOT Pdf
   if (!isPdf) {
     const elms = block.getElementsByClassName('splide');
     for (let i = 0; i < elms.length; i++) {

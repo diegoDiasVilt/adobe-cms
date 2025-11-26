@@ -78,9 +78,8 @@
                 margin-top: -10px;
                 background-color: white;
                 
-                // RESTORED DIAMOND SHAPE
                 transform: rotate(45deg); 
-                border-radius: unset; // This ensures it stays a diamond, not a circle
+                border-radius: unset;
                 transition: all 0.1s ease-in-out;
             }
             &:after {
@@ -93,7 +92,6 @@
                 margin-top: -6px;
                 background-color: white;
                 
-                // RESTORED DIAMOND SHAPE
                 transform: rotate(45deg); 
                 transition: all 0.1s ease-in-out;
             }
@@ -152,7 +150,6 @@
 body.pdf-mode {
     .comparador-de-imagens {
         .comparison-slider {
-            // Hide the handle
             .divider {
                 display: none !important;
             }

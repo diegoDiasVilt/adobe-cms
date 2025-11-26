@@ -207,8 +207,7 @@ async function loadPage() {
     loadMathJax();
     await new Promise(r => setTimeout(r, 1000));
     
-    // This runs only when everything is ready.
-    console.log('PDF_GENERATION_READY'); // Signal for a scraper if needed
+    console.log('PDF_GENERATION_READY');
     console.log(document.documentElement.outerHTML);
   } else {
     loadDelayed();

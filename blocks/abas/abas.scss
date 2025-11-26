@@ -57,33 +57,27 @@ body.theme-white .abas:not(.deep-purple) {
   --abas-active-text-color: #fff;
 }
 
-// ----------------------------------------------------
-// PDF MODE STYLES
-// ----------------------------------------------------
+// PDF MODE
 body.pdf-mode {
   .abas {
-    // Just in case the JS didn't remove the header for some reason
     .abas-header {
       display: none !important;
     }
 
-    // Force visibility just in case
     .hidden {
       display: block !important;
     }
 
-    // Style the content blocks
     .pdf-tab-content {
       margin-bottom: 30px;
       border-bottom: 1px solid #ccc;
       padding-bottom: 20px;
-      page-break-inside: avoid; // Keep content together if possible
+      page-break-inside: avoid;
 
       &:last-child {
         border-bottom: none;
       }
 
-      // Style the title injected by JS
       h3.pdf-tab-title {
         color: var(--abas-active-bg-color, #0041a9);
         margin-top: 0;
