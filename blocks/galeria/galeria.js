@@ -34,6 +34,14 @@ function handleText(textElement) {
 }
 
 export default function decorate(block) {
+  // 1. Detect PDF Mode
+  const urlParams = new URLSearchParams(window.location.search);
+  const isPdfParam = urlParams.get('mode') === 'pdf';
+  if (isPdfParam) {
+    document.body.classList.add('pdf-mode');
+  }
+  const isPdf = document.body.classList.contains('pdf-mode') || isPdfParam;
+
   const variant = block?.children[0];
   const id = block?.children[1];
   if (id && id?.querySelectorAll('div')?.length < 3) {
@@ -58,18 +66,11 @@ export default function decorate(block) {
     if (typeText === 'img') images.push(element);
   });
 
-  // validando se a relação de imagens realmente está 1/1
   if (variantText === 'text-and-image-1-1' && texts.length !== images.length) {
     if (!isInEditor) return;
-    const imageAndTextAmountDontMatchErrorHTML = `
-            <div class="oaerror error">
-                <strong>Atenção</strong> - Nesta variação da galeria a quantidade de imagens e textos deve ser a mesma.
-            </div>
-        `;
-
     const msgElement = document.createElement('div');
     msgElement.classList.add('error-notice');
-    msgElement.innerHTML += imageAndTextAmountDontMatchErrorHTML;
+    msgElement.innerHTML += `<div class="oaerror error"><strong>Atenção</strong> - Nesta variação da galeria a quantidade de imagens e textos deve ser a mesma.</div>`;
     block.insertBefore(msgElement, block.firstChild);
     return;
   }
@@ -78,7 +79,13 @@ export default function decorate(block) {
     element.remove();
   });
 
-  const arrowsHTML = `
+  // 2. Define Classes based on Mode
+  const containerClass = isPdf ? 'pdf-gallery-container' : 'splide';
+  const trackClass = isPdf ? 'pdf-gallery-track' : 'splide__track';
+  const listClass = isPdf ? 'pdf-gallery-list' : 'splide__list';
+  const slideClass = isPdf ? 'pdf-gallery-item' : 'splide__slide';
+  
+  const arrowsHTML = isPdf ? '' : `
           <div class="splide__arrows">
             <button class="splide__arrow splide__arrow--prev">
               <i class="fa-solid fa-circle-chevron-left"></i>
@@ -89,105 +96,93 @@ export default function decorate(block) {
           </div>
   `;
 
+  const wrapSplide = (content) => `
+    <div class="${containerClass}" role="group">
+      ${arrowsHTML}
+      <div class="${trackClass}">
+        <ul class="${listClass}">
+          ${content}
+        </ul>
+      </div>
+    </div>
+  `;
+
+  // 3. Render Content
   switch (variantText) {
     case 'image-only':
-      block.innerHTML += `
-        <div class="splide" role="group">
-          ${arrowsHTML}
-          <div class="splide__track">
-            <ul class="splide__list">
-              ${images?.map((img) => `<li class="splide__slide">
-                          <div class="splide__slide__container">
-                            ${handleImage(img)}
-                          </div>
-                        </li>`)?.join('')}
-            </ul>
-          </div>
-        </div>
-    `;
+      block.innerHTML += wrapSplide(
+        images?.map((img) => `<li class="${slideClass}">
+            <div class="splide__slide__container">
+                ${handleImage(img)}
+            </div>
+        </li>`)?.join('')
+      );
       break;
+
     case 'text-only':
-      block.innerHTML += `
-        <div class="splide" role="group">
-          ${arrowsHTML}
-          <div class="splide__track">
-            <ul class="splide__list">
-              ${texts?.map((text) => `<li class="splide__slide">
-                          <div class="splide__slide__container">
-                            ${handleText(text)}
-                          </div>
-                        </li>`)?.join('')}
-            </ul>
-          </div>
-        </div>
-    `;
+      block.innerHTML += wrapSplide(
+        texts?.map((text) => `<li class="${slideClass}">
+            <div class="splide__slide__container">
+                ${handleText(text)}
+            </div>
+        </li>`)?.join('')
+      );
       break;
+
     case 'text-and-image-1-1':
-      block.innerHTML += `
-        <div class="splide" role="group">
-          ${arrowsHTML}
-          <div class="splide__track">
-            <ul class="splide__list">
-              ${texts?.map((text, index) => `<li class="splide__slide">
-                          <div class="splide__slide__container text-and-image-1-1">
-                            ${handleText(text)}
-                            ${handleImage(images[index])}
-                          </div>
-                        </li>`)?.join('')}
-            </ul>
-          </div>
-        </div>
-    `;
+      block.innerHTML += wrapSplide(
+        texts?.map((text, index) => `<li class="${slideClass}">
+            <div class="splide__slide__container text-and-image-1-1">
+                ${handleText(text)}
+                ${handleImage(images[index])}
+            </div>
+        </li>`)?.join('')
+      );
       break;
+
     case 'one-image-many-texts':
+      block.innerHTML += wrapSplide(
+        texts?.map((text) => `<li class="${slideClass}">
+            <div class="splide__slide__container">
+                ${handleText(text)}
+            </div>
+        </li>`)?.join('')
+      );
       block.innerHTML += `
-        <div class="splide" role="group">
-          ${arrowsHTML}
-          <div class="splide__track">
-            <ul class="splide__list">
-              ${texts?.map((text) => `<li class="splide__slide">
-                          <div class="splide__slide__container">
-                            ${handleText(text)}
-                          </div>
-                        </li>`)?.join('')}
-            </ul>
-          </div>
-        </div>
         <div class="image__container">
             ${handleImage(images[0])}
         </div>
-    `;
+      `;
       break;
+
     case 'one-text-many-images':
       block.innerHTML += `
         <div class="text__container">
             ${handleText(texts[0])}
         </div>
-        <div class="splide" role="group">
-          ${arrowsHTML}
-          <div class="splide__track">
-            <ul class="splide__list">
-              ${images?.map((img) => `<li class="splide__slide">
-                          <div class="splide__slide__container">
-                            ${handleImage(img)}
-                          </div>
-                        </li>`)?.join('')}
-            </ul>
-          </div>
-        </div>
-    `;
+      `;
+      block.innerHTML += wrapSplide(
+        images?.map((img) => `<li class="${slideClass}">
+            <div class="splide__slide__container">
+                ${handleImage(img)}
+            </div>
+        </li>`)?.join('')
+      );
       break;
+
     default:
       break;
   }
 
-  const elms = block.getElementsByClassName('splide');
-
-  for (let i = 0; i < elms.length; i++) {
-    new Splide(elms[i], {
-      rewind: true,
-      rewindSpeed: 1000,
-      pagination: true,
-    }).mount();
+  // 4. Initialize Splide ONLY if NOT Pdf
+  if (!isPdf) {
+    const elms = block.getElementsByClassName('splide');
+    for (let i = 0; i < elms.length; i++) {
+      new Splide(elms[i], {
+        rewind: true,
+        rewindSpeed: 1000,
+        pagination: true,
+      }).mount();
+    }
   }
 }

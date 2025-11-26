@@ -1,13 +1,46 @@
-.comparador-de-imagens{
+.comparador-de-imagens {
     position: relative;
     user-select: none;
-    .comparison-slider{
+    .comparison-slider-wrapper.loadable {
+        visibility: hidden;
+        opacity: 0;
+    }
+    .comparison-slider-wrapper {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.3s;
+    }
+
+    .comparison-slider {
         position: relative;
-        img{
+        width: 100%;
+        overflow: hidden; 
+        img {
+            display: block;
+            width: 100%; 
+            height: auto; 
             max-width: unset;
         }
-        .overlay{
-            .overlay-wrapper{
+
+        .resize {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            overflow: hidden;
+            width: 50%;
+            z-index: 1;
+            
+            img {
+                width: auto;  
+                height: 100%;
+            }
+        }
+        .overlay {
+            z-index: 2;
+            pointer-events: none;
+            
+            .overlay-wrapper {
                 position: absolute;
                 bottom: 20px;
                 width: 250px;
@@ -17,23 +50,25 @@
                 color: #DDD;
                 user-select: all;
             }
-            &.right{
-                .overlay-wrapper{
-                    right: 20px; 
-                    text-align: right;
-                }
+            &.right .overlay-wrapper {
+                right: 20px; 
+                text-align: right;
             }
-            &.left{
-                .overlay-wrapper{
-                    left: 20px;
-                }
+            &.left .overlay-wrapper {
+                left: 20px;
             }
         }
 
-        .divider{
+        .divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
             width: 2px;
             background-color: rgba(255, 255, 255, 0.2);
-            &:before{
+            z-index: 3;
+            cursor: ew-resize;
+
+            &:before {
                 content: "";
                 position: absolute;
                 width: 20px;
@@ -42,11 +77,13 @@
                 top: 50%;
                 margin-top: -10px;
                 background-color: white;
-                transform: rotate(45deg);
+                
+                // RESTORED DIAMOND SHAPE
+                transform: rotate(45deg); 
+                border-radius: unset; // This ensures it stays a diamond, not a circle
                 transition: all 0.1s ease-in-out;
-                border-radius: unset;
             }
-            &:after{
+            &:after {
                 content: "";
                 position: absolute;
                 width: 12px;
@@ -55,17 +92,19 @@
                 top: 50%;
                 margin-top: -6px;
                 background-color: white;
-                transform: rotate(45deg);
+                
+                // RESTORED DIAMOND SHAPE
+                transform: rotate(45deg); 
                 transition: all 0.1s ease-in-out;
             }
-            &.draggable{
-                &:before{
+            &.draggable {
+                &:before {
                     width: 30px;
                     height: 30px;
                     left: -14px;
                     margin-top: -15px;
                 }
-                &:after{
+                &:after {
                     width: 20px;
                     height: 20px;
                     margin-top: -10px;
@@ -74,18 +113,59 @@
             }
         }
     }
+
+    .loader-15 {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%; // Only the loader should be a circle
+        animation: spin 1s linear infinite;
+
+        &.loading {
+            display: block;
+        }
+    }
 }
 
-.comparador-de-imagens.deep-purple{
-    .comparison-slider{
-        .divider{
-            &:before{
+// Support for deep-purple variant
+.comparador-de-imagens.deep-purple {
+    .comparison-slider {
+        .divider {
+            &:before {
                 background-color: #b982ff;
             }
-            &:after{
+            &:after {
                 content: "";
                 background-color: #b982ff;
             }
         }
     }
+}
+
+// PDF MODE
+body.pdf-mode {
+    .comparador-de-imagens {
+        .comparison-slider {
+            // Hide the handle
+            .divider {
+                display: none !important;
+            }
+            // Lock the split at 50%
+            .resize {
+                width: 50% !important;
+                border-right: 2px solid white; 
+            }
+        }
+    }
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }

@@ -101,3 +101,30 @@ body.theme-white .sanfona {
   --sanfona-body-text: var(--text-color, #3a3a3a);
   --sanfona-caption-text: #6c757d;
 }
+
+// PDF MODE Overrides
+body.pdf-mode .sanfona {
+  .accordion-item {
+    
+    // Disable pointer events on header (it's static now)
+    &-header {
+      pointer-events: none;
+      
+      // Hide the toggle icon (plus/minus)
+      h5 a i {
+        display: none !important;
+      }
+    }
+
+    // Force body to be visible and take full height
+    &-body {
+      max-height: unset !important;
+      overflow: visible !important;
+      transition: none !important; // Prevent animation artifacts in PDF
+    }
+
+    &.active .accordion-item-body {
+        max-height: unset !important;
+    }
+  }
+}

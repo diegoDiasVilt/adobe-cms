@@ -1,21 +1,49 @@
-.video{
+.video {
     margin-top: 40px;
-
     width: 100%;
 
-    p{
+    p {
         text-align: center;
         font-size: 80%;
         color: #6c757d;
         margin: 10px 0;
         line-height: 1;
     }
+    
     .plyr_ms {
         position: relative !important;
         z-index: 0 !important;
-      }
+    }
+
+    // Default state: Hidden
+    .video-placeholder {
+        display: none;
+    }
 }
 
-.video.deep-purple{
+.video.deep-purple {
     font-family: "Orbitron-Regular";
+}
+
+body.pdf-mode {
+    .video {
+        display: block;
+        text-align: center;
+
+        .video-placeholder {
+            display: block;
+            width: 80%;
+            margin: 10px auto; 
+            height: 0;
+            padding-bottom: 45%; 
+            
+            background-size: contain; 
+            background-repeat: no-repeat;
+            background-position: center;
+            
+            background-image: url("https://author-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/VideoTemplate.png");
+            
+            background-color: transparent; 
+        }
+    }
 }

@@ -176,3 +176,63 @@
 .galeria.deep-purple {
   border: 1px solid #b982ff;
 }
+
+body.pdf-mode .galeria {
+  margin-top: 20px !important;
+  background-color: #f8f9fa !important;
+  border: 1px solid #e9ecef !important;
+  border-radius: 6px;
+  padding: 20px !important;
+  width: 100% !important;
+  clear: both !important;
+  display: block !important;
+  box-sizing: border-box;
+}
+body.pdf-mode .galeria.one-text-many-images, body.pdf-mode .galeria.one-image-many-texts {
+  display: block !important;
+}
+body.pdf-mode .galeria .pdf-gallery-container {
+  width: 100%;
+}
+body.pdf-mode .galeria .pdf-gallery-track {
+  width: 100%;
+}
+body.pdf-mode .galeria ul, body.pdf-mode .galeria li {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding-left: 0 !important;
+}
+body.pdf-mode .galeria .pdf-gallery-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none !important;
+}
+body.pdf-mode .galeria .pdf-gallery-item {
+  display: block;
+  width: calc(50% - 10px);
+  height: auto;
+  margin-bottom: 20px;
+  page-break-inside: avoid;
+  box-sizing: border-box;
+}
+body.pdf-mode .galeria .pdf-gallery-item .text-and-image-1-1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+}
+body.pdf-mode .galeria.image-only .pdf-gallery-item {
+  margin-bottom: 20px;
+  text-align: center;
+}
+body.pdf-mode .galeria.image-only .pdf-gallery-item picture {
+  display: block;
+  margin: 0 auto;
+}
+body.pdf-mode .galeria img {
+  max-width: 100%;
+  height: auto;
+}

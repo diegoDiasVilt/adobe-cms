@@ -6,6 +6,8 @@ export default function decorate(block) {
   const iconClosed = block?.children[2];
   const id = block?.children[3];
 
+  const isPdf = document.body.classList.contains('pdf-mode');
+
   if (id?.querySelectorAll('div')?.length < 3) {
     id.remove();
     block.setAttribute('id', id?.textContent?.trim());
@@ -75,9 +77,9 @@ export default function decorate(block) {
         }
       }
     }
-
+    
     const accordionItemElement = htmlToElement(`
-        <div class="accordion-item">
+        <div class="accordion-item ${isPdf ? 'active' : ''}">
             <div class="accordion-item-header">
                 <h5><a><span>${headerText}</span><i class="fa fa-${iconClosedText || 'plus-circle'}"></i></a></h5>
             </div>
@@ -110,24 +112,26 @@ export default function decorate(block) {
   accordionItems?.forEach((accordionItem) => {
     block.append(accordionItem);
 
-    accordionItem.querySelector('a').addEventListener('click', () => {
-      if (accordionItem.className.includes('active')) {
-        accordionItem.classList.remove('active');
-        accordionItem.querySelector('i')?.classList?.add(`fa-${iconClosedText || 'plus-circle'}`);
-        accordionItem.querySelector('i')?.classList?.remove(`fa-${iconOpenText || 'circle-minus'}`);
-        return;
-      }
-      if (openAllText === 'false') {
-        Array.from(block.querySelectorAll('.accordion-item')).forEach((item) => {
-          item.classList.remove('active');
-          item.querySelector('i')?.classList?.add(`fa-${iconClosedText || 'plus-circle'}`);
-          item.querySelector('i')?.classList?.remove(`fa-${iconOpenText || 'circle-minus'}`);
-        });
-      }
+    if (!isPdf) {
+      accordionItem.querySelector('a').addEventListener('click', () => {
+        if (accordionItem.className.includes('active')) {
+          accordionItem.classList.remove('active');
+          accordionItem.querySelector('i')?.classList?.add(`fa-${iconClosedText || 'plus-circle'}`);
+          accordionItem.querySelector('i')?.classList?.remove(`fa-${iconOpenText || 'circle-minus'}`);
+          return;
+        }
+        if (openAllText === 'false') {
+          Array.from(block.querySelectorAll('.accordion-item')).forEach((item) => {
+            item.classList.remove('active');
+            item.querySelector('i')?.classList?.add(`fa-${iconClosedText || 'plus-circle'}`);
+            item.querySelector('i')?.classList?.remove(`fa-${iconOpenText || 'circle-minus'}`);
+          });
+        }
 
-      accordionItem.classList.add('active');
-      accordionItem.querySelector('i')?.classList?.add(`fa-${iconOpenText || 'circle-minus'}`);
-      accordionItem.querySelector('i')?.classList?.remove(`fa-${iconClosedText || 'plus-circle'}`);
-    });
+        accordionItem.classList.add('active');
+        accordionItem.querySelector('i')?.classList?.add(`fa-${iconOpenText || 'circle-minus'}`);
+        accordionItem.querySelector('i')?.classList?.remove(`fa-${iconClosedText || 'plus-circle'}`);
+      });
+    }
   });
 }

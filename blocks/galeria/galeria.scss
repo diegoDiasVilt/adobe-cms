@@ -194,3 +194,94 @@
 .galeria.deep-purple{
   border: 1px solid #b982ff;
 }
+
+// ----------------------------------------------------------------------
+// PDF MODE - Styles for the "pdf-gallery-..." classes
+// ----------------------------------------------------------------------
+body.pdf-mode {
+  .galeria {
+    margin-top: 20px !important;
+    
+    // 1. DISTINCT CONTAINER BACKGROUND
+    // Adds a light background and padding to separate blocks
+    background-color: #f8f9fa !important; 
+    border: 1px solid #e9ecef !important;
+    border-radius: 6px;
+    padding: 20px !important;
+    
+    // FORCE FULL WIDTH & CLEARING
+    width: 100% !important;
+    clear: both !important;
+    display: block !important; 
+    box-sizing: border-box;
+
+    // Reset container variants to block
+    &.one-text-many-images, 
+    &.one-image-many-texts {
+      display: block !important; 
+    }
+
+    .pdf-gallery-container {
+      width: 100%;
+    }
+
+    .pdf-gallery-track {
+      width: 100%;
+    }
+
+    // --- REMOVE DOTS ---
+    ul, li {
+        list-style: none !important;
+        list-style-type: none !important;
+        padding-left: 0 !important;
+    }
+
+    // --- SIDE-BY-SIDE LOGIC ---
+    .pdf-gallery-list {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 20px;       
+      padding: 0;
+      margin: 0;
+      list-style: none !important; // Ensure no dots here too
+    }
+
+    .pdf-gallery-item {
+      display: block;
+      
+      // Calculate width for 2 items per row
+      width: calc(50% - 10px); 
+      
+      height: auto;
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+      box-sizing: border-box; 
+
+      // Handle the 1-1 grid inside a list item
+      .text-and-image-1-1 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: center;
+      }
+    }
+
+    // Specific tweaks per variant
+    &.image-only {
+      .pdf-gallery-item {
+        margin-bottom: 20px;
+        text-align: center;
+        picture {
+            display: block;
+            margin: 0 auto;
+        }
+      }
+    }
+    
+    // Ensure images fit on page
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+  }
+}

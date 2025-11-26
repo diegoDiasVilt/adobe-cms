@@ -189,3 +189,50 @@ body.theme-white .botao-expansivel .modal-content-header i:hover {
 body.theme-white .botao-expansivel .modal-content-body-img-wrapper p {
   opacity: 1;
 }
+
+body.pdf-mode .botao-expansivel {
+  display: block;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+body.pdf-mode .botao-expansivel .btn-modal, body.pdf-mode .botao-expansivel .modal {
+  display: none !important;
+}
+body.pdf-mode .botao-expansivel .pdf-expanded-content {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  padding: 20px;
+  page-break-inside: avoid;
+  border-radius: 4px;
+}
+body.pdf-mode .botao-expansivel .pdf-expanded-content .pdf-content-title {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+body.pdf-mode .botao-expansivel .pdf-expanded-content .pdf-content-body {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #444;
+}
+body.pdf-mode .botao-expansivel .pdf-expanded-content .pdf-content-body .pdf-img-wrapper {
+  margin: 20px 0;
+  text-align: center;
+}
+body.pdf-mode .botao-expansivel .pdf-expanded-content .pdf-content-body .pdf-img-wrapper img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #eee;
+}
+body.pdf-mode .botao-expansivel .pdf-expanded-content .pdf-content-body .pdf-img-wrapper .img-caption, body.pdf-mode .botao-expansivel .pdf-expanded-content .pdf-content-body .pdf-img-wrapper .img-desc {
+  margin: 5px 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+body.pdf-mode .botao-expansivel .pdf-expanded-content .pdf-content-body .pdf-img-wrapper .img-caption {
+  font-weight: bold;
+}

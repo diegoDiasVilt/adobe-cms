@@ -86,3 +86,18 @@ body.theme-white .sanfona {
   --sanfona-body-text: var(--text-color, #3a3a3a);
   --sanfona-caption-text: #6c757d;
 }
+
+body.pdf-mode .sanfona .accordion-item-header {
+  pointer-events: none;
+}
+body.pdf-mode .sanfona .accordion-item-header h5 a i {
+  display: none !important;
+}
+body.pdf-mode .sanfona .accordion-item-body {
+  max-height: unset !important;
+  overflow: visible !important;
+  transition: none !important;
+}
+body.pdf-mode .sanfona .accordion-item.active .accordion-item-body {
+  max-height: unset !important;
+}

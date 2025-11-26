@@ -194,3 +194,65 @@ body.theme-white .botao-expansivel {
     opacity: 1;
   }
 }
+
+// ----------------------------------------------------
+// PDF MODE STYLES
+// ----------------------------------------------------
+body.pdf-mode {
+  .botao-expansivel {
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    
+    // Hide original elements just in case
+    .btn-modal, .modal {
+        display: none !important;
+    }
+
+    .pdf-expanded-content {
+        // Look like a section box in PDF
+        border: 1px solid #ccc;
+        background-color: #fff; // or transparent if you prefer
+        padding: 20px;
+        page-break-inside: avoid; // Keep title and some text together
+        border-radius: 4px;
+
+        .pdf-content-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .pdf-content-body {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #444;
+
+            // Handle images nicely
+            .pdf-img-wrapper {
+                margin: 20px 0;
+                text-align: center;
+                
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    border: 1px solid #eee;
+                }
+
+                .img-caption, .img-desc {
+                    margin: 5px 0;
+                    font-size: 0.85rem;
+                    color: #666;
+                }
+                .img-caption {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+  }
+}
