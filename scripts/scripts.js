@@ -325,14 +325,26 @@ export function inIFrame() {
   return window.location !== window.parent.location
 }
 
-export function createOptimizedPicture(pic) {
+export function createOptimizedPicture(pic, baseUrl = '') {
+  const domain = baseUrl || (typeof window !== 'undefined' ? window.location.origin : '');
+
   pic.querySelectorAll('source, img').forEach((el) => {
     const attr = el.tagName === 'SOURCE' ? 'srcset' : 'src';
-    const val = el.getAttribute(attr);
-    if (val && /\bformat=webply\b/.test(val)) {
-      el.setAttribute(attr, val.replace(/\bformat=webply\b/g, 'format=webp'));
+    let val = el.getAttribute(attr);
+
+    if (val) {
+      if (/\bformat=webply\b/.test(val)) {
+        val = val.replace(/\bformat=webply\b/g, 'format=webp');
+      }
+
+      if (val.startsWith('./')) {
+        val = `${domain}${val.substring(1)}`;
+      }
+
+      el.setAttribute(attr, val);
     }
   });
+
   return pic;
 }
 

@@ -1,4 +1,4 @@
-import { decodeBase64, isInEditor } from '../../scripts/scripts.js';
+import { decodeBase64, isInEditor, createOptimizedPicture } from '../../scripts/scripts.js';
 
 function handleImage(imageElement) {
   const img = imageElement?.children[0];
@@ -12,6 +12,9 @@ function handleImage(imageElement) {
 
   const pictureElement = img.querySelector('picture');
   if (!pictureElement) return imageElement?.outerHTML;
+
+  const pic = createOptimizedPicture(pictureElement);
+  pictureElement.replaceWith(pic);
 
   const imgHeader = document.createElement('figcaption');
   const imgFooter = document.createElement('figcaption');
