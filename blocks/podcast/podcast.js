@@ -13,9 +13,11 @@ export default function decorate(block) {
 
   const urlParams = new URLSearchParams(window.location.search);
   const isPdfParam = urlParams.get('mode') === 'pdf';
+  
   if (isPdfParam) {
     document.body.classList.add('pdf-mode');
   }
+
   const isPdf = document.body.classList.contains('pdf-mode') || isPdfParam;
 
   block.textContent = '';
@@ -24,7 +26,7 @@ export default function decorate(block) {
     block.setAttribute('id', businessKey);
   }
 
-  if (title && title.textContent.trim()) {
+  if (title && title.textContent.trim() && !isPdf) {
     block.append(htmlToElement(`${decodeBase64(title?.querySelector('p')?.innerHTML)}`));
   }
 
@@ -82,7 +84,7 @@ export default function decorate(block) {
     }
   }
 
-  if (description && description.textContent.trim()) {
+  if (description && description.textContent.trim() && !isPdf) {
     block.append(htmlToElement(`${decodeBase64(description?.querySelector('p')?.innerHTML)}`));
   }
 }

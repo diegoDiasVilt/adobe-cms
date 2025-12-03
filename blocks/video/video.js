@@ -22,7 +22,7 @@ export default function decorate(block) {
     block.setAttribute('id', businessKey);
   }
 
-  if (title) {
+  if (title && !isPdf) {
     block.append(htmlToElement(`<p>${title}</p>`));
   }
 
@@ -80,7 +80,7 @@ export default function decorate(block) {
     }
   }
 
-  if (description) {
+  if (description && !isPdf) {
     block.append(htmlToElement(`<p>${description}</p>`));
   }
 }
