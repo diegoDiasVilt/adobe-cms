@@ -337,9 +337,15 @@ export function createOptimizedPicture(pic, baseUrl = '') {
         val = val.replace(/\bformat=webply\b/g, 'format=webp');
       }
 
-      if (val.startsWith('./')) {
-        val = `${domain}${val.substring(1)}`;
-      }
+      if (!val.startsWith('http') && !val.startsWith('//')) {
+          if (val.startsWith('./')) {
+             // Remove o ponto (.) e junta com dominio. Ex: ./media -> /media
+             val = `${domain}${val.substring(1)}`;
+          } else if (val.startsWith('/')) {
+             // Apenas junta o domínio. Ex: /media -> https://site.com/media
+             val = `${domain}${val}`;
+          }
+        }
 
       el.setAttribute(attr, val);
     }
