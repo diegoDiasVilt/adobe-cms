@@ -1,6 +1,6 @@
 .podcast {
   margin-top: 40px;
-
+  margin-bottom: 0;
   width: 100%;
 
   p {
@@ -16,6 +16,9 @@
     z-index: 0 !important;
   }
 
+  .podcast-placeholder {
+    display: none;
+  }
 }
 
 .podcast.deep-purple {
@@ -23,23 +26,24 @@
 }
 
 body.pdf-mode {
-    .podcast {
-        display: block;
-        text-align: center;
-
-        .podcast-placeholder {
-            display: block;
-            width: 100%;
-            margin: 20px auto;
-            height: 0;
-            padding-bottom: 45%; 
-            
-            background-size: contain; 
-            background-repeat: no-repeat;
-            background-position: center;
-            background-image: url("https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/VideoTemplate.svg");
-            
-            background-color: transparent; 
-        }
+  .podcast {
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    
+    .podcast-placeholder {
+      display: block;
+      width: 90%;
+      margin: 20px auto;
+      height: 0;
+      padding-bottom: 45%; 
+      
+      background-size: contain; 
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url("https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/VideoTemplate.svg");
+      
+      background-color: transparent; 
     }
+  }
 }

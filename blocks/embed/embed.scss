@@ -1,5 +1,31 @@
 .embed {
+    margin-top: 40px;
+    
     &.deep-purple {
         color: #b982ff;
+    }
+}
+
+body.pdf-mode {
+    .embed {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 40px;
+
+        .embed-placeholder {
+            display: block;
+            width: 90%;
+            margin: 20px auto;
+            height: 0;
+            padding-bottom: 45%; 
+            
+            background-size: contain; 
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url("https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/VideoTemplate.svg");
+            
+            background-color: transparent; 
+        }
     }
 }
