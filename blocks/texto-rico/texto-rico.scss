@@ -1,24 +1,46 @@
 .texto-rico {
-	--table-border-color: #939393;
-	--caption-text-color: #6c757d;
-	--text-font-family: var(--body-font-family);
-	font-family: var(--text-font-family);
-
-	table {
-		width: 100% !important;
-		border-spacing: 0px !important;
-		border-collapse: collapse !important;
+	--table-border-color: #939393 !important;
+	--caption-text-color: #6c757d !important;
+	--text-font-family: var(--body-font-family) !important;
+	font-family: var(--text-font-family) !important;
+}
+.texto-rico table {
+	width: 100% !important;
+	border-spacing: 0px !important;
+	border-collapse: collapse !important;
+	font-size: 18px !important;
+	text-align: left !important;
+	color: #3a3a3a !important;
+	* span {
 		font-size: 18px !important;
-		margin: 0 auto !important;
-
-		td {
-			border: 1px solid var(--table-border-color) !important;
-			padding: 0.75rem !important;
-			vertical-align: top !important;
-			transition: border-color 0.2s ease !important;
-		}
+		font-family: var(--text-font-family) !important;
+		color: #3a3a3a !important;
 	}
+}
+.texto-rico table td {
+	border: 1px solid var(--table-border-color) !important;
+	padding: 0.75rem !important;
+	transition: border-color 0.2s ease !important;
+	font-family: var(--text-font-family) !important;
+	text-align: left !important;
+	color: #3a3a3a !important;
+	background-color: #ffffff !important;
 
+	> p,
+	> span {
+		font-size: 18px !important;
+		font-family: var(--text-font-family) !important;
+		text-align: left !important;
+		color: #3a3a3a !important;
+		margin: 0 0 !important;
+	}
+}
+
+.text-rico table tr {
+	background-color: #ffffff !important;
+}
+
+.text-rico {
 	figure:has(img) {
 		display: grid;
 		justify-content: center;

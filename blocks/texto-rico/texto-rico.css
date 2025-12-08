@@ -24,6 +24,7 @@
     font-family: var(--text-font-family) !important;
     text-align: left !important;
     color: #3a3a3a !important;
+    background-color: #ffffff !important;
 
     > p,
     > span {
@@ -34,6 +35,11 @@
         margin: 0 0 !important;
     }
 }
+
+.text-rico table tr {
+    background-color: #ffffff !important;
+}
+
 .texto-rico figure:has(img) {
     display: grid;
     justify-content: center;
