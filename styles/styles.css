@@ -301,21 +301,6 @@ main img {
     height: auto;
 }
 
-table {
-    width: 100%;
-    border-spacing: 0px;
-    border-collapse: collapse;
-    font-size: 18px;
-    margin: 0 auto;
-
-    td {
-        border: 1px solid var(--table-border-color);
-        padding: 0.75rem;
-        vertical-align: top;
-        transition: border-color 0.2s ease;
-    }
-}
-
 .icon {
     display: inline-block;
     height: 24px;
