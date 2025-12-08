@@ -1,20 +1,20 @@
 import { decodeBase64 } from "../../scripts/scripts.js";
 
-function removerStylesInlineDeTabelas() {
-  const seletores = "table, thead, tbody, tfoot, tr, th, td";
-  const elementosParaLimpar = document.querySelectorAll(seletores);
-  // Percorre e remove o atributo 'style'
-  for (const elemento of elementosParaLimpar) {
-    elemento.removeAttribute("style");
-    console.log("elemento", elemento);
-  }
-}
+// function removerStylesInlineDeTabelas() {
+//   const seletores = "table, thead, tbody, tfoot, tr, th, td, p, span";
+//   const elementosParaLimpar = document.querySelectorAll(seletores);
+//   // Percorre e remove o atributo 'style'
+//   console.log("elementos", elementosParaLimpar);
+//   for (const elemento of elementosParaLimpar) {
+//     elemento.removeAttribute("style");
+//   }
+// }
 
 export default function decorate(block) {
   const firstChild = block.children[0];
   const id = block.children[1];
 
-  document.addEventListener("DOMContentLoaded", removerStylesInlineDeTabelas);
+  // removerStylesInlineDeTabelas();
 
   if (id) {
     block.setAttribute("id", id?.textContent?.trim());
