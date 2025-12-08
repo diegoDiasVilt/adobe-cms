@@ -6,6 +6,7 @@ function removerStylesInlineDeTabelas() {
   // Percorre e remove o atributo 'style'
   for (const elemento of elementosParaLimpar) {
     elemento.removeAttribute("style");
+    console.log("elemento", elemento);
   }
 }
 
