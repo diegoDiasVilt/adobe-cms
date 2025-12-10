@@ -3,6 +3,13 @@
 	--caption-text-color: #6c757d !important;
 	--text-font-family: var(--body-font-family) !important;
 	font-family: var(--text-font-family) !important;
+	p,
+	span {
+		font-size: 22px !important;
+		font-family: var(--text-font-family) !important;
+		color: #3a3a3a !important;
+		margin: 30px auto !important;
+	}
 }
 .texto-rico table {
 	width: 100% !important;
@@ -15,6 +22,7 @@
 		font-size: 18px !important;
 		font-family: var(--text-font-family) !important;
 		color: #3a3a3a !important;
+		text-align: left !important;
 	}
 }
 .texto-rico table td {
@@ -45,7 +53,7 @@
 		display: grid;
 		justify-content: center;
 		figcaption {
-			text-align: center;
+			text-align: center !important;
 			font-size: 80%;
 			color: var(--caption-text-color);
 			margin: 10px 0;
