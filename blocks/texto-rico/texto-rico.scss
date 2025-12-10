@@ -17,11 +17,9 @@
 	border-collapse: collapse !important;
 	font-size: 18px !important;
 	text-align: left !important;
-	color: #3a3a3a !important;
 	* span {
 		font-size: 18px !important;
 		font-family: var(--text-font-family) !important;
-		color: #3a3a3a !important;
 		text-align: left !important;
 	}
 }
@@ -31,7 +29,6 @@
 	transition: border-color 0.2s ease !important;
 	font-family: var(--text-font-family) !important;
 	text-align: left !important;
-	color: #3a3a3a !important;
 	background-color: #ffffff !important;
 
 	> p,
@@ -39,7 +36,6 @@
 		font-size: 18px !important;
 		font-family: var(--text-font-family) !important;
 		text-align: left !important;
-		color: #3a3a3a !important;
 		margin: 0 0 !important;
 	}
 }
