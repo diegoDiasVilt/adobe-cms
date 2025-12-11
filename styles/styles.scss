@@ -86,7 +86,7 @@ body {
 	font-size: var(--body-font-size-m);
 	margin: 0;
 	font-family: var(--body-font-family);
-	line-height: 1.6;
+	line-height: var(--kindle-line-height) !important;
 	color: var(--text-color);
 	background-color: var(--background-color);
 }
@@ -273,7 +273,6 @@ conceito-chave:hover .conceito-tooltip-text {
 
 body,
 body * {
-	line-height: var(--kindle-line-height) !important;
 	word-spacing: var(--kindle-word-space) !important;
 	letter-spacing: var(--kindle-letter-space) !important;
 
