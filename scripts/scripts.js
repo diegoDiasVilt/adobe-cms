@@ -446,18 +446,32 @@ function updateRulerPosition() {
       readingRuler.style.display = 'none';
     } else {
       readingRuler.style.display = 'block';
+      const yPos = lastMouseY - (RULER_HEIGHT_PX / 2);
+      readingRuler.style.transform = `translateY(${yPos}px)`;
     }
-
-    const yPos = lastMouseY - (RULER_HEIGHT_PX / 2);
-    readingRuler.style.transform = `translateY(${yPos}px)`;
   }
 
   requestAnimationFrame(updateRulerPosition);
 }
 
-function storeMousePosition(e) {
+function isMouseVerticallyOverMedia(mouseY) {
+  const mediaElements = document.querySelectorAll('img, picture, table, video, .img-modal, figure');
+  
+  for (const el of mediaElements) {
+    const rect = el.getBoundingClientRect();
+  
+    if (rect.height === 0) continue;
+    if (mouseY >= rect.top && mouseY <= rect.bottom) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function storeMousePosition(e) {  
   lastMouseY = e.clientY;
-  isMouseOverImage = !!e.target.closest('img, picture');
+  isMouseOverImage = isMouseVerticallyOverMedia(e.clientY);
+
   isMouseOverMain = !!e.target.closest('main');
 }
 
