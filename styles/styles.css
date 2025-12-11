@@ -82,6 +82,7 @@ body {
     color: var(--text-color);
     background-color: var(--background-color);
     display: none;
+    line-height: var(--kindle-line-height) !important;
 }
 
 body.appear {
@@ -233,7 +234,6 @@ conceito-chave:hover .conceito-tooltip-text {
 
 body,
 body * {
-    line-height: var(--kindle-line-height) !important;
     word-spacing: var(--kindle-word-space) !important;
     letter-spacing: var(--kindle-letter-space) !important;
     transition: line-height 0.2s ease, word-spacing 0.2s ease,
