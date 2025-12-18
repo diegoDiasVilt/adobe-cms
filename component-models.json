@@ -858,6 +858,12 @@
       },
       {
         "component": "text",
+        "name": "subtitle",
+        "label": "Sub Título",
+        "description": "Insira um sub título se houver necessidade"
+      },
+      {
+        "component": "text",
         "name": "id",
         "label": "Identificador",
         "description": "Valor que pode ser usado em âncoras"
