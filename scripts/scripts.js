@@ -643,7 +643,7 @@ if (!IS_PDF) {
       }
 
       window.parent.postMessage({
-        event: 'enableRuler',
+        event: 'toggle_reading_ruler',
         payload: rulerEnabled
       }, '*');
     }
