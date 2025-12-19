@@ -628,6 +628,27 @@ function resetCustomizations() {
 }
 
 if (!IS_PDF) {
+  document.addEventListener('keydown', (event) => {
+    const tagName = document.activeElement.tagName;
+    if (tagName === 'INPUT' || tagName === 'TEXTAREA' || document.activeElement.isContentEditable) {
+      return;
+    }
+
+    if (event.key.toLowerCase() === 'r') {
+      
+      if (rulerEnabled) { 
+        disableRuler(); 
+      } else {
+        enableRuler();  
+      }
+
+      window.parent.postMessage({
+        event: 'enableRuler',
+        payload: rulerEnabled
+      }, '*');
+    }
+  });
+
   window.addEventListener('message', function (e) {
     console.log(e.data)
     var eventName = e?.data?.event;
