@@ -691,14 +691,34 @@
       },
       {
         "component": "text",
+        "name": "imageBeforeAlt",
+        "label": "Alt Text"
+      },
+      {
+        "component": "text",
         "name": "textBefore",
         "label": "Texto da imagem a esquerda"
+      },
+      {
+        "component": "richtext",
+        "name": "imageBeforeDescription",
+        "label": "Fonte da imagem à esquerda"
       },
       {
         "component": "reference",
         "name": "imageAfter",
         "label": "Imagem a direita",
         "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAfterAlt",
+        "label": "Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "imageAfterDescription",
+        "label": "Fonte da imagem à direita"
       },
       {
         "component": "text",
