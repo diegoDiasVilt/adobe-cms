@@ -720,11 +720,11 @@
         "name": "textAfter",
         "label": "Texto da imagem a direita"
       },
-      {
-        "component": "richtext",
-        "name": "imageAfterDescription",
-        "label": "Fonte da imagem à direita"
-      },
+        {
+          "component": "richtext",
+          "name": "imageAfterDescription",
+          "label": "Fonte da imagem à direita"
+        },
       {
         "component": "select",
         "valueType": "string",
