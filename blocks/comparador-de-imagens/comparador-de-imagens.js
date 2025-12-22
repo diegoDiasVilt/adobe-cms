@@ -1,14 +1,13 @@
 import { decodeBase64 } from "../../scripts/scripts.js";
 
 export default function decorate(block) {
-  const imageBefore = block.children[0].querySelector('img');
+  const imageBefore = block.children[0]?.querySelector('img');
   const textBefore = block.children[1]?.textContent?.trim();
-  const fontTextBefore = block.children[2].textContent?.trim();
-  const imageAfter = block.children[3].querySelector('img');
+  const fontTextBefore = block.children[2]?.textContent?.trim();
+  const imageAfter = block.children[3]?.querySelector('img');
   const textAfter = block.children[4]?.textContent?.trim();
-  const fontTextAfter = block.children[5].textContent?.trim();
+  const fontTextAfter = block.children[5]?.textContent?.trim();
   const id = block?.children[6];
-  console.log(fontTextBefore, fontTextAfter);
 
   if (id) {
     id.remove();
@@ -18,6 +17,10 @@ export default function decorate(block) {
 
   const htmlOutput = `
         <div class="comparison-slider-wrapper loadable">
+        <div class="font-text-container">
+          <div class="font-text-before"><p class="font-text">${fontTextBefore}</p></div>
+          <div class="font-text-after"><p class="font-text">${fontTextAfter}</p></div>
+        </div>
             <div class="comparison-slider">
                 <div class="overlay right" ${textAfter ? '' : "style='display:none;'"}><div class="overlay-wrapper">${textAfter}</div></div>
                 ${imageAfter?.src ? `<img src="${imageAfter?.src}" class="img-back"/>` : ''}
