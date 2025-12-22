@@ -9,6 +9,12 @@
         visibility: visible;
         opacity: 1;
         transition: opacity 0.3s;
+
+        .font-text-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
     }
 
     .comparison-slider {

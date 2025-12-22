@@ -691,6 +691,11 @@
       },
       {
         "component": "text",
+        "name": "imagetitleBefore",
+        "label": "Título da imagem da esquerda"
+      },
+      {
+        "component": "text",
         "name": "imageBeforeAlt",
         "label": "Alt Text"
       },
@@ -709,6 +714,11 @@
         "name": "imageAfter",
         "label": "Imagem a direita",
         "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imagetitleAfter",
+        "label": "Título da imagem da direita"
       },
       {
         "component": "text",
