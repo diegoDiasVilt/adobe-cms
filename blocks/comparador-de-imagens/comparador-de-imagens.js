@@ -20,8 +20,8 @@ export default function decorate(block) {
   const htmlOutput = `
         <div class="comparison-slider-wrapper loadable">
           <div class="title-container">
-            <div class="title-before"><p class="title-text">${titleBefore}</p></div>
-            <div class="title-after"><p class="title-text">${titleAfter}</p></div>
+            <div class="title-before"><p class="title-text">${titleBefore ? titleBefore : ''}</p></div>
+            <div class="title-after"><p class="title-text">${titleAfter ? titleAfter : ''}</p></div>
           </div>
           <div class="comparison-slider">
               <div class="overlay right" ${textAfter ? '' : "style='display:none;'"}><div class="overlay-wrapper">${textAfter}</div></div>
@@ -34,8 +34,8 @@ export default function decorate(block) {
                 <div class="divider" style="left: 50%;"></div>
               </div>
               <div class="font-text-container">
-                <div class="font-text-before"><p class="font-text">${fontTextBefore}</p></div>
-                <div class="font-text-after"><p class="font-text">${fontTextAfter}</p></div>
+                <div class="font-text-before"><p class="font-text">${fontTextBefore ? fontTextBefore : ''}</p></div>
+                <div class="font-text-after"><p class="font-text">${fontTextAfter ? fontTextAfter : ''}</p></div>
               </div>
         </div>
         <div class="loader-15 loading"></div>
