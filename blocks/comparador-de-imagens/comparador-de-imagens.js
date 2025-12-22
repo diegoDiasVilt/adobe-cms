@@ -4,7 +4,7 @@ export default function decorate(block) {
   const imageBefore = block.children[0].querySelector('img');
   const textBefore = block.children[1]?.textContent?.trim();
   const fontTextBefore = block.children[2].textContent?.trim();
-  const decodeBase64fontTextBefore = decodeBase64(fontTextBefore.textContent.trim());
+  const decodeBase64fontTextBefore = decodeBase64(fontTextBefore);
   const imageAfter = block.children[3].querySelector('img');
   const textAfter = block.children[4]?.textContent?.trim();
   const fontTextAfter = block.children[5].textContent?.trim();
