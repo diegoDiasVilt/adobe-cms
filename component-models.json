@@ -700,7 +700,7 @@
         "label": "Texto da imagem a esquerda"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "name": "imageBeforeDescription",
         "label": "Fonte da imagem à esquerda"
       },
@@ -721,7 +721,7 @@
         "label": "Texto da imagem a direita"
       },
         {
-          "component": "richtext",
+          "component": "text",
           "name": "imageAfterDescription",
           "label": "Fonte da imagem à direita"
         },
