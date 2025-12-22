@@ -10,10 +10,27 @@
         opacity: 1;
         transition: opacity 0.3s;
 
+        .title-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+
+            .title-text {
+                margin: 0 5px;
+                font-size: 22px;
+            }
+            
+        }
+
         .font-text-container {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
+            .font-text {
+                margin: 0 5px;
+                font-size: 14px;
+                font-style: italic;
+            }
         }
     }
 

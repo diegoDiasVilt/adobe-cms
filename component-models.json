@@ -692,17 +692,17 @@
       {
         "component": "text",
         "name": "imagetitleBefore",
-        "label": "Título da imagem da esquerda"
+        "label": "Título da imagem à esquerda"
       },
       {
         "component": "text",
         "name": "imageBeforeAlt",
-        "label": "Alt Text"
+        "label": "Alt Text imagem à esquerda"
       },
       {
         "component": "text",
         "name": "textBefore",
-        "label": "Texto da imagem a esquerda"
+        "label": "Texto da imagem à esquerda"
       },
       {
         "component": "text",
@@ -712,23 +712,23 @@
       {
         "component": "reference",
         "name": "imageAfter",
-        "label": "Imagem a direita",
+        "label": "Imagem à direita",
         "multi": false
       },
       {
         "component": "text",
         "name": "imagetitleAfter",
-        "label": "Título da imagem da direita"
+        "label": "Título da imagem à direita"
       },
       {
         "component": "text",
         "name": "imageAfterAlt",
-        "label": "Alt Text"
+        "label": "Alt Text imagem à direita"
       },
       {
         "component": "text",
         "name": "textAfter",
-        "label": "Texto da imagem a direita"
+        "label": "Texto da imagem à direita"
       },
         {
           "component": "text",
