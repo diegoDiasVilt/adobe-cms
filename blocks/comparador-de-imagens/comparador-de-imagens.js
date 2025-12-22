@@ -6,7 +6,7 @@ export default function decorate(block) {
   const textAfter = block.children[4]?.textContent?.trim();
   const fontTextAfter = block.children[5].textContent?.trim();
   const id = block?.children[6];
-
+  console.log("block.children[2]",block.children[2]);
   console.log(fontTextBefore, fontTextAfter);
 
   if (id) {
