@@ -681,7 +681,7 @@
     ]
   },
   {
-    "id": "image-compare",
+    "id": "image-compare-v2",
     "fields": [
       {
         "component": "reference",

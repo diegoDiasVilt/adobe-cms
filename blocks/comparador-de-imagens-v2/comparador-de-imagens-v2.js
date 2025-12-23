@@ -10,14 +10,14 @@ export default function decorate(block) {
   const textAfter = block.children[6]?.textContent?.trim();
   const fontTextAfter = block.children[7]?.querySelector('p')?.textContent?.trim();
   const id = block?.children[8];
-
+  console.log("block.children[2]",block.children[2]);
   const titleBeforeDecoded = decodeBase64(titleBefore || '');
   const textBeforeDecoded = decodeBase64(textBefore || '');
   const fontTextBeforeDecoded = decodeBase64(fontTextBefore || '');
+  const titleAfterDecoded = decodeBase64(titleAfter || '');
   const textAfterDecoded = decodeBase64(textAfter || '');
   const fontTextAfterDecoded = decodeBase64(fontTextAfter || '');
 
-  console.log('Decoded Text Before:', textBefore.textContent);
   if (id) {
     id.remove();
     block.setAttribute('id', id?.textContent?.trim());
@@ -29,7 +29,7 @@ export default function decorate(block) {
           <div class="title-container">
             <div class="title-before">${titleBeforeDecoded ? titleBeforeDecoded : ''}
             </div>
-            <div class="title-after"><p class="title-text">${titleAfter ? titleAfter : ''}</p>
+            <div class="title-after"><p class="title-text">${titleAfterDecoded ? titleAfterDecoded : ''}</p>
             </div>
           </div>
           <div class="comparison-slider">

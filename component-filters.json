@@ -36,7 +36,7 @@
       "timelines",
       "texto-rico",
       "code-block",
-      "image-compare",
+      "image-compare-v2",
       "video",
       "titulo",
       "imagem",
@@ -53,7 +53,7 @@
     "components": [
       "texto-rico",
       "code-block",
-      "image-compare",
+      "image-compare-v2",
       "video",
       "imagem",
       "olho",
