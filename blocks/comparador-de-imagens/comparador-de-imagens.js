@@ -4,14 +4,18 @@ export default function decorate(block) {
   const imageBefore = block.children[0]?.querySelector('img');
   const titleBefore = block.children[1]?.querySelector('p')?.textContent?.trim();
   const textBefore = block.children[2]?.querySelector('p')?.textContent?.trim();
-  const fontTextBefore = block.children[3]?.textContent?.trim();
+  const fontTextBefore = block.children[3]?.querySelector('p')?.textContent?.trim();
   const imageAfter = block.children[4]?.querySelector('img');
-  const titleAfter = block.children[5]?.textContent?.trim();
+  const titleAfter = block.children[5]?.querySelector('p')?.textContent?.trim();
   const textAfter = block.children[6]?.textContent?.trim();
-  const fontTextAfter = block.children[7]?.textContent?.trim();
+  const fontTextAfter = block.children[7]?.querySelector('p')?.textContent?.trim();
   const id = block?.children[8];
+
   const titleBeforeDecoded = decodeBase64(titleBefore || '');
   const textBeforeDecoded = decodeBase64(textBefore || '');
+  const fontTextBeforeDecoded = decodeBase64(fontTextBefore || '');
+  const textAfterDecoded = decodeBase64(textAfter || '');
+  const fontTextAfterDecoded = decodeBase64(fontTextAfter || '');
 
   console.log('Decoded Text Before:', textBefore.textContent);
   if (id) {
@@ -29,18 +33,18 @@ export default function decorate(block) {
             </div>
           </div>
           <div class="comparison-slider">
-              <div class="overlay right" ${textAfter ? '' : "style='display:none;'"}><div class="overlay-wrapper">${textAfter}</div></div>
+              <div class="overlay right"}><div class="overlay-wrapper">${textAfterDecoded}</div></div>
               ${imageAfter?.src ? `<img src="${imageAfter?.src}" class="img-back"/>` : ''}
               
                 <div class="resize" style="width: 50%;">
-                  <div class="overlay left" ${textBefore.textContent ? '' : "style='display:none;'"}><div class="overlay-wrapper" >${textBeforeDecoded}</div></div>
+                  <div class="overlay left" ${textBefore ? '' : "style='display:none;'"}><div class="overlay-wrapper" >${textBeforeDecoded}</div></div>
                   ${imageBefore?.src ? `<img src="${imageBefore?.src}" class="img-front"/>` : ''}
                 </div>
                 <div class="divider" style="left: 50%;"></div>
               </div>
               <div class="font-text-container">
-                <div class="font-text-before"><p class="font-text">${fontTextBefore ? fontTextBefore : ''}</p></div>
-                <div class="font-text-after"><p class="font-text">${fontTextAfter ? fontTextAfter : ''}</p></div>
+                <div class="font-text-before">${fontTextBeforeDecoded ? fontTextBeforeDecoded : ''}</div>
+                <div class="font-text-after"><p class="font-text">${fontTextAfterDecoded ? fontTextAfterDecoded : ''}</p></div>
               </div>
         </div>
         <div class="loader-15 loading"></div>

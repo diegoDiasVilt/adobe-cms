@@ -705,7 +705,7 @@
         "label": "Texto da imagem à esquerda"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "name": "imageBeforeDescription",
         "label": "Fonte da imagem à esquerda"
       },
@@ -716,7 +716,7 @@
         "multi": false
       },
       {
-        "component": "text",
+        "component": "richtext",
         "name": "imagetitleAfter",
         "label": "Título da imagem à direita"
       },
@@ -726,12 +726,12 @@
         "label": "Alt Text imagem à direita"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "name": "textAfter",
         "label": "Texto da imagem à direita"
       },
         {
-          "component": "text",
+          "component": "richtext",
           "name": "imageAfterDescription",
           "label": "Fonte da imagem à direita"
         },
