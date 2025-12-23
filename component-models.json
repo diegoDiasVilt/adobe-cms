@@ -760,6 +760,85 @@
     ]
   },
   {
+    "id": "image-compare",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "imageBefore",
+        "label": "Imagem à esquerda",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "imagetitleBefore",
+        "label": "Título da imagem à esquerda"
+      },
+      {
+        "component": "text",
+        "name": "imageBeforeAlt",
+        "label": "Alt Text imagem à esquerda"
+      },
+      {
+        "component": "richtext",
+        "name": "textBefore",
+        "label": "Texto da imagem à esquerda"
+      },
+      {
+        "component": "richtext",
+        "name": "imageBeforeDescription",
+        "label": "Fonte da imagem à esquerda"
+      },
+      {
+        "component": "reference",
+        "name": "imageAfter",
+        "label": "Imagem à direita",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "imagetitleAfter",
+        "label": "Título da imagem à direita"
+      },
+      {
+        "component": "text",
+        "name": "imageAfterAlt",
+        "label": "Alt Text imagem à direita"
+      },
+      {
+        "component": "richtext",
+        "name": "textAfter",
+        "label": "Texto da imagem à direita"
+      },
+        {
+          "component": "richtext",
+          "name": "imageAfterDescription",
+          "label": "Fonte da imagem à direita"
+        },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      }
+    ]
+  },
+  {
     "id": "video",
     "fields": [
       {
