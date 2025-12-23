@@ -769,51 +769,21 @@
         "multi": false
       },
       {
-        "component": "richtext",
-        "name": "imagetitleBefore",
-        "label": "Título da imagem à esquerda"
-      },
-      {
         "component": "text",
-        "name": "imageBeforeAlt",
-        "label": "Alt Text imagem à esquerda"
-      },
-      {
-        "component": "richtext",
         "name": "textBefore",
-        "label": "Texto da imagem à esquerda"
-      },
-      {
-        "component": "richtext",
-        "name": "imageBeforeDescription",
-        "label": "Fonte da imagem à esquerda"
+        "label": "Texto da imagem a esquerda"
       },
       {
         "component": "reference",
         "name": "imageAfter",
-        "label": "Imagem à direita",
+        "label": "Imagem a direita",
         "multi": false
       },
       {
-        "component": "richtext",
-        "name": "imagetitleAfter",
-        "label": "Título da imagem à direita"
-      },
-      {
         "component": "text",
-        "name": "imageAfterAlt",
-        "label": "Alt Text imagem à direita"
-      },
-      {
-        "component": "richtext",
         "name": "textAfter",
-        "label": "Texto da imagem à direita"
+        "label": "Texto da imagem a direita"
       },
-        {
-          "component": "richtext",
-          "name": "imageAfterDescription",
-          "label": "Fonte da imagem à direita"
-        },
       {
         "component": "select",
         "valueType": "string",
