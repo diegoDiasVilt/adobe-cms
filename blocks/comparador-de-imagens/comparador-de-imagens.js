@@ -4,6 +4,7 @@ export default function decorate(block) {
   const imageBefore = block.children[0]?.querySelector('img');
   const titleBefore = block.children[1]?.textContent?.trim();
   const textBefore = block.children[2]?.textContent?.trim();
+  const textBeforeTest = block.children[2];
   const fontTextBefore = block.children[3]?.textContent?.trim();
   const imageAfter = block.children[4]?.querySelector('img');
   const titleAfter = block.children[5]?.textContent?.trim();
@@ -11,6 +12,11 @@ export default function decorate(block) {
   const fontTextAfter = block.children[7]?.textContent?.trim();
   const id = block?.children[8];
 
+  const decodedTextBefore = textBefore ? decodeBase64(textBefore) : '';
+  const textBeforeDecoded = decodeBase64(textBeforeTest?.textContent?.trim());
+  console.log("decodedTextBefore", decodedTextBefore);
+  console.log("textBeforeDecoded", textBeforeDecoded);
+  
   if (id) {
     id.remove();
     block.setAttribute('id', id?.textContent?.trim());
