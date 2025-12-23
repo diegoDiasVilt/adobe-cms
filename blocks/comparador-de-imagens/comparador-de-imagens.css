@@ -11,25 +11,6 @@
   opacity: 1;
   transition: opacity 0.3s;
 }
-.comparador-de-imagens .comparison-slider-wrapper .title-container {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.comparador-de-imagens .comparison-slider-wrapper .title-container .title-text {
-  margin: 0 5px;
-  font-size: 22px;
-}
-.comparador-de-imagens .comparison-slider-wrapper .font-text-container {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.comparador-de-imagens .comparison-slider-wrapper .font-text-container .font-text {
-  margin: 0 5px;
-  font-size: 14px;
-  font-style: italic;
-}
 .comparador-de-imagens .comparison-slider {
   position: relative;
   width: 100%;
