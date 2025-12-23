@@ -2,21 +2,18 @@ import { decodeBase64 } from "../../scripts/scripts.js";
 
 export default function decorate(block) {
   const imageBefore = block.children[0]?.querySelector('img');
-  const titleBefore = block.children[1]?.textContent?.trim();
-  const textBefore = block.children[2]?.textContent?.trim();
-  const textBeforeTest = block.children[1];
+  const titleBefore = block.children[1]?.querySelector('p')?.textContent?.trim();
+  const textBefore = block.children[2]?.querySelector('p')?.textContent?.trim();
   const fontTextBefore = block.children[3]?.textContent?.trim();
   const imageAfter = block.children[4]?.querySelector('img');
   const titleAfter = block.children[5]?.textContent?.trim();
   const textAfter = block.children[6]?.textContent?.trim();
   const fontTextAfter = block.children[7]?.textContent?.trim();
   const id = block?.children[8];
-  console.log("textBeforTest", textBeforeTest);
-  const decodedTextBefore = decodeBase64(textBefore);
-  const textBeforeDecoded = decodeBase64(textBeforeTest?.textContent?.trim());
-  console.log("decodedTextBefore", decodedTextBefore);
-  console.log("textBeforeDecoded", textBeforeDecoded);
+  const titleBeforeDecoded = decodeBase64(titleBefore || '');
+  const textBeforeDecoded = decodeBase64(textBefore || '');
 
+  console.log('Decoded Text Before:', textBefore.textContent);
   if (id) {
     id.remove();
     block.setAttribute('id', id?.textContent?.trim());
@@ -26,22 +23,17 @@ export default function decorate(block) {
   const htmlOutput = `
         <div class="comparison-slider-wrapper loadable">
           <div class="title-container">
-            <div class="title-before"><p class="title-text">${titleBefore ? titleBefore : ''}
-            </p>
-            <p>
-              ${decodedTextBefore}
-            </p></div>
+            <div class="title-before">${titleBeforeDecoded ? titleBeforeDecoded : ''}
+            </div>
             <div class="title-after"><p class="title-text">${titleAfter ? titleAfter : ''}</p>
-            <p>
-              ${textBeforeDecoded}
-            </p></div>
+            </div>
           </div>
           <div class="comparison-slider">
               <div class="overlay right" ${textAfter ? '' : "style='display:none;'"}><div class="overlay-wrapper">${textAfter}</div></div>
               ${imageAfter?.src ? `<img src="${imageAfter?.src}" class="img-back"/>` : ''}
               
                 <div class="resize" style="width: 50%;">
-                  <div class="overlay left" ${textBefore ? '' : "style='display:none;'"}><div class="overlay-wrapper" >${textBefore}</div></div>
+                  <div class="overlay left" ${textBefore.textContent ? '' : "style='display:none;'"}><div class="overlay-wrapper" >${textBeforeDecoded}</div></div>
                   ${imageBefore?.src ? `<img src="${imageBefore?.src}" class="img-front"/>` : ''}
                 </div>
                 <div class="divider" style="left: 50%;"></div>

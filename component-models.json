@@ -700,7 +700,7 @@
         "label": "Alt Text imagem à esquerda"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "name": "textBefore",
         "label": "Texto da imagem à esquerda"
       },
