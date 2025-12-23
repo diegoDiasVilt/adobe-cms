@@ -11,8 +11,8 @@ export default function decorate(block) {
   const textAfter = block.children[6]?.textContent?.trim();
   const fontTextAfter = block.children[7]?.textContent?.trim();
   const id = block?.children[8];
-
-  const decodedTextBefore = textBefore ? decodeBase64(textBefore) : '';
+  console.log("textBeforTest", textBeforeTest);
+  const decodedTextBefore = decodeBase64(textBefore);
   const textBeforeDecoded = decodeBase64(textBeforeTest?.textContent?.trim());
   console.log("decodedTextBefore", decodedTextBefore);
   console.log("textBeforeDecoded", textBeforeDecoded);
