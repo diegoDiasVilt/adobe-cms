@@ -407,7 +407,7 @@
           }
         },
         {
-          "title": "Comparador de imagens",
+          "title": "Comparador de imagens v2",
           "id": "image-compare-v2",
           "plugins": {
             "xwalk": {
