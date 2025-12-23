@@ -16,7 +16,7 @@ export default function decorate(block) {
   const textBeforeDecoded = decodeBase64(textBeforeTest?.textContent?.trim());
   console.log("decodedTextBefore", decodedTextBefore);
   console.log("textBeforeDecoded", textBeforeDecoded);
-  
+
   if (id) {
     id.remove();
     block.setAttribute('id', id?.textContent?.trim());
@@ -26,8 +26,15 @@ export default function decorate(block) {
   const htmlOutput = `
         <div class="comparison-slider-wrapper loadable">
           <div class="title-container">
-            <div class="title-before"><p class="title-text">${titleBefore ? titleBefore : ''}</p></div>
-            <div class="title-after"><p class="title-text">${titleAfter ? titleAfter : ''}</p></div>
+            <div class="title-before"><p class="title-text">${titleBefore ? titleBefore : ''}
+            </p>
+            <p>
+              ${decodedTextBefore}
+            </p></div>
+            <div class="title-after"><p class="title-text">${titleAfter ? titleAfter : ''}</p>
+            <p>
+              ${textBeforeDecoded}
+            </p></div>
           </div>
           <div class="comparison-slider">
               <div class="overlay right" ${textAfter ? '' : "style='display:none;'"}><div class="overlay-wrapper">${textAfter}</div></div>
