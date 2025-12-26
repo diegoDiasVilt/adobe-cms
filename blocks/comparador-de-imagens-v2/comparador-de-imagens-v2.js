@@ -3,7 +3,7 @@ import { decodeBase64 } from "../../scripts/scripts.js";
 export default function decorate(block) {
   const imageBefore = block.children[0]?.querySelector('img');
   console.log('imageBefore:', imageBefore);
-  const altImageBefore = block.children[1]?.textContent?.trim();
+  const altImageBefore = block.children[1]?.querySelector('p').textContent.trim();
   const titleBefore = block.children[2]?.querySelector('p').textContent.trim();
   console.log('titleBefore:', titleBefore);
   const textBefore = block.children[3]?.querySelector('p').textContent.trim();
@@ -11,7 +11,7 @@ export default function decorate(block) {
   const fontTextBefore = block.children[4]?.querySelector('p').textContent.trim();
   console.log('fontTextBefore:', fontTextBefore);
   const imageAfter = block.children[5]?.querySelector('img');
-  const altImageAfter = block.children[6]?.textContent?.trim();
+  const altImageAfter = block.children[6]?.querySelector('p').textContent.trim();
   console.log('imageAfter:', imageAfter);
   const titleAfter = block.children[7]?.querySelector('p').textContent.trim();
   console.log('titleAfter:', titleAfter);
