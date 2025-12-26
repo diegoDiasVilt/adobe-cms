@@ -685,13 +685,13 @@
     "fields": [
       {
         "component": "reference",
-        "name": "imagebefore",
+        "name": "image",
         "label": "Imagem à esquerda",
         "multi": false
       },
       {
         "component": "text",
-        "name": "imagebeforealt",
+        "name": "imagealt",
         "label": "Alt Text imagem à esquerda",
         "valueType": "string"
       },
