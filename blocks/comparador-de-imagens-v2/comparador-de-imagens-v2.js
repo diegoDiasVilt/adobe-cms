@@ -1,23 +1,25 @@
 import { decodeBase64 } from "../../scripts/scripts.js";
 
 export default function decorate(block) {
-  const imageBefore = block.children[0];
+  const imageBefore = block.children[0]?.querySelector('img');
   console.log('imageBefore:', imageBefore);
-  const titleBefore = block.children[1];
+  const altImageBefore = block.children[1]?.textContent?.trim();
+  const titleBefore = block.children[2]?.querySelector('p').textContent.trim();
   console.log('titleBefore:', titleBefore);
-  const textBefore = block.children[2];
+  const textBefore = block.children[3]?.querySelector('p').textContent.trim();
   console.log('textBefore:', textBefore);
-  const fontTextBefore = block.children[3];
+  const fontTextBefore = block.children[4]?.querySelector('p').textContent.trim();
   console.log('fontTextBefore:', fontTextBefore);
-  const imageAfter = block.children[4];
+  const imageAfter = block.children[5]?.querySelector('img');
+  const altImageAfter = block.children[6]?.textContent?.trim();
   console.log('imageAfter:', imageAfter);
-  const titleAfter = block.children[5];
+  const titleAfter = block.children[7]?.querySelector('p').textContent.trim();
   console.log('titleAfter:', titleAfter);
-  const textAfter = block.children[6];
+  const textAfter = block.children[8]?.querySelector('p').textContent.trim();
   console.log('textAfter:', textAfter);
-  const fontTextAfter = block.children[7];
+  const fontTextAfter = block.children[9]?.querySelector('p').textContent.trim();
   console.log('fontTextAfter:', fontTextAfter);
-  const id = block?.children[8];
+  const id = block?.children[10];
   console.log('id:', id);
   
   const titleBeforeDecoded = decodeBase64(titleBefore || '');
@@ -46,7 +48,7 @@ export default function decorate(block) {
             <div class="title-before">
               ${titleBeforeDecoded ? titleBeforeDecoded : ''}
             </div>
-            <div class="title-after"><p class="title-text">
+            <div class="title-after">
               ${titleAfterDecoded ? titleAfterDecoded : ''}
             </div>
           </div>
@@ -56,14 +58,14 @@ export default function decorate(block) {
                     ${textAfterDecoded}
                   </div>
                 </div>
-                ${imageAfter?.src ? `<img src="${imageAfter?.src}" class="img-back"/>` : ''}
+                ${imageAfter?.src ? `<img src="${imageAfter?.src}" alt="${altImageAfter}" class="img-back"/>` : ''}
                 <div class="resize" style="width: 50%;">
                   <div class="overlay left" ${textBeforeDecoded ? '' : "style='display:none;'"}>
                     <div class="overlay-wrapper" >
                     ${textBeforeDecoded}
                     </div>
                   </div>
-                  ${imageBefore?.src ? `<img src="${imageBefore?.src}" class="img-front"/>` : ''}
+                  ${imageBefore?.src ? `<img src="${imageBefore?.src}" alt="${altImageBefore}" class="img-front"/>` : ''}
                 </div>
                 <div class="divider" style="left: 50%;"></div>
             </div>

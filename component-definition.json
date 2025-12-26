@@ -418,11 +418,11 @@
                   "model": "image-compare-v2",
                   "classes": "default",
                   "titlebefore": "Título da imagem à esquerda",
-                  "textbefore":"PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+VMOtdHVsbyBkYSBpbWFnZW0gw6AgZXNxdWVyZGE8L3A+",
-                  "descriptionbefore":"PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+TG9yZW0gSXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gVMOtdHVsbyBkYSBpbWFnZW0gw6AgZXNxdWVyZGE8L3A+",
-                  "titleafter":"PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+VMOtdHVsbyBkYSBpbWFnZW0gw6AgZXNxdWVyZGE8L3A+",
-                  "textafter":"PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+VMOtdHVsbyBkYSBpbWFnZW0gw6AgZXNxdWVyZGE8L3A+",
-                  "descriptionafter":"PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+TG9yZW0gSXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gVMOtdHVsbyBkYSBpbWFnZW0gw6AgZXNxdWVyZGE8L3A+"
+                  "textbefore":"Texto da imagem à direita",
+                  "descriptionbefore":"Fonte da imagem à esquerda",
+                  "titleafter":"Título da imagem à direita",
+                  "textafter":"Texto da imagem à direita",
+                  "descriptionafter":"Fonte da imagem à direita"
                 }
               }
             }
