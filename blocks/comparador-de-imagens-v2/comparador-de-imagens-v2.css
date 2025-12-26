@@ -1,47 +1,47 @@
-.comparador-de-imagens {
+.comparador-de-imagens-v2 {
   position: relative;
   user-select: none;
 }
-.comparador-de-imagens .comparison-slider-wrapper.loadable {
+.comparador-de-imagens-v2 .comparison-slider-wrapper.loadable {
   visibility: hidden;
   opacity: 0;
 }
-.comparador-de-imagens .comparison-slider-wrapper {
+.comparador-de-imagens-v2 .comparison-slider-wrapper {
   visibility: visible;
   opacity: 1;
   transition: opacity 0.3s;
 }
-.comparador-de-imagens .comparison-slider-wrapper .title-container {
+.comparador-de-imagens-v2 .comparison-slider-wrapper .title-container {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.comparador-de-imagens .comparison-slider-wrapper .title-container .title-text {
+.comparador-de-imagens-v2 .comparison-slider-wrapper .title-container .title-text {
   margin: 0 5px;
   font-size: 22px;
 }
-.comparador-de-imagens .comparison-slider-wrapper .font-text-container {
+.comparador-de-imagens-v2 .comparison-slider-wrapper .font-text-container {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.comparador-de-imagens .comparison-slider-wrapper .font-text-container .font-text {
+.comparador-de-imagens-v2 .comparison-slider-wrapper .font-text-container .font-text {
   margin: 0 5px;
   font-size: 14px;
   font-style: italic;
 }
-.comparador-de-imagens .comparison-slider {
+.comparador-de-imagens-v2 .comparison-slider {
   position: relative;
   width: 100%;
   overflow: hidden;
 }
-.comparador-de-imagens .comparison-slider img {
+.comparador-de-imagens-v2 .comparison-slider img {
   display: block;
   width: 100%;
   height: auto;
   max-width: unset;
 }
-.comparador-de-imagens .comparison-slider .resize {
+.comparador-de-imagens-v2 .comparison-slider .resize {
   position: absolute;
   top: 0;
   left: 0;
@@ -50,15 +50,16 @@
   width: 50%;
   z-index: 1;
 }
-.comparador-de-imagens .comparison-slider .resize img {
+.comparador-de-imagens-v2 .comparison-slider .resize img {
   width: auto;
   height: 100%;
 }
-.comparador-de-imagens .comparison-slider .overlay {
+.comparador-de-imagens-v2 .comparison-slider .overlay {
   z-index: 2;
   pointer-events: none;
 }
-.comparador-de-imagens .comparison-slider .overlay .overlay-wrapper {
+.comparador-de-imagens-v2 .comparison-slider .overlay .overlay-wrapper {
+  display: block;
   position: absolute;
   bottom: 20px;
   width: 250px;
@@ -68,14 +69,14 @@
   color: #DDD;
   user-select: all;
 }
-.comparador-de-imagens .comparison-slider .overlay.right .overlay-wrapper {
+.comparador-de-imagens-v2 .comparison-slider .overlay.right .overlay-wrapper {
   right: 20px;
   text-align: right;
 }
-.comparador-de-imagens .comparison-slider .overlay.left .overlay-wrapper {
+.comparador-de-imagens-v2 .comparison-slider .overlay.left .overlay-wrapper {
   left: 20px;
 }
-.comparador-de-imagens .comparison-slider .divider {
+.comparador-de-imagens-v2 .comparison-slider .divider {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -84,7 +85,7 @@
   z-index: 3;
   cursor: ew-resize;
 }
-.comparador-de-imagens .comparison-slider .divider:before {
+.comparador-de-imagens-v2 .comparison-slider .divider:before {
   content: "";
   position: absolute;
   width: 20px;
@@ -97,7 +98,7 @@
   border-radius: unset;
   transition: all 0.1s ease-in-out;
 }
-.comparador-de-imagens .comparison-slider .divider:after {
+.comparador-de-imagens-v2 .comparison-slider .divider:after {
   content: "";
   position: absolute;
   width: 12px;
@@ -109,19 +110,19 @@
   transform: rotate(45deg);
   transition: all 0.1s ease-in-out;
 }
-.comparador-de-imagens .comparison-slider .divider.draggable:before {
+.comparador-de-imagens-v2 .comparison-slider .divider.draggable:before {
   width: 30px;
   height: 30px;
   left: -14px;
   margin-top: -15px;
 }
-.comparador-de-imagens .comparison-slider .divider.draggable:after {
+.comparador-de-imagens-v2 .comparison-slider .divider.draggable:after {
   width: 20px;
   height: 20px;
   margin-top: -10px;
   background-color: #555;
 }
-.comparador-de-imagens .loader-15 {
+.comparador-de-imagens-v2 .loader-15 {
   display: none;
   position: absolute;
   top: 50%;
@@ -134,7 +135,7 @@
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
-.comparador-de-imagens .loader-15.loading {
+.comparador-de-imagens-v2 .loader-15.loading {
   display: block;
 }
 
