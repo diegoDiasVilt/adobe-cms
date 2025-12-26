@@ -228,7 +228,7 @@
                   "name": "TimelineItem",
                   "model": "timelineItem",
                   "titleType": "h2",
-                  "title": "VMOtdHVsbyBkYSBpbWFnZW0gw6AgZXNxdWVyZGE=",
+                  "title": "PGgzIGNsYXNzPSJqb2RpdC1wYXJhZ3JhcGgiPkxpbmhhIGRvIHRlbXBvPC9oMz4=",
                   "subtitle": "PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+PC9wPjxwIGNsYXNzPSJqb2RpdC1wYXJhZ3JhcGgiPkxvcmVtPC9wPg==",
                   "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam turpis lectus, aliquam et feugiat eget, mollis non arcu. Sed sodales suscipit pellentesque. Duis ac magna efficitur, fringilla arcu eu, commodo neque. Donec lectus ligula, lacinia quis lacinia sed, vehicula in elit. Sed in condimentum lacus, eu auctor erat. Morbi vel sapien mi. Curabitur elit tellus, tempus eget commodo eget, mollis sagittis erat. Proin condimentum lorem sed dignissim placerat. Sed finibus suscipit nunc vel aliquet. Duis gravida condimentum dapibus.",
                   "key-value": true
@@ -416,7 +416,9 @@
                 "template": {
                   "name": "Comparador de imagens v2",
                   "model": "image-compare-v2",
-                  "classes": "default"
+                  "classes": "default",
+                  "titlebefore": "PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+VMOtdHVsbyBkYSBpbWFnZW0gw6AgZXNxdWVyZGE8L3A+",
+                  "key-value": true
                 }
               }
             }
