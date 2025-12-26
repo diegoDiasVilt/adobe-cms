@@ -43,14 +43,14 @@ export default function decorate(block) {
                     ${textAfterDecoded}
                   </div>
                 </div>
-                ${imageAfter?.src ? `<img src="${imageAfter?.src}" alt="${altImageAfter}" class="img-back"/>` : ''}
+                ${imageAfter?.src ? `<img src="${imageAfter?.src}" alt="${altImageAfter ? altImageAfter : ''}" class="img-back"/>` : ''}
                 <div class="resize" style="width: 50%;">
                   <div class="overlay left" ${textBeforeDecoded ? '' : "style='display:none;'"}>
                     <div class="overlay-wrapper" >
                     ${textBeforeDecoded}
                     </div>
                   </div>
-                  ${imageBefore?.src ? `<img src="${imageBefore?.src}" alt="${altImageBefore}" class="img-front"/>` : ''}
+                  ${imageBefore?.src ? `<img src="${imageBefore?.src}" alt="${altImageBefore ? altImageBefore : ''}" class="img-front"/>` : ''}
                 </div>
                 <div class="divider" style="left: 50%;"></div>
             </div>
