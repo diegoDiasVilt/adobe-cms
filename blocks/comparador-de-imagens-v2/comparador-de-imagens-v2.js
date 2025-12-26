@@ -70,7 +70,7 @@ export default function decorate(block) {
                 <div class="divider" style="left: 50%;"></div>
             </div>
             <div class="font-text-container">
-              <div class="font-text-before">${fontTextBeforeDecoded ? fontTextBeforeDecoded : ''}</div>
+              <div class="font-text-before"><p class="font-text">${fontTextBeforeDecoded ? fontTextBeforeDecoded : ''}</p></div>
               <div class="font-text-after"><p class="font-text">${fontTextAfterDecoded ? fontTextAfterDecoded : ''}</p></div>
             </div>
         </div>
