@@ -417,7 +417,7 @@
                   "name": "Comparador de imagens v2",
                   "model": "image-compare-v2",
                   "classes": "default",
-                  "titlebefore": "PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+VMOtdHVsbyBkYSBpbWFnZW0gw6AgZXNxdWVyZGE8L3A+",
+                  "titlebefore": "Título da imagem à esquerda",
                   "textbefore":"PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+VMOtdHVsbyBkYSBpbWFnZW0gw6AgZXNxdWVyZGE8L3A+",
                   "descriptionbefore":"PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+TG9yZW0gSXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gVMOtdHVsbyBkYSBpbWFnZW0gw6AgZXNxdWVyZGE8L3A+",
                   "titleafter":"PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+VMOtdHVsbyBkYSBpbWFnZW0gw6AgZXNxdWVyZGE8L3A+",
