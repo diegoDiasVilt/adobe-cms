@@ -777,7 +777,7 @@
         "multi": false
       },
       {
-        "component": "richtext",
+        "component": "text",
         "name": "textBefore",
         "label": "Texto da imagem a esquerda"
       },
