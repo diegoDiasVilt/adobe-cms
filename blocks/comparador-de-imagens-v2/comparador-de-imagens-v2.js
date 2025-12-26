@@ -12,11 +12,24 @@ export default function decorate(block) {
   const id = block?.children[8];
   
   const titleBeforeDecoded = decodeBase64(titleBefore || '');
+  console.log('titleBeforeDecoded:', titleBeforeDecoded);
   const textBeforeDecoded = decodeBase64(textBefore || '');
+  console.log('textBeforeDecoded:', textBeforeDecoded);
   const fontTextBeforeDecoded = decodeBase64(fontTextBefore || '');
+  console.log('fontTextBeforeDecoded:', fontTextBeforeDecoded); 
   const titleAfterDecoded = decodeBase64(titleAfter || '');
+  console.log('titleAfterDecoded:', titleAfterDecoded);
   const textAfterDecoded = decodeBase64(textAfter || '');
+  console.log('textAfterDecoded:', textAfterDecoded);
   const fontTextAfterDecoded = decodeBase64(fontTextAfter || '');
+  console.log('fontTextAfterDecoded:', fontTextAfterDecoded);
+
+  if (id) {
+    id.remove();
+    block.setAttribute('id', id?.textContent?.trim());
+  }
+
+  const isPdf = document.body.classList.contains('pdf-mode');
 
   const htmlOutput = `
         <div class="comparison-slider-wrapper loadable">

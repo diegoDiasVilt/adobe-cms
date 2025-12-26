@@ -1,4 +1,4 @@
-.comparador-de-imagens {
+.comparador-de-imagens-v2 {
     position: relative;
     user-select: none;
     .comparison-slider-wrapper.loadable {
@@ -156,7 +156,7 @@
 }
 
 // Support for deep-purple variant
-.comparador-de-imagens.deep-purple {
+.comparador-de-imagens-v2.deep-purple {
     .comparison-slider {
         .divider {
             &:before {
@@ -172,7 +172,7 @@
 
 // PDF MODE
 body.pdf-mode {
-    .comparador-de-imagens {
+    .comparador-de-imagens-v2 {
         .comparison-slider {
             .divider {
                 display: none !important;

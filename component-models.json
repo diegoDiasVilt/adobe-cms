@@ -691,7 +691,7 @@
       },
       {
         "component": "richtext",
-        "name": "imagetitleBefore",
+        "name": "titleBefore",
         "label": "Título da imagem à esquerda"
       },
       {
@@ -706,7 +706,7 @@
       },
       {
         "component": "richtext",
-        "name": "imageBeforeDescription",
+        "name": "descriptionBefore",
         "label": "Fonte da imagem à esquerda"
       },
       {
@@ -717,7 +717,7 @@
       },
       {
         "component": "richtext",
-        "name": "imagetitleAfter",
+        "name": "titleAfter",
         "label": "Título da imagem à direita"
       },
       {
@@ -732,7 +732,7 @@
       },
         {
           "component": "richtext",
-          "name": "imageAfterDescription",
+          "name": "descriptionAfter",
           "label": "Fonte da imagem à direita"
         },
       {
