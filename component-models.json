@@ -715,7 +715,7 @@
       },
       {
         "component": "reference",
-        "name": "imageAfter",
+        "name": "imageafter",
         "label": "Imagem à direita",
         "multi": false
       },
@@ -777,7 +777,7 @@
         "multi": false
       },
       {
-        "component": "text",
+        "component": "richtext",
         "name": "textBefore",
         "label": "Texto da imagem a esquerda"
       },
