@@ -685,29 +685,33 @@
     "fields": [
       {
         "component": "reference",
-        "name": "imageBefore",
+        "name": "imagebefore",
         "label": "Imagem à esquerda",
         "multi": false
       },
       {
-        "component": "richtext",
-        "name": "titleBefore",
-        "label": "Título da imagem à esquerda"
-      },
-      {
         "component": "text",
-        "name": "imageBeforeAlt",
-        "label": "Alt Text imagem à esquerda"
+        "name": "imagebeforealt",
+        "label": "Alt Text imagem à esquerda",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "textBefore",
-        "label": "Texto da imagem à esquerda"
+        "name": "titlebefore",
+        "label": "Título da imagem à esquerda",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "descriptionBefore",
-        "label": "Fonte da imagem à esquerda"
+        "name": "textbefore",
+        "label": "Texto da imagem à esquerda",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "descriptionbefore",
+        "label": "Fonte da imagem à esquerda",
+        "valueType": "string"
       },
       {
         "component": "reference",
@@ -716,25 +720,29 @@
         "multi": false
       },
       {
-        "component": "richtext",
-        "name": "titleAfter",
-        "label": "Título da imagem à direita"
-      },
-      {
         "component": "text",
-        "name": "imageAfterAlt",
-        "label": "Alt Text imagem à direita"
+        "name": "imageafteralt",
+        "label": "Alt Text imagem à direita",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "textAfter",
-        "label": "Texto da imagem à direita"
+        "name": "titleafter",
+        "label": "Título da imagem à direita",
+        "valueType": "string"
       },
-        {
-          "component": "richtext",
-          "name": "descriptionAfter",
-          "label": "Fonte da imagem à direita"
-        },
+      {
+        "component": "richtext",
+        "name": "textafter",
+        "label": "Texto da imagem à direita",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "descriptionafter",
+        "label": "Fonte da imagem à direita",
+        "valueType": "string"
+      },
       {
         "component": "select",
         "valueType": "string",
