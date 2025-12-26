@@ -1,16 +1,24 @@
 import { decodeBase64 } from "../../scripts/scripts.js";
 
 export default function decorate(block) {
-  const imageBefore = block.children[0]?.querySelector('img');
-  const titleBefore = block.children[1]?.querySelector('p')?.textContent?.trim();
+  const imageBefore = block.children[0];
+  console.log('imageBefore:', imageBefore);
+  const titleBefore = block.children[1];
   console.log('titleBefore:', titleBefore);
-  const textBefore = block.children[2]?.querySelector('p')?.textContent?.trim();
-  const fontTextBefore = block.children[3]?.querySelector('p')?.textContent?.trim();
-  const imageAfter = block.children[4]?.querySelector('img');
-  const titleAfter = block.children[5]?.querySelector('p')?.textContent?.trim();
-  const textAfter = block.children[6]?.textContent?.trim();
-  const fontTextAfter = block.children[7]?.querySelector('p')?.textContent?.trim();
+  const textBefore = block.children[2];
+  console.log('textBefore:', textBefore);
+  const fontTextBefore = block.children[3];
+  console.log('fontTextBefore:', fontTextBefore);
+  const imageAfter = block.children[4];
+  console.log('imageAfter:', imageAfter);
+  const titleAfter = block.children[5];
+  console.log('titleAfter:', titleAfter);
+  const textAfter = block.children[6];
+  console.log('textAfter:', textAfter);
+  const fontTextAfter = block.children[7];
+  console.log('fontTextAfter:', fontTextAfter);
   const id = block?.children[8];
+  console.log('id:', id);
   
   const titleBeforeDecoded = decodeBase64(titleBefore || '');
   console.log('titleBeforeDecoded:', titleBeforeDecoded);
@@ -32,40 +40,59 @@ export default function decorate(block) {
 
   const isPdf = document.body.classList.contains('pdf-mode');
 
+  // const htmlOutput = `
+  //       <div class="comparison-slider-wrapper loadable">
+  //         <div class="title-container">
+  //           <div class="title-before">
+  //             ${titleBeforeDecoded ? titleBeforeDecoded : ''}
+  //           </div>
+  //           <div class="title-after"><p class="title-text">
+  //             ${titleAfterDecoded ? titleAfterDecoded : ''}
+  //           </div>
+  //         </div>
+  //           <div class="comparison-slider">
+  //               <div class="overlay right" ${textAfterDecoded ? '' : "style='display:none;'"}>
+  //                 <div class="overlay-wrapper">
+  //                   ${textAfterDecoded}
+  //                 </div>
+  //               </div>
+  //               ${imageAfter?.src ? `<img src="${imageAfter?.src}" class="img-back"/>` : ''}
+  //               <div class="resize" style="width: 50%;">
+  //                 <div class="overlay left" ${textBeforeDecoded ? '' : "style='display:none;'"}>
+  //                   <div class="overlay-wrapper" >
+  //                   ${textBeforeDecoded}
+  //                   </div>
+  //                 </div>
+  //                 ${imageBefore?.src ? `<img src="${imageBefore?.src}" class="img-front"/>` : ''}
+  //               </div>
+  //               <div class="divider" style="left: 50%;"></div>
+  //           </div>
+  //           <div class="font-text-container">
+  //             <div class="font-text-before">${fontTextBeforeDecoded ? fontTextBeforeDecoded : ''}</div>
+  //             <div class="font-text-after"><p class="font-text">${fontTextAfterDecoded ? fontTextAfterDecoded : ''}</p></div>
+  //           </div>
+  //       </div>
+  //       <div class="loader-15 loading"></div>
+  //   `;
+  //block.innerHTML = htmlOutput;
+
   const htmlOutput = `
         <div class="comparison-slider-wrapper loadable">
-          <div class="title-container">
-            <div class="title-before">
-              ${titleBeforeDecoded ? titleBeforeDecoded : ''}
-            </div>
-            <div class="title-after"><p class="title-text">
-              ${titleAfterDecoded ? titleAfterDecoded : ''}
-            </div>
-          </div>
             <div class="comparison-slider">
-                <div class="overlay right" ${textAfterDecoded ? '' : "style='display:none;'"}>
-                  <div class="overlay-wrapper">
-                    ${textAfterDecoded}
-                  </div>
-                </div>
+                <div class="overlay right" ${textAfter ? '' : "style='display:none;'"}><div class="overlay-wrapper">${textAfter}</div></div>
                 ${imageAfter?.src ? `<img src="${imageAfter?.src}" class="img-back"/>` : ''}
+                
                 <div class="resize" style="width: 50%;">
-                  <div class="overlay left" ${textBeforeDecoded ? '' : "style='display:none;'"}>
-                    <div class="overlay-wrapper" >
-                    ${textBeforeDecoded}
-                    </div>
-                  </div>
-                  ${imageBefore?.src ? `<img src="${imageBefore?.src}" class="img-front"/>` : ''}
+                    <div class="overlay left" ${textBefore ? '' : "style='display:none;'"}><div class="overlay-wrapper" >${textBefore}</div></div>
+                    ${imageBefore?.src ? `<img src="${imageBefore?.src}" class="img-front"/>` : ''}
                 </div>
+                
                 <div class="divider" style="left: 50%;"></div>
-            </div>
-            <div class="font-text-container">
-              <div class="font-text-before">${fontTextBeforeDecoded ? fontTextBeforeDecoded : ''}</div>
-              <div class="font-text-after"><p class="font-text">${fontTextAfterDecoded ? fontTextAfterDecoded : ''}</p></div>
             </div>
         </div>
         <div class="loader-15 loading"></div>
     `;
+
   block.innerHTML = htmlOutput;
 
   const wrapper = block.querySelector('.comparison-slider-wrapper');
