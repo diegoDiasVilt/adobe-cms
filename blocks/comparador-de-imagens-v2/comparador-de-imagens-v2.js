@@ -2,38 +2,23 @@ import { decodeBase64 } from "../../scripts/scripts.js";
 
 export default function decorate(block) {
   const imageBefore = block.children[0]?.querySelector('img');
-  console.log('imageBefore:', imageBefore);
   const altImageBefore = block.children[1]?.querySelector('p').textContent.trim();
   const titleBefore = block.children[2]?.querySelector('p').textContent.trim();
-  console.log('titleBefore:', titleBefore);
   const textBefore = block.children[3]?.querySelector('p').textContent.trim();
-  console.log('textBefore:', textBefore);
   const fontTextBefore = block.children[4]?.querySelector('p').textContent.trim();
-  console.log('fontTextBefore:', fontTextBefore);
   const imageAfter = block.children[5]?.querySelector('img');
   const altImageAfter = block.children[6]?.querySelector('p').textContent.trim();
-  console.log('imageAfter:', imageAfter);
   const titleAfter = block.children[7]?.querySelector('p').textContent.trim();
-  console.log('titleAfter:', titleAfter);
   const textAfter = block.children[8]?.querySelector('p').textContent.trim();
-  console.log('textAfter:', textAfter);
   const fontTextAfter = block.children[9]?.querySelector('p').textContent.trim();
-  console.log('fontTextAfter:', fontTextAfter);
   const id = block?.children[10];
-  console.log('id:', id);
   
   const titleBeforeDecoded = decodeBase64(titleBefore || '');
-  console.log('titleBeforeDecoded:', titleBeforeDecoded);
   const textBeforeDecoded = decodeBase64(textBefore || '');
-  console.log('textBeforeDecoded:', textBeforeDecoded);
   const fontTextBeforeDecoded = decodeBase64(fontTextBefore || '');
-  console.log('fontTextBeforeDecoded:', fontTextBeforeDecoded); 
   const titleAfterDecoded = decodeBase64(titleAfter || '');
-  console.log('titleAfterDecoded:', titleAfterDecoded);
   const textAfterDecoded = decodeBase64(textAfter || '');
-  console.log('textAfterDecoded:', textAfterDecoded);
   const fontTextAfterDecoded = decodeBase64(fontTextAfter || '');
-  console.log('fontTextAfterDecoded:', fontTextAfterDecoded);
 
   if (id) {
     id.remove();
