@@ -9,10 +9,8 @@ export default function decorate(block) {
   const description = block?.children[6]?.querySelector('p')?.textContent?.trim();
   const urlParams = new URLSearchParams(window.location.search);
   const isPdfParam = urlParams.get('mode') === 'pdf';
-  console.log("title",title);
   const titleDecoded = decodeBase64(title || '');
   const descriptionDecoded = decodeBase64(description || '');
-  console.log("titledecoded",titleDecoded)
 
   if (isPdfParam) {
     document.body.classList.add('pdf-mode');
