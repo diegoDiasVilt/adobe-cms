@@ -1,0 +1,41 @@
+.video {
+  margin-top: 40px;
+  margin-bottom: 0;
+  width: 100%;
+}
+.video p {
+  text-align: center;
+  font-size: 80%;
+  color: #6c757d;
+  margin: 10px 0;
+  line-height: 1;
+}
+.video .plyr_ms {
+  position: relative !important;
+  z-index: 0 !important;
+}
+.video .video-placeholder {
+  display: none;
+}
+
+.video.deep-purple {
+  font-family: "Orbitron-Regular";
+}
+
+body.pdf-mode .video {
+  display: block;
+  text-align: center;
+  margin-bottom: 0;
+}
+body.pdf-mode .video .video-placeholder {
+  display: block;
+  width: 90%;
+  margin: 20px auto;
+  height: 0;
+  padding-bottom: 45%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("https://publish-p136102-e1403896.adobeaemcloud.com/content/dam/adobe-cms/VideoTemplate.svg");
+  background-color: transparent;
+}
