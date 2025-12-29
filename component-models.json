@@ -1117,6 +1117,91 @@
     ]
   },
   {
+    "id": "imagem-v2",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Imagem",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Texto alternativo da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Título da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrição da imagem",
+        "description": "Fonte da imagem, por exemplo"
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "zoomIn",
+        "label": "Zoom in",
+        "description": "Quando estiver checkado o efeito de hover é um zoom de 50%",
+        "condition": {
+          "!==": [
+            {
+              "var": "openModal"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "openModal",
+        "label": "Invocar Modal",
+        "description": "Quando estiver checkado é aberto um modal com a imagem quando clicada",
+        "condition": {
+          "!==": [
+            {
+              "var": "zoomIn"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "uniqueStyle",
+        "label": "Estilo único",
+        "description": "O código CSS inserido neste campo será aplicado unicamente neste componente"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      }
+    ]
+  },
+  {
     "id": "button-modal",
     "fields": [
       {

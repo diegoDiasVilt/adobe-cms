@@ -514,6 +514,24 @@
           }
         },
         {
+          "title": "Imagem v2",
+          "id": "imagem-v2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Imagem-v2",
+                  "model": "imagem-v2",
+                  "classes": "default",
+                  "title":"Título da imagem",
+                  "description":"Descrição da imagem"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Botão Expansível",
           "id": "button-modal",
           "plugins": {
