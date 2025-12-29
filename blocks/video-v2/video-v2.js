@@ -27,7 +27,7 @@ export default function decorate(block) {
   }
 
   if (titleDecoded && !isPdf) {
-    block.append(htmlToElement(`${titleDecoded}`));
+    block.append(htmlToElement(`${titleDecoded ? titleDecoded : ''}`));
   }
 
   if (mediastreamId) {
@@ -85,6 +85,6 @@ export default function decorate(block) {
   }
 
   if (descriptionDecoded && !isPdf) {
-    block.append(htmlToElement(`${descriptionDecoded}`));
+    block.append(htmlToElement(`${descriptionDecoded ? descriptionDecoded : ''}`));
   }
 }
