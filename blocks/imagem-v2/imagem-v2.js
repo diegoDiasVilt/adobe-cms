@@ -1,4 +1,4 @@
-import { randomString, htmlToElement, createOptimizedPicture } from '../../scripts/scripts.js';
+import { randomString, htmlToElement, createOptimizedPicture, decodeBase64 } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const image = block.children[0];
@@ -8,13 +8,16 @@ export default function decorate(block) {
   const openModal = block.children[4];
   const uniquecss = block.children[5];
   const id = block.children[6];
+  
   if (id) {
     id.remove();
     block.setAttribute('id', id?.textContent?.trim());
   }
 
-  const titleText = title?.textContent.trim();
-  const descriptionText = description?.textContent.trim();
+  const titleText = title?.querySelector('p')?.textContent?.trim();
+  const titleTextDecoded = decodeBase64(titleText);
+  const descriptionText = description?.querySelector('p')?.textContent?.trim();
+  const descriptionTextDecoded = decodeBase64(descriptionText);
   const zoomInVal = zoomIn?.textContent.trim();
   const openModalVal = openModal?.textContent.trim();
   const uniquecssText = uniquecss?.textContent?.trim();
@@ -31,17 +34,18 @@ export default function decorate(block) {
 
   const pic = createOptimizedPicture(pictureElement);
   pictureElement.replaceWith(pic);
-
-  if (titleText) {
-    const imageTitleElement = document.createElement('p');
-    imageTitleElement.textContent = titleText;
-    block.insertBefore(imageTitleElement, image);
+  
+  if (titleTextDecoded) {
+    const titleElement = document.createElement('div');
+    titleElement.className = 'image-title';
+    titleElement.innerHTML = titleTextDecoded;
+    image.prepend(titleElement);
   }
-
-  if (descriptionText) {
-    const imageDescriptionElement = document.createElement('p');
-    imageDescriptionElement.textContent = descriptionText;
-    block.append(imageDescriptionElement);
+  if (descriptionTextDecoded) {
+    const descriptionElement = document.createElement('div');
+    descriptionElement.className = 'image-description';
+    descriptionElement.innerHTML = descriptionTextDecoded;
+    image.append(descriptionElement);
   }
 
   // handleZoomIn
@@ -82,7 +86,7 @@ export default function decorate(block) {
                     ${pictureElement.outerHTML}
                     <div class="img-modal-content-footer">
                         <div class="img-modal-content-footer-wrapper">
-                            <span>${titleText}</span>
+                            <span>${titleTextDecoded}</span>
                             <i class="fa-solid fa-xmark"></i>
                         </div>
                     </div>
