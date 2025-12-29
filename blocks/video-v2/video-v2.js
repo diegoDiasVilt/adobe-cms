@@ -1,4 +1,4 @@
-import { htmlToElement, randomString } from '../../scripts/scripts.js';
+import { htmlToElement, randomString, decodeBase64 } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const randomElementID = randomString(10);
@@ -6,10 +6,14 @@ export default function decorate(block) {
   const businessKey = block?.children[0]?.textContent?.trim();
   const mediastreamId = block?.children[1]?.textContent?.trim();
   const title = block?.children[5]?.textContent?.trim();
-  const description = block?.children[6]?.textContent?.trim();
+  const description = block?.children[6]?.querySelector('p')?.textContent?.trim();
   const urlParams = new URLSearchParams(window.location.search);
   const isPdfParam = urlParams.get('mode') === 'pdf';
-  
+  console.log("title",title);
+  const titleDecoded = decodeBase64(title || '');
+  const descriptionDecoded = decodeBase64(description || '');
+  console.log("titledecoded",titleDecoded)
+
   if (isPdfParam) {
     document.body.classList.add('pdf-mode');
   }
@@ -22,8 +26,8 @@ export default function decorate(block) {
     block.setAttribute('id', businessKey);
   }
 
-  if (title && !isPdf) {
-    block.append(htmlToElement(`<p>${title}</p>`));
+  if (titleDecoded && !isPdf) {
+    block.append(htmlToElement(`${titleDecoded}`));
   }
 
   if (mediastreamId) {
@@ -80,7 +84,7 @@ export default function decorate(block) {
     }
   }
 
-  if (description && !isPdf) {
-    block.append(htmlToElement(`<p>${description}</p>`));
+  if (descriptionDecoded && !isPdf) {
+    block.append(htmlToElement(`${descriptionDecoded}`));
   }
 }

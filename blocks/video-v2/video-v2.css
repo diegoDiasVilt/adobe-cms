@@ -1,33 +1,33 @@
-.video {
+.video-v2 {
   margin-top: 40px;
   margin-bottom: 0;
   width: 100%;
 }
-.video p {
+.video-v2 p {
   text-align: center;
   font-size: 80%;
   color: #6c757d;
   margin: 10px 0;
   line-height: 1;
 }
-.video .plyr_ms {
+.video-v2 .plyr_ms {
   position: relative !important;
   z-index: 0 !important;
 }
-.video .video-placeholder {
+.video-v2 .video-placeholder {
   display: none;
 }
 
-.video.deep-purple {
+.video-v2.deep-purple {
   font-family: "Orbitron-Regular";
 }
 
-body.pdf-mode .video {
+body.pdf-mode .video-v2 {
   display: block;
   text-align: center;
   margin-bottom: 0;
 }
-body.pdf-mode .video .video-placeholder {
+body.pdf-mode .video-v2 .video-placeholder {
   display: block;
   width: 90%;
   margin: 20px auto;
