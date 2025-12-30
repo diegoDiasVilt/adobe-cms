@@ -1407,6 +1407,118 @@
     ]
   },
   {
+    "id": "sanfona-v2",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "openAll",
+        "label": "Abertura total",
+        "description": "Ao abrir um item o anterior continua aberto. Caso não seja selecionado, ao abrir um item o anterior é fechado."
+      },
+      {
+        "component": "text",
+        "name": "iconOpen",
+        "label": "Ícone aberto",
+        "description": "Icone do font awesome. Ex: circle-play,location-dot... Consulte todas as possibilidades em: https://fontawesome.com/search?o=r&m=free"
+      },
+      {
+        "component": "text",
+        "name": "iconClosed",
+        "label": "Ícone fechado",
+        "description": "Icone do font awesome. Ex: circle-play,location-dot... Consulte todas as possibilidades em: https://fontawesome.com/search?o=r&m=free"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      }
+    ]
+  },
+  {
+    "id": "sanfonaItem-v2",
+    "fields": [
+      {
+        "component": "text",
+        "name": "headerText",
+        "label": "Texto do header"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Texto",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Imagem",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Texto alternativo da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "imgTitle",
+        "label": "Título da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrição da imagem",
+        "description": "Fonte da imagem, por exemplo"
+      },
+      {
+        "component": "richtext",
+        "name": "secondText",
+        "label": "Texto 2",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "secondImage",
+        "label": "Imagem 2",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "secondImageAlt",
+        "label": "Texto alternativo da imagem 2"
+      },
+      {
+        "component": "richtext",
+        "name": "secondImgTitle",
+        "label": "Título da imagem 2"
+      },
+      {
+        "component": "richtext",
+        "name": "secondDescription",
+        "label": "Descrição da imagem 2",
+        "description": "Fonte da imagem, por exemplo"
+      }
+    ]
+  },
+  {
     "id": "quote",
     "fields": [
       {

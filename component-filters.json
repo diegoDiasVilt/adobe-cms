@@ -19,7 +19,7 @@
       "button-modal",
       "quote",
       "embed",
-      "sanfona",
+      "sanfona-v2",
       "galeria",
       "folhaDeCreditos",
       "olho",
@@ -43,7 +43,7 @@
       "button-modal",
       "quote",
       "embed",
-      "sanfona",
+      "sanfona-v2",
       "galeria",
       "olho"
     ]
@@ -79,6 +79,12 @@
     "id": "sanfona",
     "components": [
       "sanfonaItem"
+    ]
+  },
+  {
+    "id": "sanfona-v2",
+    "components": [
+      "sanfonaItem-v2"
     ]
   },
   {
