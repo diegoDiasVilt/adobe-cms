@@ -70,9 +70,9 @@
     ]
   },
   {
-    "id": "timelines",
+    "id": "timelines-v2",
     "components": [
-      "timelineItem"
+      "timelineItem-v2"
     ]
   },
   {

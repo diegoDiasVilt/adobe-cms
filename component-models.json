@@ -344,6 +344,167 @@
     ]
   },
   {
+    "id": "timelines-v2",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "startAt",
+        "label": "Primeiro card à:",
+        "options": [
+          {
+            "name": "Direita",
+            "value": "right"
+          },
+          {
+            "name": "Esquerda",
+            "value": "left"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      }
+    ]
+  },
+  {
+    "id": "timelineItem-v2",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Titulo"
+      },
+      {
+        "component": "select",
+        "name": "titleType",
+        "label": "Tipo do título",
+        "options": [
+          {
+            "name": "h1",
+            "value": "h1"
+          },
+          {
+            "name": "h2",
+            "value": "h2"
+          },
+          {
+            "name": "h3",
+            "value": "h3"
+          },
+          {
+            "name": "h4",
+            "value": "h4"
+          },
+          {
+            "name": "h5",
+            "value": "h5"
+          },
+          {
+            "name": "h6",
+            "value": "h6"
+          }
+        ],
+        "condition": {
+          "===": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "component": "richtext",
+        "name": "subtitle",
+        "label": "Subtítulo"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Conteúdo 1",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Imagem",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Texto alternativo da imagem"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imgTitle",
+        "label": "Título da imagem",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imgSource",
+        "label": "Fonte da imagem",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "secondText",
+        "value": "",
+        "label": "Conteúdo 2",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "secondImage",
+        "label": "Imagem 2",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "secondImageAlt",
+        "label": "Texto alternativo da imagem 2"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "secondImgTitle",
+        "label": "Título da imagem 2",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "secondImgSource",
+        "label": "Fonte da imagem 2",
+        "multi": false
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
