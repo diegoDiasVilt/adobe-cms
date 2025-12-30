@@ -281,8 +281,7 @@
                   "imgTitle":"Título da imagem",
                   "imgSource": "Fonte da imagem",
                   "secondImgTitle": "Título da imagem 2",
-                  "secondImgSource": "Fonte da imagem 2",
-                  "key-value": true
+                  "secondImgSource": "Fonte da imagem 2"
                 }
               }
             }
