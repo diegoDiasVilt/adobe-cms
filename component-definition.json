@@ -336,7 +336,11 @@
                 "template": {
                   "name": "SanfonaItem-v2",
                   "model": "sanfonaItem-v2",
-                  "headerText": "Header da seção"
+                  "headerText": "Header da seção",
+                  "imgTitle": "Título da imagem",
+                  "description": "Descrição da imagem",
+                  "secondImgTitle": "Título da imagem 2",
+                  "secondDescription": "Descrição da imagem 2"
                 }
               }
             }
