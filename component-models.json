@@ -1456,6 +1456,99 @@
     ]
   },
   {
+    "id": "button-modal-v2",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      },
+      {
+        "component": "richtext",
+        "name": "cta",
+        "label": "Texto do botão"
+      },
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Titulo do modal"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Texto",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Imagem",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Texto alternativo da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "imgTitle",
+        "label": "Título da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrição da imagem",
+        "description": "Fonte da imagem, por exemplo"
+      },
+      {
+        "component": "richtext",
+        "name": "secondText",
+        "label": "Texto 2",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "secondImage",
+        "label": "Imagem 2",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "secondImageAlt",
+        "label": "Texto alternativo da imagem 2"
+      },
+      {
+        "component": "richtext",
+        "name": "secondImgTitle",
+        "label": "Título da imagem 2"
+      },
+      {
+        "component": "richtext",
+        "name": "secondDescription",
+        "label": "Descrição da imagem 2",
+        "description": "Fonte da imagem, por exemplo"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      }
+    ]
+  },
+  {
     "id": "sanfona",
     "fields": [
       {
