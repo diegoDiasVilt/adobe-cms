@@ -26,11 +26,17 @@ export default function decorate(block) {
   }
 
   const ctaText = cta?.textContent?.trim();
+  const ctaTextDecoded = decodeBase64(ctaText);
   const titleText = title?.textContent?.trim();
+  const titleTextDecoded = decodeBase64(titleText);
   const imgTitleText = imgTitle?.textContent?.trim();
+  const imgTitleTextDecoded = decodeBase64(imgTitleText);
   const descriptionText = description?.textContent?.trim();
+  const descriptionTextDecoded = decodeBase64(descriptionText);
   const imgTitleText2 = imgTitle2?.textContent?.trim();
+  const imgTitleText2Decoded = decodeBase64(imgTitleText2);
   const descriptionText2 = description2?.textContent?.trim();
+  const descriptionText2Decoded = decodeBase64(descriptionText2);
 
   let textContent = '';
   if (text) {
@@ -76,15 +82,15 @@ export default function decorate(block) {
     // 2. PDF MODE: Render content directly
     const pdfContainer = htmlToElement(`
       <div class="pdf-expanded-content">
-          <h4 class="pdf-content-title">${titleText}</h4>
+          <h4 class="pdf-content-title">${titleTextDecoded}</h4>
           <div class="pdf-content-body">
               ${textContent}
               ${image?.querySelector('img')
         ? `
                   <div class="pdf-img-wrapper">
-                      <p class="img-caption">${imgTitleText}</p>
+                      <p class="img-caption">${imgTitleTextDecoded}</p>
                       ${image.innerHTML}
-                      <p class="img-desc">${descriptionText}</p>
+                      <p class="img-desc">${descriptionTextDecoded}</p>
                   </div>
                   `
         : ''}
@@ -92,9 +98,9 @@ export default function decorate(block) {
               ${image2?.querySelector('img')
         ? `
                   <div class="pdf-img-wrapper">
-                      <p class="img-caption">${imgTitleText2}</p>
+                      <p class="img-caption">${imgTitleText2Decoded}</p>
                       ${image2.innerHTML}
-                      <p class="img-desc">${descriptionText2}</p>
+                      <p class="img-desc">${descriptionText2Decoded}</p>
                   </div>
                   `
         : ''}
@@ -104,14 +110,14 @@ export default function decorate(block) {
     block.append(pdfContainer);
 
   } else {
-    const button = htmlToElement(`<a class="btn-modal">${ctaText}</a>`);
+    const button = htmlToElement(`<a class="btn-modal">${ctaTextDecoded}</a>`);
     block.append(button);
 
     const modalElement = htmlToElement(`
           <div class="modal">
               <div class="modal-content">
                   <div class="modal-content-header">
-                      <h4 class="modal-content-header-title">${titleText}</h4>
+                      <h4 class="modal-content-header-title">${titleTextDecoded}</h4>
                       <i class="fa-solid fa-xmark"></i>
                   </div>
                   <div class="modal-content-body">
@@ -119,9 +125,9 @@ export default function decorate(block) {
                       ${image?.querySelector('img')
       ? `
                           <div class="modal-content-body-img-wrapper">
-                              <p>${imgTitleText}</p>
+                              <p>${imgTitleTextDecoded}</p>
                               ${image.innerHTML}
-                              <p>${descriptionText}</p>
+                              <p>${descriptionTextDecoded}</p>
                           </div>
                           `
       : ''}
@@ -129,9 +135,9 @@ export default function decorate(block) {
                       ${image2?.querySelector('img')
       ? `
                           <div class="modal-content-body-img-wrapper">
-                              <p>${imgTitleText2}</p>
+                              <p>${imgTitleText2Decoded}</p>
                               ${image2.innerHTML}
-                              <p>${descriptionText2}</p>
+                              <p>${descriptionText2Decoded}</p>
                           </div>
                           `
       : ''}
