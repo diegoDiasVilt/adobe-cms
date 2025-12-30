@@ -456,14 +456,14 @@
         "label": "Texto alternativo da imagem"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "valueType": "string",
         "name": "imgTitle",
         "label": "Título da imagem",
         "multi": false
       },
       {
-        "component": "text",
+        "component": "richtext",
         "valueType": "string",
         "name": "imgSource",
         "label": "Fonte da imagem",
@@ -489,14 +489,14 @@
         "label": "Texto alternativo da imagem 2"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "valueType": "string",
         "name": "secondImgTitle",
         "label": "Título da imagem 2",
         "multi": false
       },
       {
-        "component": "text",
+        "component": "richtext",
         "valueType": "string",
         "name": "secondImgSource",
         "label": "Fonte da imagem 2",
