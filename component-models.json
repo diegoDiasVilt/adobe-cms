@@ -681,6 +681,93 @@
     ]
   },
   {
+    "id": "image-compare-v2",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Imagem à esquerda",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imagealt",
+        "label": "Alt Text imagem à esquerda",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "titlebefore",
+        "label": "Título da imagem à esquerda",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "textbefore",
+        "label": "Texto da imagem à esquerda",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "descriptionbefore",
+        "label": "Fonte da imagem à esquerda",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "imageafter",
+        "label": "Imagem à direita",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageafteralt",
+        "label": "Alt Text imagem à direita",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "titleafter",
+        "label": "Título da imagem à direita",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "textafter",
+        "label": "Texto da imagem à direita",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "descriptionafter",
+        "label": "Fonte da imagem à direita",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      }
+    ]
+  },
+  {
     "id": "image-compare",
     "fields": [
       {

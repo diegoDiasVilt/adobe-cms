@@ -407,6 +407,28 @@
           }
         },
         {
+          "title": "Comparador de imagens v2",
+          "id": "image-compare-v2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Comparador de imagens v2",
+                  "model": "image-compare-v2",
+                  "classes": "default",
+                  "titlebefore": "Título da imagem à esquerda",
+                  "textbefore":"Texto da imagem à direita",
+                  "descriptionbefore":"Fonte da imagem à esquerda",
+                  "titleafter":"Título da imagem à direita",
+                  "textafter":"Texto da imagem à direita",
+                  "descriptionafter":"Fonte da imagem à direita"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Comparador de imagens",
           "id": "image-compare",
           "plugins": {
