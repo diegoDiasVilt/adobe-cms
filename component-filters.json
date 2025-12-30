@@ -9,7 +9,7 @@
   {
     "id": "section",
     "components": [
-      "timelines",
+      "timelines-v2",
       "texto-rico",
       "code-block",
       "image-compare-v2",
@@ -33,7 +33,7 @@
   {
     "id": "tab-section",
     "components": [
-      "timelines",
+      "timelines-v2",
       "texto-rico",
       "code-block",
       "image-compare-v2",
