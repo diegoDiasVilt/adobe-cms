@@ -312,24 +312,12 @@
                   "item0": {
                     "name": "sanfonaItem-v2",
                     "model": "sanfonaItem-v2",
-                    "headerText": "Header da seção 1 ",
-                    "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis velit a diam blandit euismod a laoreet dolor. Ut iaculis est non odio maximus, vel commodo eros molestie. Mauris tincidunt erat a arcu sodales, ut pharetra dui sodales.</p>",
-                    "imgTitle": "Título da imagem",
-                    "description": "Descrição da imagem",
-                    "secondText": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis velit a diam blandit euismod a laoreet dolor. Ut iaculis est non odio maximus, vel commodo eros molestie. Mauris tincidunt erat a arcu sodales, ut pharetra dui sodales.</p>",
-                    "secondImgTitle": "Título da imagem 2",
-                    "secondDescription": "Descrição da imagem 2"
+                    "headerText": "Header da seção 1 "
                   },
                   "item1": {
                     "name": "sanfonaItem-v2",
                     "model": "sanfonaItem-v2",
-                    "headerText": "Header da seção 2",
-                    "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis velit a diam blandit euismod a laoreet dolor. Ut iaculis est non odio maximus, vel commodo eros molestie. Mauris tincidunt erat a arcu sodales, ut pharetra dui sodales.</p>",
-                    "imgTitle": "Título da imagem",
-                    "description": "Descrição da imagem",
-                    "secondText": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis velit a diam blandit euismod a laoreet dolor. Ut iaculis est non odio maximus, vel commodo eros molestie. Mauris tincidunt erat a arcu sodales, ut pharetra dui sodales.</p>",
-                    "secondImgTitle": "Título da imagem 2",
-                    "secondDescription": "Descrição da imagem 2"
+                    "headerText": "Header da seção 2"
                   }
                 }
               }
@@ -346,7 +334,13 @@
                 "template": {
                   "name": "SanfonaItem-v2",
                   "model": "sanfonaItem-v2",
-                  "headerText": "Header da seção"
+                  "headerText": "Header da seção 2",
+                    "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis velit a diam blandit euismod a laoreet dolor. Ut iaculis est non odio maximus, vel commodo eros molestie. Mauris tincidunt erat a arcu sodales, ut pharetra dui sodales.</p>",
+                    "imgTitle": "Título da imagem",
+                    "description": "Descrição da imagem",
+                    "secondText": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis velit a diam blandit euismod a laoreet dolor. Ut iaculis est non odio maximus, vel commodo eros molestie. Mauris tincidunt erat a arcu sodales, ut pharetra dui sodales.</p>",
+                    "secondImgTitle": "Título da imagem 2",
+                    "secondDescription": "Descrição da imagem 2"
                 }
               }
             }
