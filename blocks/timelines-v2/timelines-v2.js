@@ -79,6 +79,10 @@ export default function decorate(block) {
     subtitle.className = 'timeline-item-subtitle';
     title.innerHTML = decodeBase64(title?.textContent);
     subtitle.innerHTML = decodeBase64(subtitle?.textContent);
+    imgTitle.innerHTML = decodeBase64(imgTitle?.textContent);
+    imgTitle2.innerHTML = decodeBase64(imgTitle2?.textContent);
+    imgSource.innerHTML = decodeBase64(imgSource?.textContent);
+    imgSource2.innerHTML = decodeBase64(imgSource2?.textContent);
 
     text.className = 'timeline-item-text';
     image.className = 'timeline-item-image';
