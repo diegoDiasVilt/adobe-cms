@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.sanfona {
+.sanfona-v2 {
   --sanfona-header-bg: #dbe3ec; /* Cor da barra do header */
   --sanfona-header-text: var(--text-color, #3a3a3a); /* Cor do texto do header */
   --sanfona-body-bg: #fff; /* Fundo do conteúdo */
@@ -7,20 +7,20 @@
   --sanfona-caption-text: #6c757d; /* Texto da legenda */
   margin-top: 40px;
 }
-.sanfona .accordion-item {
+.sanfona-v2 .accordion-item {
   background-color: var(--sanfona-header-bg);
   transition: background-color 0.2s ease;
 }
-.sanfona .accordion-item-header {
+.sanfona-v2 .accordion-item-header {
   padding: 0.75rem 1.25rem;
 }
-.sanfona .accordion-item-header h5 {
+.sanfona-v2 .accordion-item-header h5 {
   margin: 0;
   text-transform: uppercase;
   font-size: 1.25rem;
   font-weight: 500;
 }
-.sanfona .accordion-item-header h5 a {
+.sanfona-v2 .accordion-item-header h5 a {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -29,13 +29,13 @@
   color: var(--sanfona-header-text);
   transition: color 0.2s ease;
 }
-.sanfona .accordion-item-header h5 a:hover {
+.sanfona-v2 .accordion-item-header h5 a:hover {
   color: var(--sanfona-header-text);
 }
-.sanfona .accordion-item-header h5 a:hover span {
+.sanfona-v2 .accordion-item-header h5 a:hover span {
   text-decoration: underline;
 }
-.sanfona .accordion-item-body {
+.sanfona-v2 .accordion-item-body {
   overflow: hidden;
   max-height: 0;
   transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), padding 0.5s ease, background-color 0.2s ease;
@@ -44,33 +44,33 @@
   background-color: var(--sanfona-body-bg);
   padding: 0 1.25rem;
 }
-.sanfona .accordion-item-body-text {
+.sanfona-v2 .accordion-item-body-text {
   font-size: 18px;
   color: var(--sanfona-body-text);
 }
-.sanfona .accordion-item-body-image p {
+.sanfona-v2 .accordion-item-body-image p {
   text-align: center;
   font-size: 80%;
   color: var(--sanfona-caption-text);
   margin: 10px 0;
   line-height: 1;
 }
-.sanfona .accordion-item-body-image picture {
+.sanfona-v2 .accordion-item-body-image picture {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-.sanfona .accordion-item.active .accordion-item-body {
+.sanfona-v2 .accordion-item.active .accordion-item-body {
   max-height: 200vw;
   transition: max-height 0.5s ease-in-out;
   padding: 0.75rem 1.25rem;
 }
-.sanfona.deep-purple {
+.sanfona-v2.deep-purple {
   --sanfona-header-bg: #b982ff;
 }
 
-body.theme-sepia .sanfona,
-body.theme-gray .sanfona,
+body.theme-sepia .sanfona-v2,
+body.theme-gray .sanfona-v2,
 body.theme-dark .sanfona {
   --sanfona-header-bg: var(--text-color);
   --sanfona-header-text: var(--background-color);
@@ -79,7 +79,7 @@ body.theme-dark .sanfona {
   --sanfona-caption-text: var(--text-color);
 }
 
-body.theme-white .sanfona {
+body.theme-white .sanfona-v2 {
   --sanfona-header-bg: #dbe3ec;
   --sanfona-header-text: var(--text-color, #3a3a3a);
   --sanfona-body-bg: #fff;
@@ -87,17 +87,17 @@ body.theme-white .sanfona {
   --sanfona-caption-text: #6c757d;
 }
 
-body.pdf-mode .sanfona .accordion-item-header {
+body.pdf-mode .sanfona-v2 .accordion-item-header {
   pointer-events: none;
 }
-body.pdf-mode .sanfona .accordion-item-header h5 a i {
+body.pdf-mode .sanfona-v2 .accordion-item-header h5 a i {
   display: none !important;
 }
-body.pdf-mode .sanfona .accordion-item-body {
+body.pdf-mode .sanfona-v2 .accordion-item-body {
   max-height: unset !important;
   overflow: visible !important;
   transition: none !important;
 }
-body.pdf-mode .sanfona .accordion-item.active .accordion-item-body {
+body.pdf-mode .sanfona-v2 .accordion-item.active .accordion-item-body {
   max-height: unset !important;
 }
