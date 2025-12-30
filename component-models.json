@@ -1485,8 +1485,7 @@
       {
         "component": "richtext",
         "name": "description",
-        "label": "Descrição da imagem",
-        "description": "Fonte da imagem, por exemplo"
+        "label": "Descrição da imagem"
       },
       {
         "component": "richtext",
