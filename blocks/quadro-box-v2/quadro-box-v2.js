@@ -37,11 +37,10 @@ export default async function decorate(block) {
     const imageAltAuthoredCell = cells[1];
     const contentTextAuthoredCell = cells[2];
     const itemBackgroundColorAuthoredCell = cells[3];
-    const imgTitle = cells[4]?.textContent;
+    const imgTitle = cells[4]?.querySelector('p')?.textContent.trim();
     const imgTitleDecoded = imgTitle ? decodeBase64(imgTitle) : null;
-    const imgDescription = cells[5]?.textContent;
+    const imgDescription = cells[5]?.querySelector('p')?.textContent.trim();
     const imgDescriptionDecoded = imgDescription ? decodeBase64(imgDescription) : null;
-
     const imageAltText = imageAltAuthoredCell?.textContent.trim();
     const itemSpecificBgColor = itemBackgroundColorAuthoredCell?.textContent.trim() || 'rgba(0,0,0,0)';
 
@@ -75,9 +74,9 @@ export default async function decorate(block) {
       imageWrapper.className = 'quadro-box-item-image';
       const pictureElement = imageAuthoredCell.querySelector('picture');
       const imgElement = imageAuthoredCell.querySelector('img');
-      //<p class="quadro-box-item-image-title">${imgTitle.textContent}</p>
+
       if (imgTitleDecoded) {
-        imageWrapper.append(htmlToElement({imgTitleDecoded}));
+        imageWrapper.append(htmlToElement(`<div class="quadro-box-item-image-title">${imgTitleDecoded}</div>`));
       }
       if (pictureElement) {
         imageWrapper.append(pictureElement.cloneNode(true));
@@ -95,8 +94,8 @@ export default async function decorate(block) {
         }
         imageWrapper.append(img);
       }
-      if (imgDescription) {
-        imageWrapper.append(htmlToElement({imgDescriptionDecoded}));
+      if (imgDescriptionDecoded) {
+        imageWrapper.append(htmlToElement(`<div class="quadro-box-item-image-description">${imgDescriptionDecoded}</div>`));
       }
 
       if (imageWrapper.hasChildNodes()) {
