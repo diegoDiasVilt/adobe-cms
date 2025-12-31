@@ -27,7 +27,7 @@
       "podcast",
       "indice",
       "banner",
-      "quadro-box"
+      "quadro-box-v2"
     ]
   },
   {
@@ -89,6 +89,12 @@
   },
   {
     "id": "quadro-box",
+    "components": [
+      "quadro-box-item"
+    ]
+  },
+  {
+    "id": "quadro-box-v2",
     "components": [
       "quadro-box-item"
     ]

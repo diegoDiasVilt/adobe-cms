@@ -2777,5 +2777,89 @@
         "description": "Fonte da imagem, por exemplo"
       }
     ]
+  },
+  {
+    "id": "quadro-box-v2",
+    "fields": [
+      {
+        "component": "select",
+        "name": "numcolumns",
+        "label": "Number of Columns",
+        "options": [
+          {
+            "name": "1",
+            "value": "1"
+          },
+          {
+            "name": "2",
+            "value": "2"
+          },
+          {
+            "name": "3",
+            "value": "3"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quadro-box-item-v2",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imagealt",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "contenttext",
+        "label": "Content Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "itembackgroundcolor",
+        "label": "Item Background Color"
+      },
+      {
+        "component": "richtext",
+        "name": "imgTitle",
+        "label": "Título da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrição da imagem",
+        "description": "Fonte da imagem, por exemplo"
+      }
+    ]
   }
 ]
