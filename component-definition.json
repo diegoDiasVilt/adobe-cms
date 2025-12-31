@@ -1118,13 +1118,17 @@
                     "name": "quadro-box-item-v2",
                     "model": "quadro-box-item-v2",
                     "contenttext": "<p>Sample content for item 1.</p>",
-                    "itembackgroundcolor": "#dbe3ec"
+                    "itembackgroundcolor": "#dbe3ec",
+                    "imgTitle":"Título da imagem",
+                    "description":"Descrição da imagem"
                   },
                   "item1": {
                     "name": "quadro-box-item-v2",
                     "model": "quadro-box-item-v2",
                     "contenttext": "<p>Sample content for item 2.</p>",
-                    "itembackgroundcolor": "#dbe3ec"
+                    "itembackgroundcolor": "#dbe3ec",
+                    "imgTitle":"Título da imagem",
+                    "description":"Descrição da imagem"
                   }
                 }
               }
