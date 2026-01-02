@@ -1,0 +1,77 @@
+.abas {
+  --abas-link-color: #0041a9;
+  --abas-link-hover-color: #343a40;
+  --abas-active-bg-color: #007ABF;
+  --abas-active-text-color: #fff;
+}
+.abas .abas-header ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+.abas .abas-header ul li a {
+  padding: 0.2rem 1.5rem;
+  cursor: pointer;
+  color: var(--abas-link-color);
+  font-size: 18px;
+  line-height: 1.88;
+  text-decoration: none;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.abas .abas-header ul li a:hover {
+  color: var(--abas-link-hover-color);
+}
+.abas .abas-header ul li a.active {
+  background-color: var(--abas-active-bg-color);
+  color: var(--abas-active-text-color);
+  border-radius: 0.25rem;
+}
+.abas .hidden {
+  display: none;
+}
+
+.abas.deep-purple {
+  --abas-active-bg-color: #b982ff;
+}
+
+body.theme-sepia .abas:not(.deep-purple),
+body.theme-gray .abas:not(.deep-purple),
+body.theme-dark .abas:not(.deep-purple) {
+  --abas-link-color: var(--text-color);
+  --abas-link-hover-color: var(--text-color);
+  --abas-active-bg-color: var(--text-color);
+  --abas-active-text-color: var(--background-color);
+}
+
+body.theme-white .abas:not(.deep-purple) {
+  --abas-link-color: #0041a9;
+  --abas-link-hover-color: #343a40;
+  --abas-active-bg-color: #007ABF;
+  --abas-active-text-color: #fff;
+}
+
+body.pdf-mode .abas .abas-header {
+  display: none !important;
+}
+body.pdf-mode .abas .hidden {
+  display: block !important;
+}
+body.pdf-mode .abas .pdf-tab-content {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
+  page-break-inside: avoid;
+}
+body.pdf-mode .abas .pdf-tab-content:last-child {
+  border-bottom: none;
+}
+body.pdf-mode .abas .pdf-tab-content h3.pdf-tab-title {
+  color: var(--abas-active-bg-color, #0041a9);
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  border-left: 4px solid var(--abas-active-bg-color, #0041a9);
+  padding-left: 10px;
+}
