@@ -1,8 +1,16 @@
-.embed {
-    margin-top: 40px;
-    
-    &.deep-purple {
-        color: #b982ff;
+.embed-wrapper {
+    .embed {
+        margin-top: 40px;
+        text-align: center;
+        
+        &.deep-purple {
+            color: #b982ff;
+        }
+    }
+    .embed-source {
+        margin: 0 5px;
+        font-size: 14px;
+        font-style: italic;
     }
 }
 

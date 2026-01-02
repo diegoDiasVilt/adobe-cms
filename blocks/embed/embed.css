@@ -1,8 +1,14 @@
-.embed {
+.embed-wrapper .embed {
   margin-top: 40px;
+  text-align: center;
 }
-.embed.deep-purple {
+.embed-wrapper .embed.deep-purple {
   color: #b982ff;
+}
+.embed-wrapper .embed-source {
+  margin: 0 5px;
+  font-size: 14px;
+  font-style: italic;
 }
 
 body.pdf-mode .embed {
