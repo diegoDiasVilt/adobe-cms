@@ -344,6 +344,167 @@
     ]
   },
   {
+    "id": "timelines-v2",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "startAt",
+        "label": "Primeiro card à:",
+        "options": [
+          {
+            "name": "Direita",
+            "value": "right"
+          },
+          {
+            "name": "Esquerda",
+            "value": "left"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      }
+    ]
+  },
+  {
+    "id": "timelineItem-v2",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Titulo"
+      },
+      {
+        "component": "select",
+        "name": "titleType",
+        "label": "Tipo do título",
+        "options": [
+          {
+            "name": "h1",
+            "value": "h1"
+          },
+          {
+            "name": "h2",
+            "value": "h2"
+          },
+          {
+            "name": "h3",
+            "value": "h3"
+          },
+          {
+            "name": "h4",
+            "value": "h4"
+          },
+          {
+            "name": "h5",
+            "value": "h5"
+          },
+          {
+            "name": "h6",
+            "value": "h6"
+          }
+        ],
+        "condition": {
+          "===": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "component": "richtext",
+        "name": "subtitle",
+        "label": "Subtítulo"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Conteúdo 1",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Imagem",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Texto alternativo da imagem"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "imgTitle",
+        "label": "Título da imagem",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "imgSource",
+        "label": "Fonte da imagem",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "secondText",
+        "value": "",
+        "label": "Conteúdo 2",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "secondImage",
+        "label": "Imagem 2",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "secondImageAlt",
+        "label": "Texto alternativo da imagem 2"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "secondImgTitle",
+        "label": "Título da imagem 2",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "secondImgSource",
+        "label": "Fonte da imagem 2",
+        "multi": false
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
@@ -640,7 +801,7 @@
         "name": "code",
         "label": "Conteúdo",
         "valueType": "string",
-        "description": "IMPORTANTE: O bloco de código só carregará o layout se estiver selecionado o texto com o estilo 'preformatted'."
+        "description": "IMPORTANTE: Caso for inserir um bloco de código, selecione 'Code' antes de colocar o conteúdo."
       },
       {
         "component": "text",
@@ -875,6 +1036,64 @@
     ]
   },
   {
+    "id": "video-v2",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "businessKey",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      },
+      {
+        "component": "text",
+        "name": "mediastreamId",
+        "label": "mediastreamId"
+      },
+      {
+        "component": "text",
+        "name": "videoLink",
+        "label": "videoLink",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "captionLink",
+        "label": "captionLink"
+      },
+      {
+        "component": "text",
+        "name": "size",
+        "label": "size"
+      },
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Título do vídeo"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrição do vídeo"
+      }
+    ]
+  },
+  {
     "id": "titulo",
     "fields": [
       {
@@ -1059,6 +1278,91 @@
     ]
   },
   {
+    "id": "imagem-v2",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Imagem",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Texto alternativo da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Título da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrição da imagem",
+        "description": "Fonte da imagem, por exemplo"
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "zoomIn",
+        "label": "Zoom in",
+        "description": "Quando estiver checkado o efeito de hover é um zoom de 50%",
+        "condition": {
+          "!==": [
+            {
+              "var": "openModal"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "openModal",
+        "label": "Invocar Modal",
+        "description": "Quando estiver checkado é aberto um modal com a imagem quando clicada",
+        "condition": {
+          "!==": [
+            {
+              "var": "zoomIn"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "uniqueStyle",
+        "label": "Estilo único",
+        "description": "O código CSS inserido neste campo será aplicado unicamente neste componente"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      }
+    ]
+  },
+  {
     "id": "button-modal",
     "fields": [
       {
@@ -1139,6 +1443,99 @@
       },
       {
         "component": "text",
+        "name": "secondDescription",
+        "label": "Descrição da imagem 2",
+        "description": "Fonte da imagem, por exemplo"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      }
+    ]
+  },
+  {
+    "id": "button-modal-v2",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      },
+      {
+        "component": "richtext",
+        "name": "cta",
+        "label": "Texto do botão"
+      },
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Titulo do modal"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Texto",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Imagem",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Texto alternativo da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "imgTitle",
+        "label": "Título da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrição da imagem",
+        "description": "Fonte da imagem, por exemplo"
+      },
+      {
+        "component": "richtext",
+        "name": "secondText",
+        "label": "Texto 2",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "secondImage",
+        "label": "Imagem 2",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "secondImageAlt",
+        "label": "Texto alternativo da imagem 2"
+      },
+      {
+        "component": "richtext",
+        "name": "secondImgTitle",
+        "label": "Título da imagem 2"
+      },
+      {
+        "component": "richtext",
         "name": "secondDescription",
         "label": "Descrição da imagem 2",
         "description": "Fonte da imagem, por exemplo"
@@ -1264,6 +1661,117 @@
     ]
   },
   {
+    "id": "sanfona-v2",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "openAll",
+        "label": "Abertura total",
+        "description": "Ao abrir um item o anterior continua aberto. Caso não seja selecionado, ao abrir um item o anterior é fechado."
+      },
+      {
+        "component": "text",
+        "name": "iconOpen",
+        "label": "Ícone aberto",
+        "description": "Icone do font awesome. Ex: circle-play,location-dot... Consulte todas as possibilidades em: https://fontawesome.com/search?o=r&m=free"
+      },
+      {
+        "component": "text",
+        "name": "iconClosed",
+        "label": "Ícone fechado",
+        "description": "Icone do font awesome. Ex: circle-play,location-dot... Consulte todas as possibilidades em: https://fontawesome.com/search?o=r&m=free"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      }
+    ]
+  },
+  {
+    "id": "sanfonaItem-v2",
+    "fields": [
+      {
+        "component": "text",
+        "name": "headerText",
+        "label": "Texto do header"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Texto",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Imagem",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Texto alternativo da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "imgTitle",
+        "label": "Título da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrição da imagem"
+      },
+      {
+        "component": "richtext",
+        "name": "secondText",
+        "label": "Texto 2",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "secondImage",
+        "label": "Imagem 2",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "secondImageAlt",
+        "label": "Texto alternativo da imagem 2"
+      },
+      {
+        "component": "richtext",
+        "name": "secondImgTitle",
+        "label": "Título da imagem 2"
+      },
+      {
+        "component": "richtext",
+        "name": "secondDescription",
+        "label": "Descrição da imagem 2",
+        "description": "Fonte da imagem, por exemplo"
+      }
+    ]
+  },
+  {
     "id": "quote",
     "fields": [
       {
@@ -1362,9 +1870,19 @@
     "id": "embed",
     "fields": [
       {
+        "component": "richtext",
+        "name": "title",
+        "label": "Título"
+      },
+      {
         "component": "text-area",
         "name": "code",
         "label": "Embed"
+      },
+      {
+        "component": "richtext",
+        "name": "source",
+        "label": "Fonte"
       },
       {
         "component": "select",
@@ -2264,6 +2782,90 @@
       },
       {
         "component": "text",
+        "name": "description",
+        "label": "Descrição da imagem",
+        "description": "Fonte da imagem, por exemplo"
+      }
+    ]
+  },
+  {
+    "id": "quadro-box-v2",
+    "fields": [
+      {
+        "component": "select",
+        "name": "numcolumns",
+        "label": "Number of Columns",
+        "options": [
+          {
+            "name": "1",
+            "value": "1"
+          },
+          {
+            "name": "2",
+            "value": "2"
+          },
+          {
+            "name": "3",
+            "value": "3"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Tema",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Deep purple",
+            "value": "deep-purple"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quadro-box-item-v2",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imagealt",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "contenttext",
+        "label": "Content Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "itembackgroundcolor",
+        "label": "Item Background Color"
+      },
+      {
+        "component": "richtext",
+        "name": "imgTitle",
+        "label": "Título da imagem"
+      },
+      {
+        "component": "richtext",
         "name": "description",
         "label": "Descrição da imagem",
         "description": "Fonte da imagem, por exemplo"

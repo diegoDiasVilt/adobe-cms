@@ -1,23 +1,33 @@
-.embed-wrapper .embed {
+.video-v2 {
   margin-top: 40px;
+  margin-bottom: 0;
+  width: 100%;
+}
+.video-v2 p {
   text-align: center;
+  font-size: 80%;
+  color: #6c757d;
+  margin: 10px 0;
+  line-height: 1;
 }
-.embed-wrapper .embed.deep-purple {
-  color: #b982ff;
+.video-v2 .plyr_ms {
+  position: relative !important;
+  z-index: 0 !important;
 }
-.embed-wrapper .embed-source {
-  margin: 0 5px;
-  font-size: 14px;
-  font-style: italic;
+.video-v2 .video-placeholder {
+  display: none;
 }
 
-body.pdf-mode .embed {
-  display: block;
-  width: 100%;
-  text-align: center;
-  margin-top: 40px;
+.video-v2.deep-purple {
+  font-family: "Orbitron-Regular";
 }
-body.pdf-mode .embed .embed-placeholder {
+
+body.pdf-mode .video-v2 {
+  display: block;
+  text-align: center;
+  margin-bottom: 0;
+}
+body.pdf-mode .video-v2 .video-placeholder {
   display: block;
   width: 90%;
   margin: 20px auto;

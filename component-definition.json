@@ -238,6 +238,61 @@
           }
         },
         {
+          "title": "Timelines v2",
+          "id": "timelines-v2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Timelines v2",
+                  "model": "timelines-v2",
+                  "classes": "default",
+                  "startAt": "right",
+                  "filter": "timelines-v2",
+                  "item0": {
+                    "name": "TimelineItem v2",
+                    "model": "timelineItem-v2",
+                    "title": "PGgzIGNsYXNzPSJqb2RpdC1wYXJhZ3JhcGgiPkxpbmhhIGRvIHRlbXBvPC9oMz4=",
+                    "titleType": "h2",
+                    "subtitle": "PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+PC9wPjxwIGNsYXNzPSJqb2RpdC1wYXJhZ3JhcGgiPkxvcmVtPC9wPg==",
+                    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam turpis lectus, aliquam et feugiat eget, mollis non arcu. Sed sodales suscipit pellentesque. Duis ac magna efficitur, fringilla arcu eu, commodo neque. Donec lectus ligula, lacinia quis lacinia sed, vehicula in elit. Sed in condimentum lacus, eu auctor erat. Morbi vel sapien mi. Curabitur elit tellus, tempus eget commodo eget, mollis sagittis erat. Proin condimentum lorem sed dignissim placerat. Sed finibus suscipit nunc vel aliquet. Duis gravida condimentum dapibus.",
+                    "imgTitle":"Título da imagem",
+                    "imgSource": "Fonte da imagem",
+                    "secondText": "conteúdo 2",
+                    "secondImgTitle": "Título da imagem 2",
+                    "secondImgSource": "Fonte da imagem 2",
+                    "key-value": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "TimelineItem v2",
+          "id": "timelineItem-v2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "TimelineItem v2",
+                  "model": "timelineItem-v2",
+                  "titleType": "h2",
+                  "title": "PGgzIGNsYXNzPSJqb2RpdC1wYXJhZ3JhcGgiPkxpbmhhIGRvIHRlbXBvPC9oMz4=",
+                  "subtitle": "PHAgY2xhc3M9ImpvZGl0LXBhcmFncmFwaCI+PC9wPjxwIGNsYXNzPSJqb2RpdC1wYXJhZ3JhcGgiPkxvcmVtPC9wPg==",
+                  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam turpis lectus, aliquam et feugiat eget, mollis non arcu. Sed sodales suscipit pellentesque. Duis ac magna efficitur, fringilla arcu eu, commodo neque. Donec lectus ligula, lacinia quis lacinia sed, vehicula in elit. Sed in condimentum lacus, eu auctor erat. Morbi vel sapien mi. Curabitur elit tellus, tempus eget commodo eget, mollis sagittis erat. Proin condimentum lorem sed dignissim placerat. Sed finibus suscipit nunc vel aliquet. Duis gravida condimentum dapibus.",
+                  "imgTitle":"Título da imagem",
+                  "imgSource": "Fonte da imagem",
+                  "secondImgTitle": "Título da imagem 2",
+                  "secondImgSource": "Fonte da imagem 2"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Author Bio",
           "id": "author-bio",
           "plugins": {
@@ -292,6 +347,67 @@
                   "name": "SanfonaItem",
                   "model": "sanfonaItem",
                   "headerText": "Header da seção"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Sanfona v2",
+          "id": "sanfona-v2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Sanfona v2",
+                  "model": "sanfona-v2",
+                  "filter": "sanfona-v2",
+                  "classes": "default",
+                  "item0": {
+                    "name": "sanfonaItem-v2",
+                    "model": "sanfonaItem-v2",
+                    "headerText": "Header da seção 1",
+                    "text": "Texto",
+                    "imgTitle": "Título da imagem",
+                    "description": "Descrição da imagem",
+                    "secondText": "Texto 2",
+                    "secondImgTitle": "Título da imagem 2",
+                    "secondDescription": "Descrição da imagem 2"
+                  },
+                  "item1": {
+                    "name": "sanfonaItem-v2",
+                    "model": "sanfonaItem-v2",
+                    "headerText": "Header da seção 1",
+                    "text": "Texto",
+                    "imgTitle": "Título da imagem",
+                    "description": "Descrição da imagem",
+                    "secondText": "Texto 2",
+                    "secondImgTitle": "Título da imagem 2",
+                    "secondDescription": "Descrição da imagem 2"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "SanfonaItem v2",
+          "id": "sanfonaItem-v2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "SanfonaItem-v2",
+                  "model": "sanfonaItem-v2",
+                  "headerText": "Header da seção 2",
+                  "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis velit a diam blandit euismod a laoreet dolor. Ut iaculis est non odio maximus, vel commodo eros molestie. Mauris tincidunt erat a arcu sodales, ut pharetra dui sodales.</p>",
+                  "imgTitle": "Título da imagem",
+                  "description": "Descrição da imagem",
+                  "secondText": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis velit a diam blandit euismod a laoreet dolor. Ut iaculis est non odio maximus, vel commodo eros molestie. Mauris tincidunt erat a arcu sodales, ut pharetra dui sodales.</p>",
+                  "secondImgTitle": "Título da imagem 2",
+                  "secondDescription": "Descrição da imagem 2"
                 }
               }
             }
@@ -461,6 +577,24 @@
           }
         },
         {
+          "title": "Video v2",
+          "id": "video-v2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Video v2",
+                  "model": "video-v2",
+                  "classes": "default",
+                  "title": "Título do vídeo",
+                  "description": "Descrição do vídeo"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Título",
           "id": "titulo",
           "plugins": {
@@ -496,6 +630,24 @@
           }
         },
         {
+          "title": "Imagem v2",
+          "id": "imagem-v2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Imagem-v2",
+                  "model": "imagem-v2",
+                  "classes": "default",
+                  "title":"Título da imagem",
+                  "description":"Descrição da imagem"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Botão Expansível",
           "id": "button-modal",
           "plugins": {
@@ -509,6 +661,30 @@
                   "cta": "Botão Modal",
                   "title": "Modal Title",
                   "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis velit a diam blandit euismod a laoreet dolor. Ut iaculis est non odio maximus, vel commodo eros molestie. Mauris tincidunt erat a arcu sodales, ut pharetra dui sodales.</p>"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Botão Expansível v2",
+          "id": "button-modal-v2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Botao Expansivel v2",
+                  "model": "button-modal-v2",
+                  "classes": "default",
+                  "cta": "Botão Modal",
+                  "title": "Modal Title",
+                  "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis velit a diam blandit euismod a laoreet dolor. Ut iaculis est non odio maximus, vel commodo eros molestie. Mauris tincidunt erat a arcu sodales, ut pharetra dui sodales.</p>",
+                  "imgTitle":"Título da imagem",
+                  "description":"Descrição da imagem",
+                  "secondText":"Conteúdo 2",
+                  "secondImgTitle":"Título da imagem 2",
+                  "secondDescription":"Descrição da imagem 2"
                 }
               }
             }
@@ -545,7 +721,9 @@
                   "name": "embed",
                   "model": "embed",
                   "classes": "default",
-                  "code": "<div><h1>Embed</h1><p>Lorem ipsum dolor</p></div>"
+                  "code": "<div><h1>Embed</h1><p>Lorem ipsum dolor</p></div>",
+                  "title":"Título do embed",
+                  "source": "Fonte do embed"
                 }
               }
             }
@@ -921,6 +1099,58 @@
                   "model": "quadro-box-item",
                   "contenttext": "<p>Sample content for item.</p>",
                   "itembackgroundcolor": "#003366"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Quadro Box v2",
+          "id": "quadro-box-v2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Quadro Box v2",
+                  "model": "quadro-box-v2",
+                  "filter": "quadro-box-v2",
+                  "numcolumns": "3",
+                  "item0": {
+                    "name": "quadro-box-item-v2",
+                    "model": "quadro-box-item-v2",
+                    "contenttext": "<p>Sample content for item 1.</p>",
+                    "itembackgroundcolor": "#dbe3ec",
+                    "imgTitle":"Título da imagem",
+                    "description":"Descrição da imagem"
+                  },
+                  "item1": {
+                    "name": "quadro-box-item-v2",
+                    "model": "quadro-box-item-v2",
+                    "contenttext": "<p>Sample content for item 2.</p>",
+                    "itembackgroundcolor": "#dbe3ec",
+                    "imgTitle":"Título da imagem",
+                    "description":"Descrição da imagem"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Quadro Box Item v2",
+          "id": "quadro-box-item-v2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Quadro Box Item v2",
+                  "model": "quadro-box-item",
+                  "contenttext": "<p>Sample content for item.</p>",
+                  "itembackgroundcolor": "#003366",
+                  "imgTitle":"Título da imagem",
+                  "description":"Descrição da imagem"
                 }
               }
             }

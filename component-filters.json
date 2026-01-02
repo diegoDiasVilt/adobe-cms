@@ -9,17 +9,17 @@
   {
     "id": "section",
     "components": [
-      "timelines",
+      "timelines-v2",
       "texto-rico",
       "code-block",
       "image-compare-v2",
-      "video",
+      "video-v2",
       "titulo",
-      "imagem",
-      "button-modal",
+      "imagem-v2",
+      "button-modal-v2",
       "quote",
       "embed",
-      "sanfona",
+      "sanfona-v2",
       "galeria",
       "folhaDeCreditos",
       "olho",
@@ -27,23 +27,23 @@
       "podcast",
       "indice",
       "banner",
-      "quadro-box"
+      "quadro-box-v2"
     ]
   },
   {
     "id": "tab-section",
     "components": [
-      "timelines",
+      "timelines-v2",
       "texto-rico",
       "code-block",
       "image-compare-v2",
-      "video",
+      "video-v2",
       "titulo",
-      "imagem",
-      "button-modal",
+      "imagem-v2",
+      "button-modal-v2",
       "quote",
       "embed",
-      "sanfona",
+      "sanfona-v2",
       "galeria",
       "olho"
     ]
@@ -54,8 +54,8 @@
       "texto-rico",
       "code-block",
       "image-compare-v2",
-      "video",
-      "imagem",
+      "video-v2",
+      "imagem-v2",
       "olho",
       "playground"
     ]
@@ -70,9 +70,9 @@
     ]
   },
   {
-    "id": "timelines",
+    "id": "timelines-v2",
     "components": [
-      "timelineItem"
+      "timelineItem-v2"
     ]
   },
   {
@@ -82,7 +82,19 @@
     ]
   },
   {
+    "id": "sanfona-v2",
+    "components": [
+      "sanfonaItem-v2"
+    ]
+  },
+  {
     "id": "quadro-box",
+    "components": [
+      "quadro-box-item"
+    ]
+  },
+  {
+    "id": "quadro-box-v2",
     "components": [
       "quadro-box-item"
     ]

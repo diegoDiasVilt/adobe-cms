@@ -1,0 +1,192 @@
+@charset "UTF-8";
+.timelines-v2-wrapper {
+  --timeline-accent-color: #00368c;
+  --timeline-accent-text-color: white;
+  --timeline-text-color: var(--text-color, #3a3a3a);
+  --timeline-caption-color: #6c757d;
+}
+.timelines-v2-wrapper .timeline-right {
+  padding-left: 50%;
+  text-align: left;
+}
+.timelines-v2-wrapper .timeline-left {
+  padding-right: 50%;
+  text-align: right;
+}
+@media (max-width: 575px) {
+  .timelines-v2-wrapper .timeline-right {
+    padding-left: 0;
+  }
+  .timelines-v2-wrapper .timeline-left {
+    text-align: left;
+    padding-right: 0;
+  }
+  .timelines-v2-wrapper .timeline-item-wrapper {
+    margin: 0 !important;
+  }
+}
+
+.timelines-v2 {
+  margin-top: 40px;
+  position: relative;
+}
+.timelines-v2::before {
+  content: "";
+  height: 100%;
+  width: 2px;
+  background-color: var(--timeline-accent-color); /* <-- VARIÁVEL APLICADA */
+  position: absolute;
+  left: 50%;
+  transition: background-color 0.2s ease; /* Transição suave */
+}
+.timelines-v2 .timeline-right .timeline-item-title,
+.timelines-v2 .timeline-right .timeline-item-wrapper {
+  border-radius: 0px 10px 0px 0px;
+}
+.timelines-v2 .timeline-right .timeline-item-wrapper {
+  margin-left: 40px;
+}
+.timelines-v2 .timeline-right::before {
+  content: "►";
+  position: absolute;
+  left: 50%;
+}
+.timelines-v2 .timeline-left .timeline-item-title,
+.timelines-v2 .timeline-left .timeline-item-wrapper {
+  border-radius: 10px 0px 0px 0px;
+}
+.timelines-v2 .timeline-left .timeline-item-wrapper {
+  margin-right: 40px;
+}
+.timelines-v2 .timeline-left::before {
+  content: "◄";
+  position: absolute;
+  left: calc(50% - 20px);
+}
+.timelines-v2 .timeline-right .timeline-item-wrapper, .timelines-v2 .timeline-left .timeline-item-wrapper {
+  transition-property: transform;
+  transition-duration: 500ms;
+}
+.timelines-v2 .timeline-right::before, .timelines-v2 .timeline-left::before {
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--timeline-accent-color); /* <-- VARIÁVEL APLICADA */
+  transition-property: opacity, color; /* Transição suave */
+  transition-duration: 500ms, 200ms;
+}
+.timelines-v2 .timeline-right.visible .timeline-item-wrapper, .timelines-v2 .timeline-left.visible .timeline-item-wrapper {
+  transform: perspective(2500px) rotatex(0deg);
+}
+.timelines-v2 .timeline-right.visible::before, .timelines-v2 .timeline-left.visible::before {
+  opacity: 1;
+}
+.timelines-v2 .timeline-right.invisible .timeline-item-wrapper, .timelines-v2 .timeline-left.invisible .timeline-item-wrapper {
+  transform: perspective(2500px) rotatex(-90deg);
+}
+.timelines-v2 .timeline-right.invisible::before, .timelines-v2 .timeline-left.invisible::before {
+  opacity: 0;
+}
+.timelines-v2 .timeline-item-wrapper {
+  background-color: unset;
+}
+.timelines-v2 .timeline-item h1,
+.timelines-v2 .timeline-item h2,
+.timelines-v2 .timeline-item h3,
+.timelines-v2 .timeline-item h4,
+.timelines-v2 .timeline-item h5,
+.timelines-v2 .timeline-item h6 {
+  margin: 0;
+}
+.timelines-v2 .timeline-item-title {
+  padding: 0px 20px;
+  background-color: var(--timeline-accent-color); /* <-- VARIÁVEL APLICADA */
+  transition: background-color 0.2s ease; /* Transição suave */
+}
+.timelines-v2 .timeline-item-title h1,
+.timelines-v2 .timeline-item-title h2,
+.timelines-v2 .timeline-item-title h3,
+.timelines-v2 .timeline-item-title h4,
+.timelines-v2 .timeline-item-title h5,
+.timelines-v2 .timeline-item-title h6 {
+  line-height: 3rem;
+  color: var(--timeline-accent-text-color); /* <-- VARIÁVEL APLICADA */
+  text-transform: uppercase;
+  transition: color 0.2s ease; /* Transição suave */
+}
+.timelines-v2 .timeline-item-subtitle {
+  color: var(--timeline-accent-color); /* <-- VARIÁVEL APLICADA */
+  font-weight: bold;
+  transition: color 0.2s ease; /* Transição suave */
+}
+.timelines-v2 .timeline-item-text {
+  color: var(--timeline-text-color); /* <-- VARIÁVEL APLICADA */
+  font-size: 18px;
+  transition: color 0.2s ease; /* Transição suave */
+}
+.timelines-v2 .timeline-item-image-wrapper .timeline-item-image-title, .timelines-v2 .timeline-item-image-wrapper .timeline-item-image-source {
+  text-align: center;
+}
+.timelines-v2 .timeline-item-image-wrapper .timeline-item-image-title p, .timelines-v2 .timeline-item-image-wrapper .timeline-item-image-source p {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: var(--timeline-caption-color); /* <-- VARIÁVEL APLICADA */
+  font-size: 70%;
+  transition: color 0.2s ease; /* Transição suave */
+}
+.timelines-v2 .timeline-item-image-wrapper .timeline-item-image-source {
+  margin-top: -9px;
+}
+@media (max-width: 575px) {
+  .timelines-v2 .timeline .timeline-item {
+    padding-top: 20px;
+  }
+  .timelines-v2 .timeline .timeline-item::before {
+    content: "►";
+    left: 0;
+    transform: translateY(-15px);
+  }
+  .timelines-v2 .timeline::before {
+    left: -16px;
+    width: 3px;
+  }
+}
+
+.timelines.deep-purple {
+  --timeline-accent-color: #b982ff;
+}
+
+body.theme-sepia .timelines-wrapper,
+body.theme-gray .timelines-wrapper,
+body.theme-dark .timelines-wrapper {
+  --timeline-accent-color: var(--text-color);
+  --timeline-accent-text-color: var(--background-color);
+  --timeline-text-color: var(--text-color);
+  --timeline-caption-color: var(--text-color);
+}
+
+body.theme-white .timelines-wrapper {
+  --timeline-accent-color: #00368c;
+  --timeline-accent-text-color: white;
+  --timeline-text-color: var(--text-color, #3a3a3a);
+  --timeline-caption-color: #6c757d;
+}
+
+body.pdf-mode .timelines .timeline-right .timeline-item-wrapper, body.pdf-mode .timelines .timeline-left .timeline-item-wrapper {
+  transition: none !important;
+  transform: none !important;
+}
+body.pdf-mode .timelines .timeline-right::before, body.pdf-mode .timelines .timeline-left::before {
+  opacity: 1 !important;
+  transition: none !important;
+}
+body.pdf-mode .timelines .timeline-right.invisible .timeline-item-wrapper, body.pdf-mode .timelines .timeline-left.invisible .timeline-item-wrapper {
+  transform: none !important;
+}
+body.pdf-mode .timelines .timeline-right.invisible::before, body.pdf-mode .timelines .timeline-left.invisible::before {
+  opacity: 1 !important;
+}
+body.pdf-mode .timelines .timeline-item {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}

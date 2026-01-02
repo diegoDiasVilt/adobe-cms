@@ -31,11 +31,15 @@ export default function decorate(block) {
     const text = element?.children[1];
     const image = element?.children[2];
     const imgTitle = imgTitleElement?.textContent?.trim();
+    const imgTitleDecoded = decodeBase64(imgTitle);
     const description = descriptionElement?.textContent?.trim();
+    const descriptionDecoded = decodeBase64(description);
     const secondText = element?.children[5];
     const secondImage = element?.children[6];
     const secondImgTitle = secondImgTitleElement?.textContent?.trim();
+    const secondImgTitleDecoded = decodeBase64(secondImgTitle);
     const secondDescription = secondDescriptionElement?.textContent?.trim();
+    const secondDescriptionDecoded = decodeBase64(secondDescription);
     
     headerTextElement.remove();
     imgTitleElement.remove();
@@ -88,18 +92,18 @@ export default function decorate(block) {
                     ${textContent}
                 </div>
                 <div class="accordion-item-body-image">
-                    <p>${imgTitle}</p>
+                    <p>${imgTitleDecoded}</p>
                     ${image?.innerHTML}
-                    <p>${description}</p>
+                    <p>${descriptionDecoded}</p>
                 </div>
 
                 <div class="accordion-item-body-text">
                     ${secondTextContent}
                 </div>
                 <div class="accordion-item-body-image">
-                    <p>${secondImgTitle}</p>
+                    <p>${secondImgTitleDecoded}</p>
                     ${secondImage?.innerHTML}
-                    <p>${secondDescription}</p>
+                    <p>${secondDescriptionDecoded}</p>
                 </div>
             </div>
         </div>

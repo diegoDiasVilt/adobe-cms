@@ -1,27 +1,37 @@
-.embed-wrapper {
-    .embed {
-        margin-top: 40px;
+.video-v2 {
+    margin-top: 40px;
+    margin-bottom: 0;
+    width: 100%;
+
+    p {
         text-align: center;
-        
-        &.deep-purple {
-            color: #b982ff;
-        }
+        font-size: 80%;
+        color: #6c757d;
+        margin: 10px 0;
+        line-height: 1;
     }
-    .embed-source {
-        margin: 0 5px;
-        font-size: 14px;
-        font-style: italic;
+    
+    .plyr_ms {
+        position: relative !important;
+        z-index: 0 !important;
+    }
+
+    .video-placeholder {
+        display: none;
     }
 }
 
-body.pdf-mode {
-    .embed {
-        display: block;
-        width: 100%;
-        text-align: center;
-        margin-top: 40px;
+.video-v2.deep-purple {
+    font-family: "Orbitron-Regular";
+}
 
-        .embed-placeholder {
+body.pdf-mode {
+    .video-v2 {
+        display: block;
+        text-align: center;
+        margin-bottom: 0; 
+
+        .video-placeholder {
             display: block;
             width: 90%;
             margin: 20px auto;
