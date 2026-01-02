@@ -801,7 +801,7 @@
         "name": "code",
         "label": "Conteúdo",
         "valueType": "string",
-        "description": "IMPORTANTE: O bloco de código só carregará o layout se estiver selecionado o texto com o estilo 'preformatted'."
+        "description": "IMPORTANTE: Caso for inserir um bloco de código, selecione 'Code' antes de colocar o conteúdo."
       },
       {
         "component": "text",
