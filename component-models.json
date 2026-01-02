@@ -1870,9 +1870,19 @@
     "id": "embed",
     "fields": [
       {
+        "component": "richtext",
+        "name": "title",
+        "label": "Título"
+      },
+      {
         "component": "text-area",
         "name": "code",
         "label": "Embed"
+      },
+      {
+        "component": "richtext",
+        "name": "source",
+        "label": "Fonte"
       },
       {
         "component": "select",

@@ -721,7 +721,9 @@
                   "name": "embed",
                   "model": "embed",
                   "classes": "default",
-                  "code": "<div><h1>Embed</h1><p>Lorem ipsum dolor</p></div>"
+                  "code": "<div><h1>Embed</h1><p>Lorem ipsum dolor</p></div>",
+                  "title":"Título do embed",
+                  "source": "Fonte do embed"
                 }
               }
             }
