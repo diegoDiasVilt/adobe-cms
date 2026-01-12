@@ -853,3 +853,13 @@ if (!IS_PDF) {
     }
   }, false);
 }
+
+window.addEventListener('message', (event) => {
+    const data = event.data;
+
+    if (data.type === 'UPDATE_STYLES') {
+        const { background, fontFamily, fontSizeClass } = data.styles;
+        document.body.className = ''; 
+        document.body.classList.add(background, fontFamily, fontSizeClass);
+    }
+});
