@@ -468,6 +468,14 @@ main .section.hidden {
   z-index: 999;
   justify-content: end;
 }
+.access-menu button:hover {
+  border-color: #646cff;
+}
+.access-menu button:focus,
+.access-menu button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
 .access-menu button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -478,20 +486,7 @@ main .section.hidden {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-}
-.access-menu button:hover {
-  border-color: #646cff;
-}
-.access-menu button:focus,
-.access-menu button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-.access-menu button {
-  cursor: pointer;
-  background-color: #4c4c4c;
-  color: #FFFFFF;
-  border-radius: 8px;
+  color: #fff;
 }
 
 .background-container {
