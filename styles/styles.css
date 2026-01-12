@@ -542,8 +542,3 @@ main .section.hidden {
 .font-container .font-options button:hover {
   background-color: #3a3a3a;
 }
-
-body.appear {
-  font-size: 24px;
-  background-color: #1a1a1a;
-}
