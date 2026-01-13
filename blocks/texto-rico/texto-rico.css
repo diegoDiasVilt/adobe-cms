@@ -1,91 +1,92 @@
 .texto-rico-wrapper {
-    margin: 40px auto !important;
+  margin: 40px auto !important;
 }
 
 .texto-rico {
-    --table-border-color: #939393 !important;
-    --caption-text-color: #6c757d !important;
-    --text-font-family: var(--body-font-family) !important;
-    font-family: var(--text-font-family) !important;
-    > p,
-    > span {
-        font-size: 22px !important;
-        font-family: var(--text-font-family) !important;
-        margin: 30px auto !important;
-    }
+  --table-border-color: #939393 !important;
+  --caption-text-color: #6c757d !important;
+  --text-font-family: var(--body-font-family);
+  font-family: var(--text-font-family);
+}
+.texto-rico p,
+.texto-rico span {
+  font-size: 22px;
+  font-family: var(--text-font-family);
+  color: #3a3a3a;
+  margin: 30px auto;
 }
 
 .texto-rico table {
-    width: 100% !important;
-    border-spacing: 0px !important;
-    border-collapse: collapse !important;
-    font-size: 18px !important;
-    text-align: left !important;
-    * span {
-        font-size: 18px !important;
-        font-family: var(--text-font-family) !important;
-        text-align: left !important;
-    }
+  width: 100% !important;
+  border-spacing: 0px !important;
+  border-collapse: collapse !important;
+  font-size: 18px;
+  text-align: left !important;
 }
-.texto-rico table td {
-    border: 1px solid var(--table-border-color) !important;
-    padding: 0.75rem !important;
-    transition: border-color 0.2s ease !important;
-    font-family: var(--text-font-family) !important;
-    text-align: left !important;
-    background-color: #ffffff !important;
+.texto-rico table * span {
+  font-size: 18px;
+  font-family: var(--text-font-family);
+  text-align: left !important;
+}
 
-    > p,
-    > span {
-        font-size: 18px !important;
-        font-family: var(--text-font-family) !important;
-        text-align: left !important;
-        margin: 0 0 !important;
-    }
+.texto-rico table td {
+  border: 1px solid var(--table-border-color) !important;
+  padding: 0.75rem !important;
+  transition: border-color 0.2s ease !important;
+  font-family: var(--text-font-family);
+  text-align: left !important;
+  background-color: #ffffff;
+}
+.texto-rico table td > p,
+.texto-rico table td > span {
+  font-size: 18px;
+  font-family: var(--text-font-family);
+  text-align: left !important;
+  margin: 0 0 !important;
 }
 
 .text-rico table tr {
-    background-color: #ffffff !important;
+  background-color: #ffffff;
 }
 
-.texto-rico figure:has(img) {
-    display: grid;
-    justify-content: center;
+.text-rico figure:has(img) {
+  display: grid;
+  justify-content: center;
 }
-.texto-rico figure:has(img) figcaption {
-    text-align: center !important;
-    font-size: 80%;
-    color: var(--caption-text-color);
-    margin: 10px 0;
-    line-height: 1;
-    transition: color 0.2s ease, opacity 0.2s ease;
+.text-rico figure:has(img) figcaption {
+  text-align: center !important;
+  font-size: 80%;
+  color: var(--caption-text-color);
+  margin: 10px 0;
+  line-height: 1;
+  transition: color 0.2s ease, opacity 0.2s ease;
 }
-.texto-rico figure:has(img) img {
-    margin: 0 auto;
+.text-rico figure:has(img) img {
+  margin: 0 auto;
 }
 
 .texto-rico.deep-purple {
-    --text-font-family: "Orbitron-Regular";
+  --text-font-family: "Orbitron-Regular";
 }
 
 body.theme-sepia .texto-rico:not(.deep-purple),
 body.theme-gray .texto-rico:not(.deep-purple),
 body.theme-dark .texto-rico:not(.deep-purple) {
-    --table-border-color: var(--text-color);
-    --caption-text-color: var(--text-color);
-    color: var(--text-color) !important;
+  --table-border-color: var(--text-color);
+  --caption-text-color: var(--text-color);
+  color: var(--text-color) !important;
 }
 body.theme-sepia .texto-rico:not(.deep-purple) figure:has(img) figcaption,
 body.theme-gray .texto-rico:not(.deep-purple) figure:has(img) figcaption,
 body.theme-dark .texto-rico:not(.deep-purple) figure:has(img) figcaption {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 
 body.theme-white .texto-rico:not(.deep-purple) {
-    --table-border-color: #939393;
-    --caption-text-color: #6c757d;
-    color: var(--text-color) !important;
+  --table-border-color: #939393;
+  --caption-text-color: #6c757d;
+  color: var(--text-color) !important;
 }
 body.theme-white .texto-rico:not(.deep-purple) figure:has(img) figcaption {
-    opacity: 1;
+  opacity: 1;
 }
