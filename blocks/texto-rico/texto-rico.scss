@@ -9,8 +9,8 @@
 	font-family: var(--text-font-family);
 	p,
 	span {
-		font-size: 22px;
-		font-family: var(--text-font-family);
+		font-size: 22px !important;
+		font-family: var(--text-font-family) !important;
 		color: #3a3a3a;
 		margin: 30px auto;
 	}
@@ -22,8 +22,8 @@
 	font-size: 18px;
 	text-align: left !important;
 	* span {
-		font-size: 18px;
-		font-family: var(--text-font-family);
+		font-size: 18px !important;
+		font-family: var(--text-font-family) !important;
 		text-align: left !important;
 	}
 }
@@ -31,14 +31,14 @@
 	border: 1px solid var(--table-border-color) !important;
 	padding: 0.75rem !important;
 	transition: border-color 0.2s ease !important;
-	font-family: var(--text-font-family);
+	font-family: var(--text-font-family) !important;
 	text-align: left !important;
 	background-color: #ffffff;
 
 	> p,
 	> span {
-		font-size: 18px;
-		font-family: var(--text-font-family);
+		font-size: 18px !important;
+		font-family: var(--text-font-family) !important;
 		text-align: left !important;
 		margin: 0 0 !important;
 	}
