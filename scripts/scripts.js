@@ -628,6 +628,7 @@ function resetCustomizations() {
 }
 
 if (!IS_PDF) {
+  // Função para medir e enviar a altura real do conteúdo
   const sendHeightToParent = () => {
     const height = Math.max(
       document.body.scrollHeight,
@@ -638,254 +639,98 @@ if (!IS_PDF) {
     window.parent.postMessage(['setHeight', height], '*');
   };
 
-  window.addEventListener('load', sendHeightToParent);
-  window.addEventListener('resize', sendHeightToParent);
-
+  // Observa mudanças no conteúdo (imagens carregando, textos expandindo)
   const observer = new MutationObserver(sendHeightToParent);
   observer.observe(document.body, { subtree: true, childList: true, attributes: true });
 
+  window.addEventListener('load', sendHeightToParent);
+  window.addEventListener('resize', sendHeightToParent);
+
   document.addEventListener('keydown', (event) => {
     const tagName = document.activeElement.tagName;
-    if (tagName === 'INPUT' || tagName === 'TEXTAREA' || document.activeElement.isContentEditable) {
-      return;
-    }
+    if (tagName === 'INPUT' || tagName === 'TEXTAREA' || document.activeElement.isContentEditable) return;
 
     if (event.key.toLowerCase() === 'r') {
-      if (rulerEnabled) {
-        disableRuler();
-      } else {
-        enableRuler();  
-      }
-      window.parent.postMessage({
-        event: 'toggle_reading_ruler',
-        payload: rulerEnabled
-      }, '*');
+      if (rulerEnabled) { disableRuler(); } else { enableRuler(); }
+      window.parent.postMessage({ event: 'toggle_reading_ruler', payload: rulerEnabled }, '*');
     }
   });
 
   window.addEventListener('message', function (e) {
-    console.log(e.data)
     var eventName = e?.data?.event;
     var data = e?.data?.payload;
-    if (eventName === "set_navbar_height") {
-      let counter = 0
-      const intervalId = setInterval(() => {
-        if (counter >= 3) {
-          clearInterval(intervalId);
-        }
-        this.document.querySelectorAll('.block')?.forEach(element => {
-          element.setAttribute('style', `scroll-margin-top: ${data}px`);
-        });
 
-        this.document.querySelector(".img-modal img")?.setAttribute('style', `scroll-margin-top: ${data}px`);
-        this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
-        counter++;
-        console.log(counter)
-      }, 1000);
-    }
-
+    // Responde ao comando de preparação para impressão
     if (eventName === "prepare_for_print") {
       sendHeightToParent();
       return;
     }
 
+    if (eventName === "set_navbar_height") {
+      let counter = 0;
+      const intervalId = setInterval(() => {
+        if (counter >= 3) clearInterval(intervalId);
+        this.document.querySelectorAll('.block')?.forEach(el => el.setAttribute('style', `scroll-margin-top: ${data}px`));
+        counter++;
+      }, 1000);
+    }
+
     if (eventName === "set_ruler_visibility") {
-      if (data === true) {
-        enableRuler();
-      } else if (data === false) {
-        disableRuler();
-      }
+      data ? enableRuler() : disableRuler();
     }
 
     if (eventName === "set_kindle_alignment") {
       const styleId = 'kindle-alignment-style';
-      let alignmentStyleElement = document.getElementById(styleId);
-
-      if (!alignmentStyleElement) {
-        alignmentStyleElement = document.createElement('style');
-        alignmentStyleElement.id = styleId;
-        document.head.appendChild(alignmentStyleElement);
-      }
-
-      if (data === 'left' || data === 'justify') {
-        alignmentStyleElement.innerHTML = `
-          * {
-            text-align: ${data} !important;
-          }
-        `;
-      } else {
-        alignmentStyleElement.innerHTML = '';
-      }
+      let el = document.getElementById(styleId) || document.createElement('style');
+      el.id = styleId;
+      document.head.appendChild(el);
+      el.innerHTML = (data === 'left' || data === 'justify') ? `* { text-align: ${data} !important; }` : '';
     }
 
     if (eventName === "set_kindle_font_type") {
       const styleId = 'kindle-font-type-style';
-      let fontStyleElement = document.getElementById(styleId);
-
-      if (!fontStyleElement) {
-        fontStyleElement = document.createElement('style');
-        fontStyleElement.id = styleId;
-        document.head.appendChild(fontStyleElement);
+      let el = document.getElementById(styleId) || document.createElement('style');
+      el.id = styleId;
+      document.head.appendChild(el);
+      const fonts = {
+        'helvetica': 'Helvetica, Arial, sans-serif',
+        'verdana': 'Verdana, Geneva, sans-serif',
+        'georgia': 'Georgia, serif',
+        'times new roman': '"Times New Roman", Times, serif',
+        'dyslexic': 'OpenDyslexic, sans-serif'
+      };
+      if (fonts[data]) {
+        el.innerHTML = `* { font-family: ${fonts[data]} !important; } i[class*="fa-"] { font-family: "FontAwesome" !important; }`;
+      } else {
+        el.innerHTML = '';
       }
-
-      let fontFamily = '';
-
-      switch (data) {
-        case 'helvetica':
-          fontFamily = 'Helvetica, Arial, sans-serif';
-          break;
-        case 'verdana':
-          fontFamily = 'Verdana, Geneva, sans-serif';
-          break;
-        case 'georgia':
-          fontFamily = 'Georgia, serif';
-          break;
-        case 'times new roman':
-          fontFamily = '"Times New Roman", Times, serif';
-          break;
-        case 'dyslexic':
-          fontFamily = 'OpenDyslexic, sans-serif';
-          break;
-        case 'default':
-        default:
-          fontStyleElement.innerHTML = '';
-          return;
-      }
-
-      fontStyleElement.innerHTML = `
-        /* 1. Aplica a fonte do usuário em TUDO */
-        * {
-          font-family: ${fontFamily} !important;
-        }
-        i[class*="fa-"], .fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands {
-          font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "FontAwesome" !important;
-        }
-      `;
-
-      setTimeout(sendHeightToParent, 100);
+      setTimeout(sendHeightToParent, 150); // Recalcula altura após mudar fonte
     }
 
     if (eventName === "set_kindle_font_size") {
-      let delta = data-20;
-      if (delta === 0) {
-        resetFontSizes();
-      }
-      applyFontSizeDelta(delta);
-      setTimeout(sendHeightToParent, 100);
+      let delta = data - 20;
+      delta === 0 ? resetFontSizes() : applyFontSizeDelta(delta);
+      setTimeout(sendHeightToParent, 150);
     }
 
     if (eventName === "set_kindle_theme") {
-      const body = document.body;
       const themeClasses = ['theme-white', 'theme-sepia', 'theme-gray', 'theme-dark'];
-      body.classList.remove(...themeClasses);
-
-      switch (data) {
-        case 'white':
-          body.classList.add('theme-white');
-          break;
-        case 'sepia':
-          body.classList.add('theme-sepia');
-          break;
-        case 'neutral':
-          body.classList.add('theme-gray');
-          break;
-        case 'dark':
-          body.classList.add('theme-dark');
-          break;
-        case 'default':
-          body.classList.remove(...themeClasses);
-          break;
-        default:
-          break;
-      }
+      document.body.classList.remove(...themeClasses);
+      if (data !== 'default') document.body.classList.add(`theme-${data === 'neutral' ? 'gray' : data}`);
       forceRichTextTheme(data);
     }
 
     if (eventName === "set_kindle_line_space") {
-      let lineHeight = '140%';
-      switch (data) {
-        case '168%':
-        case '196%':
-        case '224%':
-        case '252%':
-          lineHeight = data;
-          break;
-        case '140%':
-        case 'default':
-        default:
-          lineHeight = '140%';
-          break;
-      }
-      document.documentElement.style.setProperty('--kindle-line-height', lineHeight);
+      document.documentElement.style.setProperty('--kindle-line-height', data === 'default' ? '140%' : data);
+      setTimeout(sendHeightToParent, 100);
     }
 
-    if (eventName === "set_kindle_word_space") {
-      let wordSpace = 'normal';
-      switch (data) {
-        case '5%':
-          wordSpace = '0.05em';
-          break;
-        case '10%':
-          wordSpace = '0.10em';
-          break;
-        case '15%':
-          wordSpace = '0.15em';
-          break;
-        case '20%':
-          wordSpace = '0.20em';
-          break;
-        case '0%':
-        case 'default':
-        default:
-          wordSpace = 'normal';
-          break;
-      }
-      document.documentElement.style.setProperty('--kindle-word-space', wordSpace);
+    if (eventName === "set_kindle_word_space" || eventName === "set_kindle_letters_space") {
+      const prop = eventName.includes('word') ? '--kindle-word-space' : '--kindle-letter-space';
+      document.documentElement.style.setProperty(prop, data === 'default' || data === '0%' ? 'normal' : `${parseInt(data)/100}em`);
     }
 
-    if (eventName === "set_kindle_letters_space") {
-      let letterSpace = 'normal';
-      switch (data) {
-        case '5%':
-          letterSpace = '0.05em';
-          break;
-        case '10%':
-          letterSpace = '0.10em';
-          break;
-        case '15%':
-          letterSpace = '0.15em';
-          break;
-        case '20%':
-          letterSpace = '0.20em';
-          break;
-        case '0%':
-        case 'default':
-        default:
-          letterSpace = 'normal';
-          break;
-      }
-      document.documentElement.style.setProperty('--kindle-letter-space', letterSpace);
-    }
-    if (eventName === 'set_kindle_reset') {
-      resetCustomizations();
-    }
+    if (eventName === 'set_kindle_reset') resetCustomizations();
+
   }, false);
-
-  (function() {
-    const sendHeight = () => {
-        const height = document.documentElement.scrollHeight || document.body.scrollHeight;
-        window.parent.postMessage(['setHeight', height], '*');
-    };
-
-    window.addEventListener('load', sendHeight);
-    window.addEventListener('resize', sendHeight);
-    const observer = new MutationObserver(sendHeight);
-    observer.observe(document.body, { subtree: true, childList: true });
-
-    window.addEventListener('message', (event) => {
-        if (event.data.event === 'prepare_for_print') {
-            sendHeight();
-        }
-    });
-})();
 }
