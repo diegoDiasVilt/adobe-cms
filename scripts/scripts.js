@@ -635,13 +635,11 @@ if (!IS_PDF) {
     }
 
     if (event.key.toLowerCase() === 'r') {
-      
-      if (rulerEnabled) { 
-        disableRuler(); 
+      if (rulerEnabled) {
+        disableRuler();
       } else {
         enableRuler();  
       }
-
       window.parent.postMessage({
         event: 'toggle_reading_ruler',
         payload: rulerEnabled
@@ -667,7 +665,6 @@ if (!IS_PDF) {
         this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
         counter++;
         console.log(counter)
-
       }, 1000);
     }
 
@@ -678,6 +675,7 @@ if (!IS_PDF) {
         disableRuler();
       }
     }
+
     if (eventName === "set_kindle_alignment") {
       const styleId = 'kindle-alignment-style';
       let alignmentStyleElement = document.getElementById(styleId);
@@ -732,13 +730,12 @@ if (!IS_PDF) {
           fontStyleElement.innerHTML = '';
           return;
       }
-      
+
       fontStyleElement.innerHTML = `
         /* 1. Aplica a fonte do usuário em TUDO */
         * {
           font-family: ${fontFamily} !important;
         }
-
         i[class*="fa-"], .fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands {
           font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "FontAwesome" !important;
         }
@@ -747,17 +744,15 @@ if (!IS_PDF) {
 
     if (eventName === "set_kindle_font_size") {
       let delta = data-20;
-
       if (delta === 0) {
         resetFontSizes();
       }
-
       applyFontSizeDelta(delta);
     }
+
     if (eventName === "set_kindle_theme") {
       const body = document.body;
       const themeClasses = ['theme-white', 'theme-sepia', 'theme-gray', 'theme-dark'];
-      
       body.classList.remove(...themeClasses);
 
       switch (data) {
@@ -779,7 +774,6 @@ if (!IS_PDF) {
         default:
           break;
       }
-
       forceRichTextTheme(data);
     }
 
