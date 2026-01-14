@@ -10,8 +10,8 @@
 }
 .texto-rico p,
 .texto-rico span {
-  font-size: 22px !important;
-  font-family: var(--text-font-family) !important;
+  font-size: 22px;
+  font-family: var(--text-font-family);
   color: #3a3a3a;
   margin: 30px auto;
 }
@@ -24,8 +24,8 @@
   text-align: left !important;
 }
 .texto-rico table * span {
-  font-size: 18px !important;
-  font-family: var(--text-font-family) !important;
+  font-size: 18px;
+  font-family: var(--text-font-family);
   text-align: left !important;
 }
 
@@ -33,14 +33,14 @@
   border: 1px solid var(--table-border-color) !important;
   padding: 0.75rem !important;
   transition: border-color 0.2s ease !important;
-  font-family: var(--text-font-family) !important;
+  font-family: var(--text-font-family);
   text-align: left !important;
   background-color: #ffffff;
 }
 .texto-rico table td > p,
 .texto-rico table td > span {
-  font-size: 18px !important;
-  font-family: var(--text-font-family) !important;
+  font-size: 18px;
+  font-family: var(--text-font-family);
   text-align: left !important;
   margin: 0 0 !important;
 }
