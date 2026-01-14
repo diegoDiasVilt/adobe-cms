@@ -8,6 +8,7 @@
   --text-font-family: var(--body-font-family);
   font-family: var(--text-font-family);
 }
+
 .texto-rico p,
 .texto-rico span {
   font-size: 22px;
@@ -23,6 +24,7 @@
   font-size: 18px;
   text-align: left !important;
 }
+
 .texto-rico table * span {
   font-size: 18px;
   font-family: var(--text-font-family);
@@ -37,6 +39,7 @@
   text-align: left !important;
   background-color: #ffffff;
 }
+
 .texto-rico table td > p,
 .texto-rico table td > span {
   font-size: 18px;
