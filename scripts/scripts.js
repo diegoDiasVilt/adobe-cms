@@ -628,22 +628,6 @@ function resetCustomizations() {
 }
 
 if (!IS_PDF) {
-  const sendHeightToParent = () => {
-    const height = Math.max(
-      document.body.scrollHeight,
-      document.documentElement.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.offsetHeight
-    );
-    window.parent.postMessage(['setHeight', height], '*');
-  };
-
-  const observer = new MutationObserver(sendHeightToParent);
-  observer.observe(document.body, { subtree: true, childList: true, attributes: true });
-
-  window.addEventListener('load', sendHeightToParent);
-  window.addEventListener('resize', sendHeightToParent);
-
   document.addEventListener('keydown', (event) => {
     const tagName = document.activeElement.tagName;
     if (tagName === 'INPUT' || tagName === 'TEXTAREA' || document.activeElement.isContentEditable) {
@@ -669,12 +653,6 @@ if (!IS_PDF) {
     console.log(e.data)
     var eventName = e?.data?.event;
     var data = e?.data?.payload;
-
-    if (eventName === "prepare_for_print") {
-      sendHeightToParent();
-      return;
-    }
-
     if (eventName === "set_navbar_height") {
       let counter = 0
       const intervalId = setInterval(() => {
@@ -765,7 +743,6 @@ if (!IS_PDF) {
           font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "FontAwesome" !important;
         }
       `;
-      setTimeout(sendHeightToParent, 150);
     }
 
     if (eventName === "set_kindle_font_size") {
@@ -776,7 +753,6 @@ if (!IS_PDF) {
       }
 
       applyFontSizeDelta(delta);
-      setTimeout(sendHeightToParent, 150);
     }
     if (eventName === "set_kindle_theme") {
       const body = document.body;
