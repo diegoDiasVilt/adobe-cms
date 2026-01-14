@@ -628,6 +628,22 @@ function resetCustomizations() {
 }
 
 if (!IS_PDF) {
+  const sendHeightToParent = () => {
+    const height = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight
+    );
+    window.parent.postMessage(['setHeight', height], '*');
+  };
+
+  window.addEventListener('load', sendHeightToParent);
+  window.addEventListener('resize', sendHeightToParent);
+
+  const observer = new MutationObserver(sendHeightToParent);
+  observer.observe(document.body, { subtree: true, childList: true, attributes: true });
+
   document.addEventListener('keydown', (event) => {
     const tagName = document.activeElement.tagName;
     if (tagName === 'INPUT' || tagName === 'TEXTAREA' || document.activeElement.isContentEditable) {
@@ -666,6 +682,11 @@ if (!IS_PDF) {
         counter++;
         console.log(counter)
       }, 1000);
+    }
+
+    if (eventName === "prepare_for_print") {
+      sendHeightToParent();
+      return;
     }
 
     if (eventName === "set_ruler_visibility") {
@@ -740,6 +761,8 @@ if (!IS_PDF) {
           font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "FontAwesome" !important;
         }
       `;
+
+      setTimeout(sendHeightToParent, 100);
     }
 
     if (eventName === "set_kindle_font_size") {
@@ -748,6 +771,7 @@ if (!IS_PDF) {
         resetFontSizes();
       }
       applyFontSizeDelta(delta);
+      setTimeout(sendHeightToParent, 100);
     }
 
     if (eventName === "set_kindle_theme") {
@@ -846,4 +870,22 @@ if (!IS_PDF) {
       resetCustomizations();
     }
   }, false);
+
+  (function() {
+    const sendHeight = () => {
+        const height = document.documentElement.scrollHeight || document.body.scrollHeight;
+        window.parent.postMessage(['setHeight', height], '*');
+    };
+
+    window.addEventListener('load', sendHeight);
+    window.addEventListener('resize', sendHeight);
+    const observer = new MutationObserver(sendHeight);
+    observer.observe(document.body, { subtree: true, childList: true });
+
+    window.addEventListener('message', (event) => {
+        if (event.data.event === 'prepare_for_print') {
+            sendHeight();
+        }
+    });
+})();
 }
