@@ -628,6 +628,7 @@ function resetCustomizations() {
 }
 
 if (!IS_PDF) {
+
   const sendHeightToParent = () => {
     const height = Math.max(
       document.body.scrollHeight,
@@ -643,7 +644,7 @@ if (!IS_PDF) {
 
   const observer = new MutationObserver(sendHeightToParent);
   observer.observe(document.body, { subtree: true, childList: true, attributes: true });
-
+  
   document.addEventListener('keydown', (event) => {
     const tagName = document.activeElement.tagName;
     if (tagName === 'INPUT' || tagName === 'TEXTAREA' || document.activeElement.isContentEditable) {
@@ -664,7 +665,6 @@ if (!IS_PDF) {
   });
 
   window.addEventListener('message', function (e) {
-    console.log(e.data)
     var eventName = e?.data?.event;
     var data = e?.data?.payload;
     if (eventName === "set_navbar_height") {
@@ -683,6 +683,7 @@ if (!IS_PDF) {
         console.log(counter)
       }, 1000);
     }
+
 
     if (eventName === "prepare_for_print") {
       sendHeightToParent();
@@ -871,21 +872,4 @@ if (!IS_PDF) {
     }
   }, false);
 
-  (function() {
-    const sendHeight = () => {
-        const height = document.documentElement.scrollHeight || document.body.scrollHeight;
-        window.parent.postMessage(['setHeight', height], '*');
-    };
-
-    window.addEventListener('load', sendHeight);
-    window.addEventListener('resize', sendHeight);
-    const observer = new MutationObserver(sendHeight);
-    observer.observe(document.body, { subtree: true, childList: true });
-
-    window.addEventListener('message', (event) => {
-        if (event.data.event === 'prepare_for_print') {
-            sendHeight();
-        }
-    });
-})();
 }
