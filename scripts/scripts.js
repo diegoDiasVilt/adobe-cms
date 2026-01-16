@@ -628,6 +628,7 @@ function resetCustomizations() {
 }
 
 if (!IS_PDF) {
+
   const sendHeightToParent = () => {
     const height = Math.max(
       document.body.scrollHeight,
@@ -662,21 +663,6 @@ if (!IS_PDF) {
       }, '*');
     }
   });
-
-  let lastIframeScroll = window.pageYOffset;
-
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    window.parent.postMessage({
-      event: 'iframe_scroll',
-      payload: {
-        scrollY: currentScroll,
-        direction: currentScroll > lastIframeScroll ? 'down' : 'up'
-      }
-    }, '*');
-    
-    lastIframeScroll = currentScroll;
-  }, { passive: true });
 
   window.addEventListener('message', function (e) {
     var eventName = e?.data?.event;
