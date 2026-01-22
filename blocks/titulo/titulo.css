@@ -20,6 +20,7 @@
   font-style: var(--titulo-font-style);
   letter-spacing: var(--titulo-letter-spacing);
   transition: color 0.2s ease;
+  line-height: 1;
 }
 .titulo h1 i,
 .titulo h2 i,
