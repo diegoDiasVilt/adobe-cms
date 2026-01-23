@@ -665,6 +665,7 @@ if (!IS_PDF) {
   });
 
   window.addEventListener('message', function (e) {
+    console.log('event name log', eventName)
     var eventName = e?.data?.event;
     var data = e?.data?.payload;
     if (eventName === "set_navbar_height") {
