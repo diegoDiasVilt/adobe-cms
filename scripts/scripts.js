@@ -687,6 +687,7 @@ if (!IS_PDF) {
 
 
     if (eventName === "prepare_for_print") {
+      console.log('enter - prepare_for_print', eventName)
       sendHeightToParent();
       return;
     }
