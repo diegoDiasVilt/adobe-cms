@@ -668,12 +668,11 @@ if (IS_PDF) {
   window.addEventListener(
     'message',
     async (e) => {
-      console.log('EVENT - is_pdf')
       const eventName = e?.data?.event;
       const payload = e?.data?.payload;
 
       if (eventName === 'prepare_for_print') {
-         console.log('ENTER on PRINT')
+         console.log('IS_PDF - PREPARE TO PRINT')
         if (payload?.id) {
           PRINT_IFRAME_ID = payload.id;
         }
