@@ -19,6 +19,11 @@ if (IS_PDF) {
   window.isPdfMode = true;
 }
 
+let resolvePageReady = null;
+const pageReady = new Promise((resolve) => {
+  resolvePageReady = resolve;
+});
+
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 /**
@@ -200,14 +205,31 @@ function loadDelayed() {
   import('./sidekick.js').then(({ initSidekick }) => initSidekick());
 }
 
+async function waitForImages(root) {
+  const images = [...root.querySelectorAll('img')];
+  if (images.length === 0) return;
+
+  const waiters = images.map((img) => new Promise((resolve) => {
+    if (img.complete) return resolve();
+    const done = () => resolve();
+    img.addEventListener('load', done, { once: true });
+    img.addEventListener('error', done, { once: true });
+  }));
+
+  const timeout = new Promise((resolve) => setTimeout(resolve, 5000));
+  await Promise.race([Promise.allSettled(waiters), timeout]);
+}
+
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   if (IS_PDF) {
     loadMathJax();
+    await waitForImages(document);
     await new Promise(r => setTimeout(r, 1000));
     console.log('PDF_GENERATION_READY');
     // console.log(document.documentElement.outerHTML);
+    if (resolvePageReady) resolvePageReady();
   } else {
     loadDelayed();
   }
@@ -672,11 +694,12 @@ if (IS_PDF) {
       const payload = e?.data?.payload;
 
       if (eventName === 'prepare_for_print') {
-         console.log('IS_PDF - PREPARE TO PRINT')
+         console.log('IS_PDF - PREPARE TO PRINT - ADD PAGEREADY')
         if (payload?.id) {
           PRINT_IFRAME_ID = payload.id;
         }
         // mede e devolve pro pai
+        await pageReady;
         await sendPdfHeightToParent();
       }
     },
