@@ -207,7 +207,7 @@ async function loadPage() {
     loadMathJax();
     await new Promise(r => setTimeout(r, 1000));
     console.log('PDF_GENERATION_READY');
-    console.log(document.documentElement.outerHTML);
+    // console.log(document.documentElement.outerHTML);
   } else {
     loadDelayed();
   }
