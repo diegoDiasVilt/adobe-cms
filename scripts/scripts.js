@@ -686,6 +686,11 @@ async function sendPdfHeightToParent() {
   );
 }
 
+async function sendPdfHeightToParentAfterDelay(delayMs = 400) {
+  await new Promise((resolve) => setTimeout(resolve, delayMs));
+  await sendPdfHeightToParent();
+}
+
 if (IS_PDF) {
   window.addEventListener(
     'message',
@@ -701,6 +706,7 @@ if (IS_PDF) {
         // mede e devolve pro pai
         await pageReady;
         await sendPdfHeightToParent();
+        await sendPdfHeightToParentAfterDelay(600);
       }
     },
     false,
