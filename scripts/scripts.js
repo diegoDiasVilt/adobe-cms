@@ -626,6 +626,71 @@ function resetCustomizations() {
   document.documentElement.style.setProperty('--kindle-letter-space', 'normal'); //
 }
 
+
+let PRINT_IFRAME_ID = null;
+
+function getDocumentHeight() {
+  return Math.max(
+    document.documentElement.scrollHeight,
+    document.body.scrollHeight,
+    document.documentElement.offsetHeight,
+    document.body.offsetHeight,
+  );
+}
+
+function raf2() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  });
+}
+
+async function sendPdfHeightToParent() {
+  await raf2();
+
+  const height = getDocumentHeight();
+
+  // mantém o contrato atual do seu pai
+  window.parent.postMessage(['setHeight', height + 10], '*');
+
+  // ✅ sincronização do print (com ID)
+  window.parent.postMessage(
+    {
+      event: 'print_ready',
+      payload: {
+        id: PRINT_IFRAME_ID,
+        height,
+      },
+    },
+    '*',
+  );
+}
+
+if (IS_PDF) {
+  window.addEventListener(
+    'message',
+    async (e) => {
+      console.log('IS_PDF EVENT')
+      const eventName = e?.data?.event;
+      const payload = e?.data?.payload;
+
+      if (eventName === 'prepare_for_print') {
+        // ✅ captura o id enviado pelo pai
+         console.log('ENTER on PRINT')
+        if (payload?.id) {
+          PRINT_IFRAME_ID = payload.id;
+        }
+
+        // (opcional) reforça classe PDF
+        document.body.classList.add('pdf-mode');
+
+        // mede e devolve pro pai
+        await sendPdfHeightToParent();
+      }
+    },
+    false,
+  );
+}
+
 if (!IS_PDF) {
 
   const sendHeightToParent = () => {
