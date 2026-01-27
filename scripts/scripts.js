@@ -771,6 +771,8 @@ if (!IS_PDF) {
     }
 
     if (eventName === "prepare_for_print") {
+      console.log('prepare_for_print, is not a pdf test')
+      document.body.classList.add('pdf-mode');
       sendHeightToParent();
       return;
     }
