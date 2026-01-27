@@ -646,7 +646,6 @@ function raf2() {
 
 async function sendPdfHeightToParent() {
   await raf2();
-  await waitForPdfContent();
 
   const height = getDocumentHeight();
 
@@ -665,47 +664,15 @@ async function sendPdfHeightToParent() {
   );
 }
 
-function waitForPdfContent() {
-  const tasks = [];
-
-  if (document.fonts && document.fonts.ready) {
-    tasks.push(document.fonts.ready.catch(() => {}));
-  }
-
-  if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
-    tasks.push(window.MathJax.typesetPromise().catch(() => {}));
-  }
-
-  const images = Array.from(document.images || []);
-  if (images.length) {
-    const imagePromises = images.map((img) => {
-      if (img.complete && img.naturalWidth !== 0) return Promise.resolve();
-      if (typeof img.decode === 'function') return img.decode().catch(() => {});
-      return new Promise((resolve) => {
-        img.addEventListener('load', resolve, { once: true });
-        img.addEventListener('error', resolve, { once: true });
-      });
-    });
-    tasks.push(Promise.all(imagePromises));
-  }
-
-  // Safety timeout to avoid hanging print in edge cases.
-  return Promise.race([
-    Promise.all(tasks),
-    new Promise((resolve) => setTimeout(resolve, 2500)),
-  ]);
-}
-
 if (IS_PDF) {
   window.addEventListener(
     'message',
     async (e) => {
-      console.log('EVENT - is_pdf')
       const eventName = e?.data?.event;
       const payload = e?.data?.payload;
 
       if (eventName === 'prepare_for_print') {
-         console.log('ENTER on PRINT')
+         console.log('IS_PDF - PREPARE TO PRINT')
         if (payload?.id) {
           PRINT_IFRAME_ID = payload.id;
         }
