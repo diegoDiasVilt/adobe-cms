@@ -200,40 +200,12 @@ function loadDelayed() {
   import('./sidekick.js').then(({ initSidekick }) => initSidekick());
 }
 
-function getDocHeight() {
-  return Math.max(
-    document.body.scrollHeight,
-    document.documentElement.scrollHeight,
-    document.body.offsetHeight,
-    document.documentElement.offsetHeight
-  );
-}
-
-function getIframeId() {
-  return new URLSearchParams(window.location.search).get('iframeId');
-}
-
-function notifyParentPrintReady() {
-  console.log('enter on notify')
-  const id = getIframeId();
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const height = getDocHeight();
-      window.parent.postMessage(
-        { event: 'print_ready', payload: { id, height } },
-        '*'
-      );
-    });
-  });
-}
-
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   if (IS_PDF) {
     loadMathJax();
     await new Promise(r => setTimeout(r, 1000));
-    notifyParentPrintReady()
     console.log('PDF_GENERATION_READY');
     console.log(document.documentElement.outerHTML);
   } else {
