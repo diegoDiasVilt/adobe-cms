@@ -200,13 +200,23 @@ function loadDelayed() {
   import('./sidekick.js').then(({ initSidekick }) => initSidekick());
 }
 
+function notifyParentReady() {
+  try {
+    console.log('enter on notify')
+    window.parent.postMessage({ event: 'iframe_loaded' }, '*');
+  } catch (e) {
+    // ignore
+     console.log('catch notify')
+  }
+}
+
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   if (IS_PDF) {
     loadMathJax();
     await new Promise(r => setTimeout(r, 1000));
-    
+    notifyParentReady()
     console.log('PDF_GENERATION_READY');
     console.log(document.documentElement.outerHTML);
   } else {
@@ -665,7 +675,6 @@ if (!IS_PDF) {
   });
 
   window.addEventListener('message', function (e) {
-    console.log('event name log', eventName)
     var eventName = e?.data?.event;
     var data = e?.data?.payload;
     if (eventName === "set_navbar_height") {
@@ -685,9 +694,7 @@ if (!IS_PDF) {
       }, 1000);
     }
 
-
     if (eventName === "prepare_for_print") {
-      console.log('enter - prepare_for_print', eventName)
       sendHeightToParent();
       return;
     }
