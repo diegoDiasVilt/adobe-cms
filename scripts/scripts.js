@@ -19,11 +19,6 @@ if (IS_PDF) {
   window.isPdfMode = true;
 }
 
-let resolvePageReady = null;
-const pageReady = new Promise((resolve) => {
-  resolvePageReady = resolve;
-});
-
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 /**
@@ -205,31 +200,14 @@ function loadDelayed() {
   import('./sidekick.js').then(({ initSidekick }) => initSidekick());
 }
 
-async function waitForImages(root) {
-  const images = [...root.querySelectorAll('img')];
-  if (images.length === 0) return;
-
-  const waiters = images.map((img) => new Promise((resolve) => {
-    if (img.complete) return resolve();
-    const done = () => resolve();
-    img.addEventListener('load', done, { once: true });
-    img.addEventListener('error', done, { once: true });
-  }));
-
-  const timeout = new Promise((resolve) => setTimeout(resolve, 5000));
-  await Promise.race([Promise.allSettled(waiters), timeout]);
-}
-
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   if (IS_PDF) {
     loadMathJax();
-    await waitForImages(document);
     await new Promise(r => setTimeout(r, 1000));
     console.log('PDF_GENERATION_READY');
-    // console.log(document.documentElement.outerHTML);
-    if (resolvePageReady) resolvePageReady();
+    console.log(document.documentElement.outerHTML);
   } else {
     loadDelayed();
   }
@@ -648,81 +626,22 @@ function resetCustomizations() {
   document.documentElement.style.setProperty('--kindle-letter-space', 'normal'); //
 }
 
-
-let PRINT_IFRAME_ID = null;
-
-function getDocumentHeight() {
-  return Math.max(
-    document.documentElement.scrollHeight,
-    document.body.scrollHeight,
-    document.documentElement.offsetHeight,
-    document.body.offsetHeight,
-  );
-}
-
-function raf2() {
-  return new Promise((resolve) => {
-    requestAnimationFrame(() => requestAnimationFrame(resolve));
-  });
-}
-
-async function sendPdfHeightToParent() {
-  await raf2();
-
-  const height = getDocumentHeight();
-
-
-  window.parent.postMessage(['setHeight', height + 10], '*');
-
-  window.parent.postMessage(
-    {
-      event: 'print_ready',
-      payload: {
-        id: PRINT_IFRAME_ID,
-        height,
-      },
-    },
-    '*',
-  );
-}
-
-async function sendPdfHeightToParentAfterDelay(delayMs = 400) {
-  await new Promise((resolve) => setTimeout(resolve, delayMs));
-  await sendPdfHeightToParent();
-}
-
-if (IS_PDF) {
-  window.addEventListener(
-    'message',
-    async (e) => {
-      const eventName = e?.data?.event;
-      const payload = e?.data?.payload;
-
-      if (eventName === 'prepare_for_print') {
-         console.log('IS_PDF - PREPARE TO PRINT - ADD PAGEREADY - DELAY')
-        if (payload?.id) {
-          PRINT_IFRAME_ID = payload.id;
-        }
-        // mede e devolve pro pai
-        await pageReady;
-        await sendPdfHeightToParent();
-        await sendPdfHeightToParentAfterDelay(600);
-      }
-    },
-    false,
-  );
-}
-
 if (!IS_PDF) {
+  const getDocumentHeight = () => Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+    document.body.offsetHeight,
+    document.documentElement.offsetHeight
+  );
 
   const sendHeightToParent = () => {
-    const height = Math.max(
-      document.body.scrollHeight,
-      document.documentElement.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.offsetHeight
-    );
+    const height = getDocumentHeight();
     window.parent.postMessage(['setHeight', height], '*');
+  };
+
+  const sendPrintHeightToParent = () => {
+    const height = getDocumentHeight();
+    window.parent.postMessage({ event: 'print_iframe_height', payload: { height } }, '*');
   };
 
   window.addEventListener('load', sendHeightToParent);
@@ -771,9 +690,10 @@ if (!IS_PDF) {
     }
 
     if (eventName === "prepare_for_print") {
-      console.log('prepare_for_print, is not a pdf test')
+      console.log('prepare_for_print, add body class')
       document.body.classList.add('pdf-mode');
-      sendHeightToParent();
+
+      setTimeout(sendPrintHeightToParent, 100);
       return;
     }
 
