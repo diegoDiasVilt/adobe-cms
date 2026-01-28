@@ -351,10 +351,7 @@ export async function fetchAuthorBio(anchor) {
     });
 }
 
-const printReadyPromise = loadPage().then(() => {
-  window.__printReady = true;
-});
-window.__printReadyPromise = printReadyPromise;
+loadPage();
 
 export function isInEditor() {
   return window?.location?.hostname?.startsWith("author");
@@ -823,7 +820,7 @@ if (!IS_PDF) {
       }
 
       if (eventName === "prepare_for_print") {
-        console.log("class/width/request -- prepare_for_print -- updated");
+        console.log("class/width/request -- prepare_for_print -- v1");
         document.body.classList.add("pdf-mode");
         applyPrintLayout(data?.printWidthPx);
         requestAnimationFrame(sendHeightToParent);
@@ -837,56 +834,46 @@ if (!IS_PDF) {
       }
 
       if (eventName === "request_print_html") {
-        console.log("request -- request_print_html -- updated");
-        (async () => {
-          if (window.__printReadyPromise) {
-            await window.__printReadyPromise;
+        console.log("request -- request_print_html -- v1");
+        const main = document.querySelector("main") || document.body;
+        const container = document.createElement("div");
+        Array.from(main.childNodes).forEach((node) => {
+          container.appendChild(node.cloneNode(true));
+        });
+        absolutizeUrlsInContainer(container, window.location.href);
+        container.querySelectorAll("img").forEach((img) => {
+          img.setAttribute("loading", "eager");
+          img.setAttribute("decoding", "async");
+          img.setAttribute("fetchpriority", "high");
+          if (img.dataset && img.dataset.src && !img.getAttribute("src")) {
+            img.setAttribute("src", img.dataset.src);
           }
-          await new Promise((r) => requestAnimationFrame(() => r()));
-          const main = document.querySelector("main") || document.body;
-          const container = document.createElement("div");
-          Array.from(main.childNodes).forEach((node) => {
-            container.appendChild(node.cloneNode(true));
-          });
-          absolutizeUrlsInContainer(container, window.location.href);
-          container.querySelectorAll("img").forEach((img) => {
-            img.setAttribute("loading", "eager");
-            img.setAttribute("decoding", "async");
-            img.setAttribute("fetchpriority", "high");
-            if (img.dataset && img.dataset.src && !img.getAttribute("src")) {
-              img.setAttribute("src", img.dataset.src);
-            }
-            if (
-              img.dataset &&
-              img.dataset.srcset &&
-              !img.getAttribute("srcset")
-            ) {
-              img.setAttribute("srcset", img.dataset.srcset);
-            }
-          });
+          if (img.dataset && img.dataset.srcset && !img.getAttribute("srcset")) {
+            img.setAttribute("srcset", img.dataset.srcset);
+          }
+        });
 
-          const styleHrefs = Array.from(
-            document.querySelectorAll('link[rel="stylesheet"]'),
-          )
-            .map((el) => el.href)
-            .filter(Boolean);
-          const styleTags = Array.from(document.querySelectorAll("style"))
-            .map((el) => el.textContent || "")
-            .filter((text) => text.trim().length > 0);
+        const styleHrefs = Array.from(
+          document.querySelectorAll('link[rel="stylesheet"]'),
+        )
+          .map((el) => el.href)
+          .filter(Boolean);
+        const styleTags = Array.from(document.querySelectorAll("style"))
+          .map((el) => el.textContent || "")
+          .filter((text) => text.trim().length > 0);
 
-          window.parent.postMessage(
-            {
-              event: "print_html",
-              payload: {
-                id: data?.id,
-                html: container.innerHTML,
-                styleHrefs,
-                styleTags,
-              },
+        window.parent.postMessage(
+          {
+            event: "print_html",
+            payload: {
+              id: data?.id,
+              html: container.innerHTML,
+              styleHrefs,
+              styleTags,
             },
-            "*",
-          );
-        })();
+          },
+          "*",
+        );
         return;
       }
 
