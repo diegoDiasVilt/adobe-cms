@@ -820,7 +820,7 @@ if (!IS_PDF) {
       }
 
       if (eventName === "prepare_for_print") {
-        console.log("class/width/request -- prepare_for_print");
+        console.log("class/width/request -- prepare_for_print -- updated");
         document.body.classList.add("pdf-mode");
         applyPrintLayout(data?.printWidthPx);
         requestAnimationFrame(sendHeightToParent);
@@ -834,13 +834,24 @@ if (!IS_PDF) {
       }
 
       if (eventName === "request_print_html") {
-         console.log("request -- request_print_html");
+         console.log("request -- request_print_html -- updated");
         const main = document.querySelector("main") || document.body;
         const container = document.createElement("div");
         Array.from(main.childNodes).forEach((node) => {
           container.appendChild(node.cloneNode(true));
         });
         absolutizeUrlsInContainer(container, window.location.href);
+        container.querySelectorAll("img").forEach((img) => {
+          img.setAttribute("loading", "eager");
+          img.setAttribute("decoding", "async");
+          img.setAttribute("fetchpriority", "high");
+          if (img.dataset && img.dataset.src && !img.getAttribute("src")) {
+            img.setAttribute("src", img.dataset.src);
+          }
+          if (img.dataset && img.dataset.srcset && !img.getAttribute("srcset")) {
+            img.setAttribute("srcset", img.dataset.srcset);
+          }
+        });
 
         const styleHrefs = Array.from(
           document.querySelectorAll('link[rel="stylesheet"]'),
