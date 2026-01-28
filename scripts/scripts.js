@@ -10,12 +10,13 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
-} from './aem.js';
+} from "./aem.js";
 
-const IS_PDF = new URLSearchParams(window.location.search).get('mode') === 'pdf';
+const IS_PDF =
+  new URLSearchParams(window.location.search).get("mode") === "pdf";
 
 if (IS_PDF) {
-  document.body.classList.add('pdf-mode');
+  document.body.classList.add("pdf-mode");
   window.isPdfMode = true;
 }
 
@@ -48,19 +49,19 @@ function loadMathJax() {
   if (window.mathJaxLoaded) return; // Prevent double loading
   window.mathJaxLoaded = true;
 
-  const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
+  const script = document.createElement("script");
+  script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js";
   // If PDF mode, we might want to wait for onload
   if (IS_PDF) {
-     script.async = false; // Force synchronous-like behavior if possible
+    script.async = false; // Force synchronous-like behavior if possible
   }
   document.head.appendChild(script);
-  
+
   window.MathJax = {
-    loader: { load: ['input/mml', 'output/chtml'] },
+    loader: { load: ["input/mml", "output/chtml"] },
     startup: {
-      typeset: true 
-    }
+      typeset: true,
+    },
   };
 }
 
@@ -75,7 +76,10 @@ export function moveInstrumentation(from, to) {
     to,
     [...from.attributes]
       .map(({ nodeName }) => nodeName)
-      .filter((attr) => attr.startsWith('data-aue-') || attr.startsWith('data-richtext-')),
+      .filter(
+        (attr) =>
+          attr.startsWith("data-aue-") || attr.startsWith("data-richtext-"),
+      ),
   );
 }
 
@@ -85,7 +89,8 @@ export function moveInstrumentation(from, to) {
 async function loadFonts() {
   await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
   try {
-    if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
+    if (!window.location.hostname.includes("localhost"))
+      sessionStorage.setItem("fonts-loaded", "true");
   } catch (e) {
     // do nothing
   }
@@ -97,7 +102,7 @@ async function loadFonts() {
  * @returns {HTMLElement}
  */
 export function htmlToElement(html) {
-  const template = document.createElement('template');
+  const template = document.createElement("template");
   const trimmedHtml = html.trim(); // Never return a text node of whitespace as the result
   template.innerHTML = trimmedHtml;
   return template.content.firstElementChild;
@@ -112,7 +117,7 @@ function buildAutoBlocks() {
     // TODO: add auto block, if needed
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Auto Blocking failed', error);
+    console.error("Auto Blocking failed", error);
   }
 }
 
@@ -135,18 +140,18 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'pt-BR';
+  document.documentElement.lang = "pt-BR";
   decorateTemplateAndTheme();
-  const main = doc.querySelector('main');
+  const main = doc.querySelector("main");
   if (main) {
     decorateMain(main);
-    document.body.classList.add('appear');
+    document.body.classList.add("appear");
     await waitForLCP(LCP_BLOCKS);
   }
 
   try {
     /* if desktop (proxy for fast connection) or fonts already loaded, load fonts.css */
-    if (window.innerWidth >= 900 || sessionStorage.getItem('fonts-loaded')) {
+    if (window.innerWidth >= 900 || sessionStorage.getItem("fonts-loaded")) {
       loadFonts();
     }
   } catch (e) {
@@ -159,31 +164,31 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
-  const main = doc.querySelector('main');
+  const main = doc.querySelector("main");
   await loadBlocks(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadHeader(doc.querySelector('header'));
-  loadFooter(doc.querySelector('footer'));
+  loadHeader(doc.querySelector("header"));
+  loadFooter(doc.querySelector("footer"));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
 
   if (IS_PDF) {
-    const images = main.querySelectorAll('img');
-    images.forEach(img => {
-      img.setAttribute('loading', 'eager');
+    const images = main.querySelectorAll("img");
+    images.forEach((img) => {
+      img.setAttribute("loading", "eager");
       // If you use data-src patterns, swap them here
       if (img.dataset.src) img.src = img.dataset.src;
     });
   }
 
-  sampleRUM('lazy');
-  sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
-  sampleRUM.observe(main.querySelectorAll('picture > img'));
+  sampleRUM("lazy");
+  sampleRUM.observe(main.querySelectorAll("div[data-block-name]"));
+  sampleRUM.observe(main.querySelectorAll("picture > img"));
 }
 
 /**
@@ -193,11 +198,11 @@ async function loadLazy(doc) {
 function loadDelayed() {
   if (IS_PDF) return;
 
-  window.setTimeout(() => import('./delayed.js'), 1500);
-  
+  window.setTimeout(() => import("./delayed.js"), 1500);
+
   window.setTimeout(() => loadMathJax(), 1500);
 
-  import('./sidekick.js').then(({ initSidekick }) => initSidekick());
+  import("./sidekick.js").then(({ initSidekick }) => initSidekick());
 }
 
 async function loadPage() {
@@ -205,8 +210,8 @@ async function loadPage() {
   await loadLazy(document);
   if (IS_PDF) {
     loadMathJax();
-    await new Promise(r => setTimeout(r, 1000));
-    console.log('PDF_GENERATION_READY');
+    await new Promise((r) => setTimeout(r, 1000));
+    console.log("PDF_GENERATION_READY");
     console.log(document.documentElement.outerHTML);
   } else {
     loadDelayed();
@@ -220,7 +225,7 @@ async function loadPage() {
 export function extractAuthorInfo(block) {
   const authorInfo = [...block.children].map((row) => row.firstElementChild);
   return {
-    authorImage: authorInfo[0]?.querySelector('img')?.getAttribute('src'),
+    authorImage: authorInfo[0]?.querySelector("img")?.getAttribute("src"),
     authorName: authorInfo[1]?.textContent.trim(),
     authorTitle: authorInfo[2]?.textContent.trim(),
     authorCompany: authorInfo[3]?.textContent.trim(),
@@ -240,8 +245,8 @@ export async function fetchAuthorBio(anchor) {
     .then((response) => response.text())
     .then((html) => {
       const parser = new DOMParser();
-      const htmlDoc = parser.parseFromString(html, 'text/html');
-      const authorInfoEl = htmlDoc.querySelector('.author-bio');
+      const htmlDoc = parser.parseFromString(html, "text/html");
+      const authorInfoEl = htmlDoc.querySelector(".author-bio");
       if (!authorInfoEl) {
         return null;
       }
@@ -256,25 +261,25 @@ export async function fetchAuthorBio(anchor) {
 loadPage();
 
 export function isInEditor() {
-  return window?.location?.hostname?.startsWith('author');
+  return window?.location?.hostname?.startsWith("author");
 }
 
 // a diferença é que este ignora tbm a tela de preview do AEM
 export function enhancedIsInEditor() {
-  return document.querySelectorAll('.adobe-ue-edit')?.length > 0;
+  return document.querySelectorAll(".adobe-ue-edit")?.length > 0;
 }
 
 export function generateUUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    const r = Math.random() * 16 | 0;
-    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
 }
 
 export function randomString(len) {
-  const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-  let randomString = '';
+  const charSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  let randomString = "";
   for (let i = 0; i < len; i++) {
     const randomPoz = Math.floor(Math.random() * charSet.length);
     randomString += charSet.substring(randomPoz, randomPoz + 1);
@@ -284,15 +289,17 @@ export function randomString(len) {
 
 let lastHeight = 0;
 function resize() {
-  const { height } = document.getElementsByTagName('html')[0].getBoundingClientRect();
+  const { height } = document
+    .getElementsByTagName("html")[0]
+    .getBoundingClientRect();
   if (lastHeight !== height) {
     lastHeight = height;
-    window.parent.postMessage(['setHeight', height + 10], '*');
+    window.parent.postMessage(["setHeight", height + 10], "*");
   }
 }
 
 if (!IS_PDF) {
-  document.addEventListener('DOMContentLoaded', (event) => {
+  document.addEventListener("DOMContentLoaded", (event) => {
     setInterval(resize, 1000);
   });
 }
@@ -316,35 +323,36 @@ export function decodeBase64(base64) {
 
 export function handleRichTextElement(textElement) {
   const elementToInjectHTML = textElement?.querySelector("div:last-child");
-  elementToInjectHTML.innerHTML = decodeBase64(textElement?.textContent)
+  elementToInjectHTML.innerHTML = decodeBase64(textElement?.textContent);
   return textElement?.outerHTML;
 }
 
 export function inIFrame() {
-  return window.location !== window.parent.location
+  return window.location !== window.parent.location;
 }
 
-export function createOptimizedPicture(pic, baseUrl = '') {
-  const domain = baseUrl || (typeof window !== 'undefined' ? window.location.origin : '');
+export function createOptimizedPicture(pic, baseUrl = "") {
+  const domain =
+    baseUrl || (typeof window !== "undefined" ? window.location.origin : "");
 
-  pic.querySelectorAll('source, img').forEach((el) => {
-    const attr = el.tagName === 'SOURCE' ? 'srcset' : 'src';
+  pic.querySelectorAll("source, img").forEach((el) => {
+    const attr = el.tagName === "SOURCE" ? "srcset" : "src";
     let val = el.getAttribute(attr);
 
     if (val) {
       if (/\bformat=webply\b/.test(val)) {
-        val = val.replace(/\bformat=webply\b/g, 'format=webp');
+        val = val.replace(/\bformat=webply\b/g, "format=webp");
       }
 
-      if (!val.startsWith('http') && !val.startsWith('//')) {
-          if (val.startsWith('./')) {
-             // Remove o ponto (.) e junta com dominio. Ex: ./media -> /media
-             val = `${domain}${val.substring(1)}`;
-          } else if (val.startsWith('/')) {
-             // Apenas junta o domínio. Ex: /media -> https://site.com/media
-             val = `${domain}${val}`;
-          }
+      if (!val.startsWith("http") && !val.startsWith("//")) {
+        if (val.startsWith("./")) {
+          // Remove o ponto (.) e junta com dominio. Ex: ./media -> /media
+          val = `${domain}${val.substring(1)}`;
+        } else if (val.startsWith("/")) {
+          // Apenas junta o domínio. Ex: /media -> https://site.com/media
+          val = `${domain}${val}`;
         }
+      }
 
       el.setAttribute(attr, val);
     }
@@ -354,66 +362,70 @@ export function createOptimizedPicture(pic, baseUrl = '') {
 }
 
 function makeConceitosInteractive() {
-  const conceitosChave = document.querySelectorAll('conceito-chave:not([data-processed])');
+  const conceitosChave = document.querySelectorAll(
+    "conceito-chave:not([data-processed])",
+  );
 
   if (conceitosChave.length > 0) {
-
     conceitosChave.forEach((conceito) => {
-
-      if (conceito.parentElement.tagName === 'SPAN') {
+      if (conceito.parentElement.tagName === "SPAN") {
         const span = conceito.parentElement;
 
         span.replaceWith(...span.childNodes);
       }
 
-      conceito.setAttribute('data-processed', 'true');
+      conceito.setAttribute("data-processed", "true");
 
-      const tooltipTextValue = conceito.getAttribute('interacao');
+      const tooltipTextValue = conceito.getAttribute("interacao");
       if (tooltipTextValue) {
-        const tooltip = document.createElement('span');
-        tooltip.classList.add('conceito-tooltip-text');
+        const tooltip = document.createElement("span");
+        tooltip.classList.add("conceito-tooltip-text");
         tooltip.textContent = tooltipTextValue;
         conceito.appendChild(tooltip);
       }
-      
-      if (!conceito.hasAttribute('data-click-listener')) {
-          conceito.setAttribute('data-click-listener', 'true');
-          conceito.addEventListener('click', () => {
-            const keyConceptText = conceito.childNodes[0].nodeType === Node.TEXT_NODE
-              ? conceito.childNodes[0].nodeValue.trim()
-              : '';
-            
-            const payload = {
-              keyConcept: keyConceptText,
-              bloomTaxonomy: conceito.getAttribute('taxonomia'),
-              interactionMessage: conceito.getAttribute('interacao')
-            };
 
-            window.parent.postMessage({
-              event: 'key_concept_request',
-              payload: payload
-            }, '*');
-          });
+      if (!conceito.hasAttribute("data-click-listener")) {
+        conceito.setAttribute("data-click-listener", "true");
+        conceito.addEventListener("click", () => {
+          const keyConceptText =
+            conceito.childNodes[0].nodeType === Node.TEXT_NODE
+              ? conceito.childNodes[0].nodeValue.trim()
+              : "";
+
+          const payload = {
+            keyConcept: keyConceptText,
+            bloomTaxonomy: conceito.getAttribute("taxonomia"),
+            interactionMessage: conceito.getAttribute("interacao"),
+          };
+
+          window.parent.postMessage(
+            {
+              event: "key_concept_request",
+              payload: payload,
+            },
+            "*",
+          );
+        });
       }
     });
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  makeConceitosInteractive(); 
-  
+document.addEventListener("DOMContentLoaded", () => {
+  makeConceitosInteractive();
+
   const observer = new MutationObserver(() => {
     makeConceitosInteractive();
   });
 
   observer.observe(document.body, {
-    childList: true, 
-    subtree: true   
+    childList: true,
+    subtree: true,
   });
 });
 
 let readingRuler = null;
-const RULER_HEIGHT_PX = 42; 
+const RULER_HEIGHT_PX = 42;
 let rulerEnabled = false;
 let lastMouseY = 0;
 let isMouseOverImage = false;
@@ -421,18 +433,18 @@ let isMouseOverMain = false;
 
 function createReadingRuler() {
   if (!readingRuler) {
-    readingRuler = document.createElement('div');
-    readingRuler.id = 'reading-ruler';
-    readingRuler.style.position = 'fixed';
-    readingRuler.style.top = '0';
-    readingRuler.style.left = '0';
-    readingRuler.style.width = '100%';
+    readingRuler = document.createElement("div");
+    readingRuler.id = "reading-ruler";
+    readingRuler.style.position = "fixed";
+    readingRuler.style.top = "0";
+    readingRuler.style.left = "0";
+    readingRuler.style.width = "100%";
     readingRuler.style.height = `${RULER_HEIGHT_PX}px`;
-    readingRuler.style.backgroundColor = 'rgba(187, 187, 187, 0.2)';
-    readingRuler.style.pointerEvents = 'none';
-    readingRuler.style.zIndex = '9998';
-    readingRuler.style.display = 'none';
-    readingRuler.style.willChange = 'transform, display';
+    readingRuler.style.backgroundColor = "rgba(187, 187, 187, 0.2)";
+    readingRuler.style.pointerEvents = "none";
+    readingRuler.style.zIndex = "9998";
+    readingRuler.style.display = "none";
+    readingRuler.style.willChange = "transform, display";
     document.body.appendChild(readingRuler);
   }
 }
@@ -442,10 +454,10 @@ function updateRulerPosition() {
 
   if (readingRuler) {
     if (isMouseOverImage || !isMouseOverMain) {
-      readingRuler.style.display = 'none';
+      readingRuler.style.display = "none";
     } else {
-      readingRuler.style.display = 'block';
-      const yPos = lastMouseY - (RULER_HEIGHT_PX / 2);
+      readingRuler.style.display = "block";
+      const yPos = lastMouseY - RULER_HEIGHT_PX / 2;
       readingRuler.style.transform = `translateY(${yPos}px)`;
     }
   }
@@ -454,11 +466,13 @@ function updateRulerPosition() {
 }
 
 function isMouseVerticallyOverMedia(mouseY) {
-  const mediaElements = document.querySelectorAll('img, picture, table, video, .img-modal, figure');
-  
+  const mediaElements = document.querySelectorAll(
+    "img, picture, table, video, .img-modal, figure",
+  );
+
   for (const el of mediaElements) {
     const rect = el.getBoundingClientRect();
-  
+
     if (rect.height === 0) continue;
     if (mouseY >= rect.top && mouseY <= rect.bottom) {
       return true;
@@ -467,11 +481,11 @@ function isMouseVerticallyOverMedia(mouseY) {
   return false;
 }
 
-function storeMousePosition(e) {  
+function storeMousePosition(e) {
   lastMouseY = e.clientY;
   isMouseOverImage = isMouseVerticallyOverMedia(e.clientY);
 
-  isMouseOverMain = !!e.target.closest('main');
+  isMouseOverMain = !!e.target.closest("main");
 }
 
 function enableRuler() {
@@ -479,10 +493,10 @@ function enableRuler() {
 
   if (!rulerEnabled) {
     rulerEnabled = true;
-    
-    document.addEventListener('mousemove', storeMousePosition);
 
-    if (readingRuler) readingRuler.style.display = 'block';
+    document.addEventListener("mousemove", storeMousePosition);
+
+    if (readingRuler) readingRuler.style.display = "block";
 
     requestAnimationFrame(updateRulerPosition);
   }
@@ -491,18 +505,19 @@ function enableRuler() {
 function disableRuler() {
   if (rulerEnabled) {
     rulerEnabled = false;
-    
-    document.removeEventListener('mousemove', storeMousePosition);
+
+    document.removeEventListener("mousemove", storeMousePosition);
   }
 
   if (readingRuler) {
-    readingRuler.style.display = 'none';
+    readingRuler.style.display = "none";
   }
 }
 
 let originalFontSizes = new WeakMap();
 let isFontSizesStored = false;
-const FONT_SCALE_TARGETS = 'p, h1, h2, h3, h4, h5, h6, li, a, span, td, th, div';
+const FONT_SCALE_TARGETS =
+  "p, h1, h2, h3, h4, h5, h6, li, a, span, td, th, div";
 
 function storeOriginalFontSizes() {
   if (isFontSizesStored) return;
@@ -518,7 +533,7 @@ function storeOriginalFontSizes() {
 
 function applyFontSizeDelta(delta) {
   storeOriginalFontSizes();
-  
+
   document.querySelectorAll(FONT_SCALE_TARGETS).forEach((el) => {
     if (originalFontSizes.has(el)) {
       const originalSize = originalFontSizes.get(el);
@@ -528,51 +543,57 @@ function applyFontSizeDelta(delta) {
 }
 
 function forceRichTextTheme(payload) {
-  const richTextBlocks = document.querySelectorAll('.texto-rico');
+  const richTextBlocks = document.querySelectorAll(".texto-rico");
   if (richTextBlocks.length === 0) return;
 
-  let newColor = '';
+  let newColor = "";
   let isReset = false;
   switch (payload) {
-    case 'sepia':
-      newColor = '#3D3025';
+    case "sepia":
+      newColor = "#3D3025";
       break;
-    case 'neutral':
-      newColor = '#F2F2F2';
+    case "neutral":
+      newColor = "#F2F2F2";
       break;
-    case 'dark':
-      newColor = '#E6E6E6';
+    case "dark":
+      newColor = "#E6E6E6";
       break;
-    case 'white':
-      newColor = '#212529';
+    case "white":
+      newColor = "#212529";
       break;
-    case 'default':
+    case "default":
     default:
       isReset = true;
       break;
   }
 
-  richTextBlocks.forEach(block => {
-    const allElements = block.querySelectorAll('p, span, li, a, h1, h2, h3, h4, h5, h6, strong, em, div, td, th');
-    
-    allElements.forEach(el => {
+  richTextBlocks.forEach((block) => {
+    const allElements = block.querySelectorAll(
+      "p, span, li, a, h1, h2, h3, h4, h5, h6, strong, em, div, td, th",
+    );
+
+    allElements.forEach((el) => {
       if (isReset) {
         if (el.dataset.originalColor) {
-          el.style.setProperty('color', el.dataset.originalColor);
-          el.removeAttribute('data-original-Color');
+          el.style.setProperty("color", el.dataset.originalColor);
+          el.removeAttribute("data-original-Color");
         } else {
-          if (el.style.getPropertyPriority('color') === 'important') {
-            el.style.removeProperty('color');
+          if (el.style.getPropertyPriority("color") === "important") {
+            el.style.removeProperty("color");
           }
         }
       } else {
         const currentInlineColor = el.style.color;
-        
-        if (currentInlineColor && !el.dataset.originalColor && el.style.getPropertyPriority('color') !== 'important') {
+
+        if (
+          currentInlineColor &&
+          !el.dataset.originalColor &&
+          el.style.getPropertyPriority("color") !== "important"
+        ) {
           el.dataset.originalColor = currentInlineColor;
         }
-        
-        el.style.setProperty('color', newColor, 'important');
+
+        el.style.setProperty("color", newColor, "important");
       }
     });
   });
@@ -581,30 +602,31 @@ function forceRichTextTheme(payload) {
 function resetFontSizes() {
   document.querySelectorAll(FONT_SCALE_TARGETS).forEach((el) => {
     if (el.style.fontSize) {
-      el.style.fontSize = '';
+      el.style.fontSize = "";
     }
   });
 }
 
 function resetCustomizations() {
-  
   // Reseta a Régua de Leitura
   disableRuler(); //
 
   // Reseta o Alinhamento
-  const alignmentStyleElement = document.getElementById('kindle-alignment-style'); //
+  const alignmentStyleElement = document.getElementById(
+    "kindle-alignment-style",
+  ); //
   if (alignmentStyleElement) {
     alignmentStyleElement.innerHTML = `
         * {
           text-align: left !important;
         }
-      `;;
+      `;
   }
 
   // Reseta o Tipo da Fonte
-  const fontStyleElement = document.getElementById('kindle-font-type-style'); //
+  const fontStyleElement = document.getElementById("kindle-font-type-style"); //
   if (fontStyleElement) {
-    fontStyleElement.innerHTML = ''; //
+    fontStyleElement.innerHTML = ""; //
   }
 
   // Reseta o Tamanho da Fonte
@@ -612,155 +634,169 @@ function resetCustomizations() {
 
   // Reseta o Tema
   const body = document.body;
-  const themeClasses = ['theme-white', 'theme-sepia', 'theme-gray', 'theme-dark']; //
+  const themeClasses = [
+    "theme-white",
+    "theme-sepia",
+    "theme-gray",
+    "theme-dark",
+  ]; //
   body.classList.remove(...themeClasses);
-  forceRichTextTheme('default');
+  forceRichTextTheme("default");
 
   // Reseta o Espaçamento entre Linhas
-  document.documentElement.style.setProperty('--kindle-line-height', '140%'); //
+  document.documentElement.style.setProperty("--kindle-line-height", "140%"); //
 
   // Reseta o Espaçamento entre Palavras
-  document.documentElement.style.setProperty('--kindle-word-space', 'normal'); //
+  document.documentElement.style.setProperty("--kindle-word-space", "normal"); //
 
   // Reseta o Espaçamento entre Letras
-  document.documentElement.style.setProperty('--kindle-letter-space', 'normal'); //
+  document.documentElement.style.setProperty("--kindle-letter-space", "normal"); //
 }
 
 if (!IS_PDF) {
-  const getDocumentHeight = () => Math.max(
-    document.body.scrollHeight,
-    document.documentElement.scrollHeight,
-    document.body.offsetHeight,
-    document.documentElement.offsetHeight
-  );
-
   const sendHeightToParent = () => {
-    const height = getDocumentHeight();
-    window.parent.postMessage(['setHeight', height], '*');
+    const height = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight,
+    );
+    window.parent.postMessage(["setHeight", height], "*");
   };
 
-  const sendPrintHeightToParent = () => {
-    const height = getDocumentHeight();
-    window.parent.postMessage({ event: 'print_iframe_height', payload: { height } }, '*');
-  };
-
-  window.addEventListener('load', sendHeightToParent);
-  window.addEventListener('resize', sendHeightToParent);
+  window.addEventListener("load", sendHeightToParent);
+  window.addEventListener("resize", sendHeightToParent);
 
   const observer = new MutationObserver(sendHeightToParent);
-  observer.observe(document.body, { subtree: true, childList: true, attributes: true });
-  
-  document.addEventListener('keydown', (event) => {
+  observer.observe(document.body, {
+    subtree: true,
+    childList: true,
+    attributes: true,
+  });
+
+  document.addEventListener("keydown", (event) => {
     const tagName = document.activeElement.tagName;
-    if (tagName === 'INPUT' || tagName === 'TEXTAREA' || document.activeElement.isContentEditable) {
+    if (
+      tagName === "INPUT" ||
+      tagName === "TEXTAREA" ||
+      document.activeElement.isContentEditable
+    ) {
       return;
     }
 
-    if (event.key.toLowerCase() === 'r') {
+    if (event.key.toLowerCase() === "r") {
       if (rulerEnabled) {
         disableRuler();
       } else {
-        enableRuler();  
+        enableRuler();
       }
-      window.parent.postMessage({
-        event: 'toggle_reading_ruler',
-        payload: rulerEnabled
-      }, '*');
+      window.parent.postMessage(
+        {
+          event: "toggle_reading_ruler",
+          payload: rulerEnabled,
+        },
+        "*",
+      );
     }
   });
 
-  window.addEventListener('message', function (e) {
-    var eventName = e?.data?.event;
-    var data = e?.data?.payload;
-    if (eventName === "set_navbar_height") {
-      let counter = 0
-      const intervalId = setInterval(() => {
-        if (counter >= 3) {
-          clearInterval(intervalId);
+  window.addEventListener(
+    "message",
+    function (e) {
+      var eventName = e?.data?.event;
+      var data = e?.data?.payload;
+      if (eventName === "set_navbar_height") {
+        let counter = 0;
+        const intervalId = setInterval(() => {
+          if (counter >= 3) {
+            clearInterval(intervalId);
+          }
+          this.document.querySelectorAll(".block")?.forEach((element) => {
+            element.setAttribute("style", `scroll-margin-top: ${data}px`);
+          });
+
+          this.document
+            .querySelector(".img-modal img")
+            ?.setAttribute("style", `scroll-margin-top: ${data}px`);
+          this.document
+            .querySelector(".modal-content")
+            ?.setAttribute("style", `scroll-margin-top: ${data}px`);
+          counter++;
+          console.log(counter);
+        }, 1000);
+      }
+
+      if (eventName === "prepare_for_print") {
+        console.log("add pdf-mode - prepare_for_print");
+        document.body.classList.add("pdf-mode");
+        sendHeightToParent();
+        return;
+      }
+
+      if (eventName === "set_ruler_visibility") {
+        if (data === true) {
+          enableRuler();
+        } else if (data === false) {
+          disableRuler();
         }
-        this.document.querySelectorAll('.block')?.forEach(element => {
-          element.setAttribute('style', `scroll-margin-top: ${data}px`);
-        });
-
-        this.document.querySelector(".img-modal img")?.setAttribute('style', `scroll-margin-top: ${data}px`);
-        this.document.querySelector(".modal-content")?.setAttribute('style', `scroll-margin-top: ${data}px`);
-        counter++;
-        console.log(counter)
-      }, 1000);
-    }
-
-    if (eventName === "prepare_for_print") {
-      console.log('prepare_for_print, add body class')
-      document.body.classList.add('pdf-mode');
-
-      setTimeout(sendPrintHeightToParent, 100);
-      return;
-    }
-
-    if (eventName === "set_ruler_visibility") {
-      if (data === true) {
-        enableRuler();
-      } else if (data === false) {
-        disableRuler();
-      }
-    }
-
-    if (eventName === "set_kindle_alignment") {
-      const styleId = 'kindle-alignment-style';
-      let alignmentStyleElement = document.getElementById(styleId);
-
-      if (!alignmentStyleElement) {
-        alignmentStyleElement = document.createElement('style');
-        alignmentStyleElement.id = styleId;
-        document.head.appendChild(alignmentStyleElement);
       }
 
-      if (data === 'left' || data === 'justify') {
-        alignmentStyleElement.innerHTML = `
+      if (eventName === "set_kindle_alignment") {
+        const styleId = "kindle-alignment-style";
+        let alignmentStyleElement = document.getElementById(styleId);
+
+        if (!alignmentStyleElement) {
+          alignmentStyleElement = document.createElement("style");
+          alignmentStyleElement.id = styleId;
+          document.head.appendChild(alignmentStyleElement);
+        }
+
+        if (data === "left" || data === "justify") {
+          alignmentStyleElement.innerHTML = `
           * {
             text-align: ${data} !important;
           }
         `;
-      } else {
-        alignmentStyleElement.innerHTML = '';
-      }
-    }
-
-    if (eventName === "set_kindle_font_type") {
-      const styleId = 'kindle-font-type-style';
-      let fontStyleElement = document.getElementById(styleId);
-
-      if (!fontStyleElement) {
-        fontStyleElement = document.createElement('style');
-        fontStyleElement.id = styleId;
-        document.head.appendChild(fontStyleElement);
+        } else {
+          alignmentStyleElement.innerHTML = "";
+        }
       }
 
-      let fontFamily = '';
+      if (eventName === "set_kindle_font_type") {
+        const styleId = "kindle-font-type-style";
+        let fontStyleElement = document.getElementById(styleId);
 
-      switch (data) {
-        case 'helvetica':
-          fontFamily = 'Helvetica, Arial, sans-serif';
-          break;
-        case 'verdana':
-          fontFamily = 'Verdana, Geneva, sans-serif';
-          break;
-        case 'georgia':
-          fontFamily = 'Georgia, serif';
-          break;
-        case 'times new roman':
-          fontFamily = '"Times New Roman", Times, serif';
-          break;
-        case 'dyslexic':
-          fontFamily = 'OpenDyslexic, sans-serif';
-          break;
-        case 'default':
-        default:
-          fontStyleElement.innerHTML = '';
-          return;
-      }
+        if (!fontStyleElement) {
+          fontStyleElement = document.createElement("style");
+          fontStyleElement.id = styleId;
+          document.head.appendChild(fontStyleElement);
+        }
 
-      fontStyleElement.innerHTML = `
+        let fontFamily = "";
+
+        switch (data) {
+          case "helvetica":
+            fontFamily = "Helvetica, Arial, sans-serif";
+            break;
+          case "verdana":
+            fontFamily = "Verdana, Geneva, sans-serif";
+            break;
+          case "georgia":
+            fontFamily = "Georgia, serif";
+            break;
+          case "times new roman":
+            fontFamily = '"Times New Roman", Times, serif';
+            break;
+          case "dyslexic":
+            fontFamily = "OpenDyslexic, sans-serif";
+            break;
+          case "default":
+          default:
+            fontStyleElement.innerHTML = "";
+            return;
+        }
+
+        fontStyleElement.innerHTML = `
         /* 1. Aplica a fonte do usuário em TUDO */
         * {
           font-family: ${fontFamily} !important;
@@ -770,113 +806,128 @@ if (!IS_PDF) {
         }
       `;
 
-      setTimeout(sendHeightToParent, 100);
-    }
-
-    if (eventName === "set_kindle_font_size") {
-      let delta = data-20;
-      if (delta === 0) {
-        resetFontSizes();
+        setTimeout(sendHeightToParent, 100);
       }
-      applyFontSizeDelta(delta);
-      setTimeout(sendHeightToParent, 100);
-    }
 
-    if (eventName === "set_kindle_theme") {
-      const body = document.body;
-      const themeClasses = ['theme-white', 'theme-sepia', 'theme-gray', 'theme-dark'];
-      body.classList.remove(...themeClasses);
-
-      switch (data) {
-        case 'white':
-          body.classList.add('theme-white');
-          break;
-        case 'sepia':
-          body.classList.add('theme-sepia');
-          break;
-        case 'neutral':
-          body.classList.add('theme-gray');
-          break;
-        case 'dark':
-          body.classList.add('theme-dark');
-          break;
-        case 'default':
-          body.classList.remove(...themeClasses);
-          break;
-        default:
-          break;
+      if (eventName === "set_kindle_font_size") {
+        let delta = data - 20;
+        if (delta === 0) {
+          resetFontSizes();
+        }
+        applyFontSizeDelta(delta);
+        setTimeout(sendHeightToParent, 100);
       }
-      forceRichTextTheme(data);
-    }
 
-    if (eventName === "set_kindle_line_space") {
-      let lineHeight = '140%';
-      switch (data) {
-        case '168%':
-        case '196%':
-        case '224%':
-        case '252%':
-          lineHeight = data;
-          break;
-        case '140%':
-        case 'default':
-        default:
-          lineHeight = '140%';
-          break;
+      if (eventName === "set_kindle_theme") {
+        const body = document.body;
+        const themeClasses = [
+          "theme-white",
+          "theme-sepia",
+          "theme-gray",
+          "theme-dark",
+        ];
+        body.classList.remove(...themeClasses);
+
+        switch (data) {
+          case "white":
+            body.classList.add("theme-white");
+            break;
+          case "sepia":
+            body.classList.add("theme-sepia");
+            break;
+          case "neutral":
+            body.classList.add("theme-gray");
+            break;
+          case "dark":
+            body.classList.add("theme-dark");
+            break;
+          case "default":
+            body.classList.remove(...themeClasses);
+            break;
+          default:
+            break;
+        }
+        forceRichTextTheme(data);
       }
-      document.documentElement.style.setProperty('--kindle-line-height', lineHeight);
-    }
 
-    if (eventName === "set_kindle_word_space") {
-      let wordSpace = 'normal';
-      switch (data) {
-        case '5%':
-          wordSpace = '0.05em';
-          break;
-        case '10%':
-          wordSpace = '0.10em';
-          break;
-        case '15%':
-          wordSpace = '0.15em';
-          break;
-        case '20%':
-          wordSpace = '0.20em';
-          break;
-        case '0%':
-        case 'default':
-        default:
-          wordSpace = 'normal';
-          break;
+      if (eventName === "set_kindle_line_space") {
+        let lineHeight = "140%";
+        switch (data) {
+          case "168%":
+          case "196%":
+          case "224%":
+          case "252%":
+            lineHeight = data;
+            break;
+          case "140%":
+          case "default":
+          default:
+            lineHeight = "140%";
+            break;
+        }
+        document.documentElement.style.setProperty(
+          "--kindle-line-height",
+          lineHeight,
+        );
       }
-      document.documentElement.style.setProperty('--kindle-word-space', wordSpace);
-    }
 
-    if (eventName === "set_kindle_letters_space") {
-      let letterSpace = 'normal';
-      switch (data) {
-        case '5%':
-          letterSpace = '0.05em';
-          break;
-        case '10%':
-          letterSpace = '0.10em';
-          break;
-        case '15%':
-          letterSpace = '0.15em';
-          break;
-        case '20%':
-          letterSpace = '0.20em';
-          break;
-        case '0%':
-        case 'default':
-        default:
-          letterSpace = 'normal';
-          break;
+      if (eventName === "set_kindle_word_space") {
+        let wordSpace = "normal";
+        switch (data) {
+          case "5%":
+            wordSpace = "0.05em";
+            break;
+          case "10%":
+            wordSpace = "0.10em";
+            break;
+          case "15%":
+            wordSpace = "0.15em";
+            break;
+          case "20%":
+            wordSpace = "0.20em";
+            break;
+          case "0%":
+          case "default":
+          default:
+            wordSpace = "normal";
+            break;
+        }
+        document.documentElement.style.setProperty(
+          "--kindle-word-space",
+          wordSpace,
+        );
       }
-      document.documentElement.style.setProperty('--kindle-letter-space', letterSpace);
-    }
-    if (eventName === 'set_kindle_reset') {
-      resetCustomizations();
-    }
-  }, false);
 
+      if (eventName === "set_kindle_letters_space") {
+        let letterSpace = "normal";
+        switch (data) {
+          case "5%":
+            letterSpace = "0.05em";
+            break;
+          case "10%":
+            letterSpace = "0.10em";
+            break;
+          case "15%":
+            letterSpace = "0.15em";
+            break;
+          case "20%":
+            letterSpace = "0.20em";
+            break;
+          case "0%":
+          case "default":
+          default:
+            letterSpace = "normal";
+            break;
+        }
+        document.documentElement.style.setProperty(
+          "--kindle-letter-space",
+          letterSpace,
+        );
+      }
+      if (eventName === "set_kindle_reset") {
+        resetCustomizations();
+      }
+    },
+    false,
+  );
 }
