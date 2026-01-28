@@ -40,6 +40,15 @@ function applyPrintLayout(widthPx = DEFAULT_PRINT_WIDTH_PX) {
   document.documentElement.classList.add("pdf-mode");
 }
 
+function resetPrintLayout() {
+  document.documentElement.classList.remove("pdf-mode");
+  document.body.classList.remove("pdf-mode");
+  const styleEl = document.getElementById("print-layout-style");
+  if (styleEl) {
+    styleEl.remove();
+  }
+}
+
 if (IS_PDF) {
   document.body.classList.add("pdf-mode");
   window.isPdfMode = true;
@@ -752,10 +761,16 @@ if (!IS_PDF) {
       }
 
       if (eventName === "prepare_for_print") {
-        console.log("force class and width - prepare_for_print");
+        console.log("force class/width - prepare_for_print");
         document.body.classList.add("pdf-mode");
         applyPrintLayout(data?.printWidthPx);
         requestAnimationFrame(sendHeightToParent);
+        return;
+      }
+
+      if (eventName === "cleanup_print") {
+        console.log("reset print layout");
+        resetPrintLayout();
         return;
       }
 
