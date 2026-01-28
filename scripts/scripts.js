@@ -301,6 +301,9 @@ function loadDelayed() {
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({ event: "print_ready" }, "*");
+  }
   if (IS_PDF) {
     loadMathJax();
     await new Promise((r) => setTimeout(r, 1000));
@@ -820,7 +823,7 @@ if (!IS_PDF) {
       }
 
       if (eventName === "prepare_for_print") {
-        console.log("class/width/request -- prepare_for_print -- v1");
+        console.log("class/width/request -- prepare_for_print -- v1.1");
         document.body.classList.add("pdf-mode");
         applyPrintLayout(data?.printWidthPx);
         requestAnimationFrame(sendHeightToParent);
@@ -834,7 +837,7 @@ if (!IS_PDF) {
       }
 
       if (eventName === "request_print_html") {
-        console.log("request -- request_print_html -- v1");
+        console.log("request -- request_print_html -- v1.1");
         const main = document.querySelector("main") || document.body;
         const container = document.createElement("div");
         Array.from(main.childNodes).forEach((node) => {
