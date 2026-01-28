@@ -49,6 +49,65 @@ function resetPrintLayout() {
   }
 }
 
+function absolutizeUrlsInContainer(container, baseUrl) {
+  const base = new URL(baseUrl, window.location.href);
+  const elements = container.querySelectorAll(
+    "img[src], source[src], source[srcset], a[href], link[href], video[src], audio[src]",
+  );
+  elements.forEach((el) => {
+    if (el.tagName === "IMG" || el.tagName === "SOURCE") {
+      const src = el.getAttribute("src");
+      if (src) {
+        try {
+          el.setAttribute("src", new URL(src, base).href);
+        } catch {
+          // ignore invalid URLs
+        }
+      }
+      const srcset = el.getAttribute("srcset");
+      if (srcset) {
+        const updated = srcset
+          .split(",")
+          .map((entry) => {
+            const parts = entry.trim().split(/\s+/, 2);
+            const url = parts[0];
+            const size = parts[1];
+            try {
+              const abs = new URL(url, base).href;
+              return size ? `${abs} ${size}` : abs;
+            } catch {
+              return entry;
+            }
+          })
+          .join(", ");
+        el.setAttribute("srcset", updated);
+      }
+    }
+
+    if (el.tagName === "A" || el.tagName === "LINK") {
+      const href = el.getAttribute("href");
+      if (href) {
+        try {
+          el.setAttribute("href", new URL(href, base).href);
+        } catch {
+          // ignore invalid URLs
+        }
+      }
+    }
+
+    if (el.tagName === "VIDEO" || el.tagName === "AUDIO") {
+      const src = el.getAttribute("src");
+      if (src) {
+        try {
+          el.setAttribute("src", new URL(src, base).href);
+        } catch {
+          // ignore invalid URLs
+        }
+      }
+    }
+  });
+}
+
 if (IS_PDF) {
   document.body.classList.add("pdf-mode");
   window.isPdfMode = true;
@@ -761,7 +820,7 @@ if (!IS_PDF) {
       }
 
       if (eventName === "prepare_for_print") {
-        console.log("class/width -- prepare_for_print");
+        console.log("class/width/request -- prepare_for_print");
         document.body.classList.add("pdf-mode");
         applyPrintLayout(data?.printWidthPx);
         requestAnimationFrame(sendHeightToParent);
@@ -771,6 +830,39 @@ if (!IS_PDF) {
       if (eventName === "cleanup_print") {
         console.log("reset print layout");
         resetPrintLayout();
+        return;
+      }
+
+      if (eventName === "request_print_html") {
+         console.log("request -- request_print_html");
+        const main = document.querySelector("main") || document.body;
+        const container = document.createElement("div");
+        Array.from(main.childNodes).forEach((node) => {
+          container.appendChild(node.cloneNode(true));
+        });
+        absolutizeUrlsInContainer(container, window.location.href);
+
+        const styleHrefs = Array.from(
+          document.querySelectorAll('link[rel="stylesheet"]'),
+        )
+          .map((el) => el.href)
+          .filter(Boolean);
+        const styleTags = Array.from(document.querySelectorAll("style"))
+          .map((el) => el.textContent || "")
+          .filter((text) => text.trim().length > 0);
+
+        window.parent.postMessage(
+          {
+            event: "print_html",
+            payload: {
+              id: data?.id,
+              html: container.innerHTML,
+              styleHrefs,
+              styleTags,
+            },
+          },
+          "*",
+        );
         return;
       }
 
