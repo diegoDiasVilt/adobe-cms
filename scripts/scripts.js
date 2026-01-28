@@ -15,6 +15,7 @@ import {
 const IS_PDF =
   new URLSearchParams(window.location.search).get("mode") === "pdf";
 const DEFAULT_PRINT_WIDTH_PX = 1024;
+const DEFAULT_PRINT_PADDING_BOTTOM_PX = 24;
 
 function applyPrintLayout(widthPx = DEFAULT_PRINT_WIDTH_PX) {
   const safeWidth =
@@ -43,6 +44,7 @@ function applyPrintLayout(widthPx = DEFAULT_PRINT_WIDTH_PX) {
 function resetPrintLayout() {
   document.documentElement.classList.remove("pdf-mode");
   document.body.classList.remove("pdf-mode");
+  document.body.style.paddingBottom = "";
   const styleEl = document.getElementById("print-layout-style");
   if (styleEl) {
     styleEl.remove();
@@ -761,9 +763,15 @@ if (!IS_PDF) {
       }
 
       if (eventName === "prepare_for_print") {
-        console.log("force class/width - prepare_for_print");
+        console.log("force class/width/pb - prepare_for_print");
         document.body.classList.add("pdf-mode");
         applyPrintLayout(data?.printWidthPx);
+        const paddingBottom =
+          Number.isFinite(data?.printPaddingBottomPx) &&
+          data.printPaddingBottomPx >= 0
+            ? Math.round(data.printPaddingBottomPx)
+            : DEFAULT_PRINT_PADDING_BOTTOM_PX;
+        document.body.style.paddingBottom = `${paddingBottom}px`;
         requestAnimationFrame(sendHeightToParent);
         return;
       }
