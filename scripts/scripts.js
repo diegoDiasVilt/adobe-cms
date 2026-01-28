@@ -14,6 +14,31 @@ import {
 
 const IS_PDF =
   new URLSearchParams(window.location.search).get("mode") === "pdf";
+const DEFAULT_PRINT_WIDTH_PX = 1024;
+
+function applyPrintLayout(widthPx = DEFAULT_PRINT_WIDTH_PX) {
+  const safeWidth =
+    Number.isFinite(widthPx) && widthPx > 0
+      ? Math.round(widthPx)
+      : DEFAULT_PRINT_WIDTH_PX;
+  const styleId = "print-layout-style";
+  let styleEl = document.getElementById(styleId);
+  if (!styleEl) {
+    styleEl = document.createElement("style");
+    styleEl.id = styleId;
+    document.head.appendChild(styleEl);
+  }
+  styleEl.textContent = `
+    html.pdf-mode, body.pdf-mode {
+      width: ${safeWidth}px !important;
+      max-width: ${safeWidth}px !important;
+      margin: 0 auto !important;
+      box-sizing: border-box;
+    }
+  `;
+
+  document.documentElement.classList.add("pdf-mode");
+}
 
 if (IS_PDF) {
   document.body.classList.add("pdf-mode");
@@ -727,9 +752,10 @@ if (!IS_PDF) {
       }
 
       if (eventName === "prepare_for_print") {
-        console.log("add pdf-mode - prepare_for_print");
+        console.log("force class and width - prepare_for_print");
         document.body.classList.add("pdf-mode");
-        sendHeightToParent();
+        applyPrintLayout(data?.printWidthPx);
+        requestAnimationFrame(sendHeightToParent);
         return;
       }
 
