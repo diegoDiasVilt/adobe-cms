@@ -49,7 +49,7 @@ function resetPrintLayout() {
   }
 }
 
-function absolutizeUrlsInContainer(container, baseUrl) {
+function normalizeUrls(container, baseUrl) {
   const base = new URL(baseUrl, window.location.href);
   const elements = container.querySelectorAll(
     "img[src], source[src], source[srcset], a[href], link[href], video[src], audio[src]",
@@ -823,27 +823,26 @@ if (!IS_PDF) {
       }
 
       if (eventName === "prepare_for_print") {
-        console.log("class/width/request -- prepare_for_print -- v1.1");
+        console.log("class/width/request -- prepare_for_print -- v1.2");
         document.body.classList.add("pdf-mode");
-        applyPrintLayout(data?.printWidthPx);
+        // applyPrintLayout(data?.printWidthPx);
         requestAnimationFrame(sendHeightToParent);
         return;
       }
 
       if (eventName === "cleanup_print") {
-        console.log("reset print layout");
         resetPrintLayout();
         return;
       }
 
       if (eventName === "request_print_html") {
-        console.log("request -- request_print_html -- v1.1");
+        console.log("request -- request_print_html -- v1.2");
         const main = document.querySelector("main") || document.body;
         const container = document.createElement("div");
         Array.from(main.childNodes).forEach((node) => {
           container.appendChild(node.cloneNode(true));
         });
-        absolutizeUrlsInContainer(container, window.location.href);
+        normalizeUrls(container, window.location.href);
         container.querySelectorAll("img").forEach((img) => {
           img.setAttribute("loading", "eager");
           img.setAttribute("decoding", "async");
