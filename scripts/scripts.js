@@ -14,41 +14,13 @@ import {
 
 const IS_PDF =
   new URLSearchParams(window.location.search).get("mode") === "pdf";
-const DEFAULT_PRINT_WIDTH_PX = 1024;
-
-function applyPrintLayout(widthPx = DEFAULT_PRINT_WIDTH_PX) {
-  const safeWidth =
-    Number.isFinite(widthPx) && widthPx > 0
-      ? Math.round(widthPx)
-      : DEFAULT_PRINT_WIDTH_PX;
-  const styleId = "print-layout-style";
-  let styleEl = document.getElementById(styleId);
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = styleId;
-    document.head.appendChild(styleEl);
-  }
-  styleEl.textContent = `
-    html.pdf-mode, body.pdf-mode {
-      width: ${safeWidth}px !important;
-      max-width: ${safeWidth}px !important;
-      margin: 0 auto !important;
-      box-sizing: border-box;
-    }
-  `;
-
-  document.documentElement.classList.add("pdf-mode");
-}
 
 function resetPrintLayout() {
   document.documentElement.classList.remove("pdf-mode");
   document.body.classList.remove("pdf-mode");
-  const styleEl = document.getElementById("print-layout-style");
-  if (styleEl) {
-    styleEl.remove();
-  }
 }
 
+// normaliza URLs relativas no HTML clonado
 function normalizeUrls(container, baseUrl) {
   const base = new URL(baseUrl, window.location.href);
   const elements = container.querySelectorAll(
@@ -301,6 +273,7 @@ function loadDelayed() {
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
+  // avisa o parent que o iframe terminou de montar o DOM
   if (window.parent && window.parent !== window) {
     window.parent.postMessage({ event: "print_ready" }, "*");
   }
@@ -822,21 +795,22 @@ if (!IS_PDF) {
         }, 1000);
       }
 
+      // aplica classe pdf-mode antes de clonar o HTML
       if (eventName === "prepare_for_print") {
-        console.log("class/width/request -- prepare_for_print -- v1.2");
         document.body.classList.add("pdf-mode");
-        // applyPrintLayout(data?.printWidthPx);
         requestAnimationFrame(sendHeightToParent);
         return;
       }
 
+      // remove classes do modo impressão
       if (eventName === "cleanup_print") {
         resetPrintLayout();
         return;
       }
 
+      // monta o HTML para impressão e envia ao parent
       if (eventName === "request_print_html") {
-        console.log("request -- request_print_html -- v1.2");
+        console.log("request_print_html");
         const main = document.querySelector("main") || document.body;
         const container = document.createElement("div");
         Array.from(main.childNodes).forEach((node) => {
