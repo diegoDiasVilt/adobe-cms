@@ -280,7 +280,7 @@ async function loadPage() {
   if (IS_PDF) {
     loadMathJax();
     await new Promise((r) => setTimeout(r, 1000));
-    console.log("PDF_GENERATION_READY");
+    // console.log("PDF_GENERATION_READY");
     console.log(document.documentElement.outerHTML);
   } else {
     loadDelayed();
@@ -379,19 +379,20 @@ if (IS_PDF) {
 
     // aplica classe pdf-mode antes de clonar o HTML
     if (eventName === "prepare_for_print") {
+      console.log('prepare is PDF')
       document.body.classList.add("pdf-mode");
       return;
     }
 
-    // remove classes do modo impressão
+    // remove classes do modo impressï¿½o
     if (eventName === "cleanup_print") {
       resetPrintLayout();
       return;
     }
 
-    // monta o HTML para impressão e envia ao parent
+    // monta o HTML para impressï¿½o e envia ao parent
     if (eventName === "request_print_html") {
-      console.log("request_print_html");
+      console.log("request_print_html is PDF");
       const main = document.querySelector("main") || document.body;
       const container = document.createElement("div");
       Array.from(main.childNodes).forEach((node) => {
