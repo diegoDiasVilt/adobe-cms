@@ -280,8 +280,8 @@ async function loadPage() {
   if (IS_PDF) {
     loadMathJax();
     await new Promise((r) => setTimeout(r, 1000));
-    // console.log("PDF_GENERATION_READY");
-    console.log(document.documentElement.outerHTML);
+    console.log("PDF_GENERATION_READY");
+    // console.log(document.documentElement.outerHTML);
   } else {
     loadDelayed();
   }
@@ -372,6 +372,7 @@ if (!IS_PDF) {
     setInterval(resize, 1000);
   });
 }
+
 if (IS_PDF) {
   window.addEventListener("message", function (e) {
     var eventName = e?.data?.event;
@@ -379,20 +380,19 @@ if (IS_PDF) {
 
     // aplica classe pdf-mode antes de clonar o HTML
     if (eventName === "prepare_for_print") {
-      console.log('prepare is PDF')
       document.body.classList.add("pdf-mode");
       return;
     }
 
-    // remove classes do modo impress�o
+    // remove classes do modo impressao
     if (eventName === "cleanup_print") {
       resetPrintLayout();
       return;
     }
 
-    // monta o HTML para impress�o e envia ao parent
+    // monta o HTML para impressso e envia ao parent
     if (eventName === "request_print_html") {
-      console.log("request_print_html is PDF");
+      console.log("request_print_html is PDF v2");
       const main = document.querySelector("main") || document.body;
       const container = document.createElement("div");
       Array.from(main.childNodes).forEach((node) => {
@@ -858,65 +858,7 @@ if (!IS_PDF) {
           console.log(counter);
         }, 1000);
       }
-
-      // aplica classe pdf-mode antes de clonar o HTML
-      if (eventName === "prepare_for_print") {
-        document.body.classList.add("pdf-mode");
-        requestAnimationFrame(sendHeightToParent);
-        return;
-      }
-
-      // remove classes do modo impressão
-      if (eventName === "cleanup_print") {
-        resetPrintLayout();
-        return;
-      }
-
-      // monta o HTML para impressão e envia ao parent
-      if (eventName === "request_print_html") {
-        console.log("request_print_html");
-        const main = document.querySelector("main") || document.body;
-        const container = document.createElement("div");
-        Array.from(main.childNodes).forEach((node) => {
-          container.appendChild(node.cloneNode(true));
-        });
-        normalizeUrls(container, window.location.href);
-        container.querySelectorAll("img").forEach((img) => {
-          img.setAttribute("loading", "eager");
-          img.setAttribute("decoding", "async");
-          img.setAttribute("fetchpriority", "high");
-          if (img.dataset && img.dataset.src && !img.getAttribute("src")) {
-            img.setAttribute("src", img.dataset.src);
-          }
-          if (img.dataset && img.dataset.srcset && !img.getAttribute("srcset")) {
-            img.setAttribute("srcset", img.dataset.srcset);
-          }
-        });
-
-        const styleHrefs = Array.from(
-          document.querySelectorAll('link[rel="stylesheet"]'),
-        )
-          .map((el) => el.href)
-          .filter(Boolean);
-        const styleTags = Array.from(document.querySelectorAll("style"))
-          .map((el) => el.textContent || "")
-          .filter((text) => text.trim().length > 0);
-
-        window.parent.postMessage(
-          {
-            event: "print_html",
-            payload: {
-              id: data?.id,
-              html: container.innerHTML,
-              styleHrefs,
-              styleTags,
-            },
-          },
-          "*",
-        );
-        return;
-      }
-
+      
       if (eventName === "set_ruler_visibility") {
         if (data === true) {
           enableRuler();
