@@ -9,6 +9,15 @@
   font-family: var(--text-font-family);
 }
 
+.texto-rico h1,
+.texto-rico h2,
+.texto-rico h3,
+.texto-rico h4,
+.texto-rico h5,
+.texto-rico h6 {
+  line-height: 1;
+}
+
 .texto-rico p,
 .texto-rico span {
   font-size: 22px;
