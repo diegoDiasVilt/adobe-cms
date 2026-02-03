@@ -38,6 +38,14 @@
 .titulo h6 strong {
   font-weight: 600;
 }
+.titulo h1,
+.titulo h2,
+.titulo h3,
+.titulo h4,
+.titulo h5,
+.titulo h6 {
+  overflow-wrap: break-word;
+}
 .titulo.background div div {
   width: fit-content;
   background-color: var(--titulo-accent-color);
@@ -71,6 +79,30 @@
   font-style: var(--titulo-font-style);
 }
 
+@media (max-width: 500px) {
+  .titulo h1 {
+    font-size: 40px;
+  }
+  .titulo h2 {
+    font-size: 34px;
+  }
+}
+@media (max-width: 425px) {
+  .titulo h1 {
+    font-size: 34px;
+  }
+  .titulo h2 {
+    font-size: 30px;
+  }
+}
+@media (max-width: 375px) {
+  .titulo h1 {
+    font-size: 30px;
+  }
+  .titulo h2 {
+    font-size: 26px;
+  }
+}
 body.theme-sepia .titulo:not(.deep-purple),
 body.theme-gray .titulo:not(.deep-purple),
 body.theme-dark .titulo:not(.deep-purple) {

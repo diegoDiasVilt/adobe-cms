@@ -33,6 +33,15 @@
      }
    }
 
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   h6 {
+     overflow-wrap: break-word;
+   }
+
    &.background {
      div {
        div {
@@ -75,6 +84,36 @@
     h1,h2,h3,h4,h5,h6 {
       font-style: var(--titulo-font-style);
     }
+  }
+}
+
+@media (max-width: 500px) {
+  .titulo h1 {
+    font-size: 40px;
+  }
+
+  .titulo h2 {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 425px) {
+  .titulo h1 {
+    font-size: 34px;
+  }
+
+  .titulo h2 {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 375px) {
+  .titulo h1 {
+    font-size: 30px;
+  }
+
+  .titulo h2 {
+    font-size: 26px;
   }
 }
 
