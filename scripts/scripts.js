@@ -52,14 +52,14 @@ function loadMathJax() {
   script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
   // If PDF mode, we might want to wait for onload
   if (IS_PDF) {
-     script.async = false; // Force synchronous-like behavior if possible
+    script.async = false; // Force synchronous-like behavior if possible
   }
   document.head.appendChild(script);
-  
+
   window.MathJax = {
     loader: { load: ['input/mml', 'output/chtml'] },
     startup: {
-      typeset: true 
+      typeset: true
     }
   };
 }
@@ -194,7 +194,7 @@ function loadDelayed() {
   if (IS_PDF) return;
 
   window.setTimeout(() => import('./delayed.js'), 1500);
-  
+
   window.setTimeout(() => loadMathJax(), 1500);
 
   import('./sidekick.js').then(({ initSidekick }) => initSidekick());
@@ -206,7 +206,7 @@ async function loadPage() {
   if (IS_PDF) {
     loadMathJax();
     await new Promise(r => setTimeout(r, 1000));
-    
+
     console.log('PDF_GENERATION_READY');
     console.log(document.documentElement.outerHTML);
   } else {
@@ -338,14 +338,14 @@ export function createOptimizedPicture(pic, baseUrl = '') {
       }
 
       if (!val.startsWith('http') && !val.startsWith('//')) {
-          if (val.startsWith('./')) {
-             // Remove o ponto (.) e junta com dominio. Ex: ./media -> /media
-             val = `${domain}${val.substring(1)}`;
-          } else if (val.startsWith('/')) {
-             // Apenas junta o domínio. Ex: /media -> https://site.com/media
-             val = `${domain}${val}`;
-          }
+        if (val.startsWith('./')) {
+          // Remove o ponto (.) e junta com dominio. Ex: ./media -> /media
+          val = `${domain}${val.substring(1)}`;
+        } else if (val.startsWith('/')) {
+          // Apenas junta o domínio. Ex: /media -> https://site.com/media
+          val = `${domain}${val}`;
         }
+      }
 
       el.setAttribute(attr, val);
     }
@@ -376,45 +376,45 @@ function makeConceitosInteractive() {
         tooltip.textContent = tooltipTextValue;
         conceito.appendChild(tooltip);
       }
-      
-      if (!conceito.hasAttribute('data-click-listener')) {
-          conceito.setAttribute('data-click-listener', 'true');
-          conceito.addEventListener('click', () => {
-            const keyConceptText = conceito.childNodes[0].nodeType === Node.TEXT_NODE
-              ? conceito.childNodes[0].nodeValue.trim()
-              : '';
-            
-            const payload = {
-              keyConcept: keyConceptText,
-              bloomTaxonomy: conceito.getAttribute('taxonomia'),
-              interactionMessage: conceito.getAttribute('interacao')
-            };
 
-            window.parent.postMessage({
-              event: 'key_concept_request',
-              payload: payload
-            }, '*');
-          });
+      if (!conceito.hasAttribute('data-click-listener')) {
+        conceito.setAttribute('data-click-listener', 'true');
+        conceito.addEventListener('click', () => {
+          const keyConceptText = conceito.childNodes[0].nodeType === Node.TEXT_NODE
+            ? conceito.childNodes[0].nodeValue.trim()
+            : '';
+
+          const payload = {
+            keyConcept: keyConceptText,
+            bloomTaxonomy: conceito.getAttribute('taxonomia'),
+            interactionMessage: conceito.getAttribute('interacao')
+          };
+
+          window.parent.postMessage({
+            event: 'key_concept_request',
+            payload: payload
+          }, '*');
+        });
       }
     });
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  makeConceitosInteractive(); 
-  
+  makeConceitosInteractive();
+
   const observer = new MutationObserver(() => {
     makeConceitosInteractive();
   });
 
   observer.observe(document.body, {
-    childList: true, 
-    subtree: true   
+    childList: true,
+    subtree: true
   });
 });
 
 let readingRuler = null;
-const RULER_HEIGHT_PX = 42; 
+const RULER_HEIGHT_PX = 42;
 let rulerEnabled = false;
 let lastMouseY = 0;
 let isMouseOverImage = false;
@@ -456,10 +456,10 @@ function updateRulerPosition() {
 
 function isMouseVerticallyOverMedia(mouseY) {
   const mediaElements = document.querySelectorAll('img, picture, table, video, .img-modal, figure');
-  
+
   for (const el of mediaElements) {
     const rect = el.getBoundingClientRect();
-  
+
     if (rect.height === 0) continue;
     if (mouseY >= rect.top && mouseY <= rect.bottom) {
       return true;
@@ -468,7 +468,7 @@ function isMouseVerticallyOverMedia(mouseY) {
   return false;
 }
 
-function storeMousePosition(e) {  
+function storeMousePosition(e) {
   lastMouseY = e.clientY;
   isMouseOverImage = isMouseVerticallyOverMedia(e.clientY);
 
@@ -480,7 +480,7 @@ function enableRuler() {
 
   if (!rulerEnabled) {
     rulerEnabled = true;
-    
+
     document.addEventListener('mousemove', storeMousePosition);
 
     if (readingRuler) readingRuler.style.display = 'block';
@@ -492,7 +492,7 @@ function enableRuler() {
 function disableRuler() {
   if (rulerEnabled) {
     rulerEnabled = false;
-    
+
     document.removeEventListener('mousemove', storeMousePosition);
   }
 
@@ -519,7 +519,7 @@ function storeOriginalFontSizes() {
 
 function applyFontSizeDelta(delta) {
   storeOriginalFontSizes();
-  
+
   document.querySelectorAll(FONT_SCALE_TARGETS).forEach((el) => {
     if (originalFontSizes.has(el)) {
       const originalSize = originalFontSizes.get(el);
@@ -555,7 +555,7 @@ function forceRichTextTheme(payload) {
 
   richTextBlocks.forEach(block => {
     const allElements = block.querySelectorAll('p, span, li, a, h1, h2, h3, h4, h5, h6, strong, em, div, td, th');
-    
+
     allElements.forEach(el => {
       if (isReset) {
         if (el.dataset.originalColor) {
@@ -568,11 +568,11 @@ function forceRichTextTheme(payload) {
         }
       } else {
         const currentInlineColor = el.style.color;
-        
+
         if (currentInlineColor && !el.dataset.originalColor && el.style.getPropertyPriority('color') !== 'important') {
           el.dataset.originalColor = currentInlineColor;
         }
-        
+
         el.style.setProperty('color', newColor, 'important');
       }
     });
@@ -588,7 +588,7 @@ function resetFontSizes() {
 }
 
 function resetCustomizations() {
-  
+
   // Reseta a Régua de Leitura
   disableRuler(); //
 
@@ -644,7 +644,7 @@ if (!IS_PDF) {
 
   const observer = new MutationObserver(sendHeightToParent);
   observer.observe(document.body, { subtree: true, childList: true, attributes: true });
-  
+
   document.addEventListener('keydown', (event) => {
     const tagName = document.activeElement.tagName;
     if (tagName === 'INPUT' || tagName === 'TEXTAREA' || document.activeElement.isContentEditable) {
@@ -655,7 +655,7 @@ if (!IS_PDF) {
       if (rulerEnabled) {
         disableRuler();
       } else {
-        enableRuler();  
+        enableRuler();
       }
       window.parent.postMessage({
         event: 'toggle_reading_ruler',
@@ -767,7 +767,7 @@ if (!IS_PDF) {
     }
 
     if (eventName === "set_kindle_font_size") {
-      let delta = data-20;
+      let delta = data - 20;
       if (delta === 0) {
         resetFontSizes();
       }
@@ -870,6 +870,17 @@ if (!IS_PDF) {
     if (eventName === 'set_kindle_reset') {
       resetCustomizations();
     }
+    if (eventName === 'set_active_learning_obj') {
+      setActiveLearningObject(data);
+    }
   }, false);
 
+}
+
+function setActiveLearningObject(lobBusinessKey) {
+  console.log(lobBusinessKey)
+  document.querySelectorAll(".section").forEach(section => {
+    section.style.display = 'none'
+  })
+  document.querySelector(`.section-${lobBusinessKey}`).style.display = "block"
 }
