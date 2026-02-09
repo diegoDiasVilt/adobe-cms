@@ -1053,7 +1053,23 @@ if (!IS_PDF) {
       if (eventName === "set_kindle_reset") {
         resetCustomizations();
       }
-    },
-    false,
-  );
+    if (eventName === 'set_active_learning_obj') {
+      setActiveLearningObject(data);
+    }
+  }, false);
+
 }
+
+function setActiveLearningObject(lobBusinessKey) {
+  document.querySelectorAll(".section").forEach(section => {
+    section.style.display = 'none'
+  })
+  document.querySelector(`.section-${lobBusinessKey}`).style.display = "block"
+}
+
+setTimeout(() => {
+  const paramLob = new URLSearchParams(window.location.search).get("learningObj");
+  if(paramLob){
+    setActiveLearningObject(paramLob)  
+  }
+}, 1000);
