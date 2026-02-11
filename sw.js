@@ -2,8 +2,8 @@ const CACHE_NAME = 'cogna-router-v1';
 
 const IGNORE_DOMAINS = [
     'aem.page',
-    'aem.live',
-    'localhost',
+    // 'aem.live',
+    // 'localhost',
 ];
 
 self.addEventListener('install', e => self.skipWaiting());
