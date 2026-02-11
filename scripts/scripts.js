@@ -858,7 +858,7 @@ if (!IS_PDF) {
           console.log(counter);
         }, 1000);
       }
-      
+
       if (eventName === "set_ruler_visibility") {
         if (data === true) {
           enableRuler();
@@ -1053,23 +1053,23 @@ if (!IS_PDF) {
       if (eventName === "set_kindle_reset") {
         resetCustomizations();
       }
-    if (eventName === 'set_active_learning_obj') {
-      setActiveLearningObject(data);
-    }
-  }, false);
+      // if (eventName === 'set_active_learning_obj') {
+      //   setActiveLearningObject(data);
+      // }
+    }, false);
 
 }
 
-function setActiveLearningObject(lobBusinessKey) {
-  document.querySelectorAll(".section").forEach(section => {
-    section.style.display = 'none'
-  })
-  document.querySelector(`.section-${lobBusinessKey}`).style.display = "block"
-}
+// function setActiveLearningObject(lobBusinessKey) {
+//   document.querySelectorAll(".section").forEach(section => {
+//     section.style.display = 'none'
+//   })
+//   document.querySelector(`.section-${lobBusinessKey}`).style.display = "block"
+// }
 
-setTimeout(() => {
-  const paramLob = new URLSearchParams(window.location.search).get("learningObj");
-  if(paramLob){
-    setActiveLearningObject(paramLob)  
-  }
-}, 1000);
+// setTimeout(() => {
+//   const paramLob = new URLSearchParams(window.location.search).get("learningObj");
+//   if(paramLob){
+//     setActiveLearningObject(paramLob)
+//   }
+// }, 1000);
