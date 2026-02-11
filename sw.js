@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cogna-router-v1';
+const CACHE_NAME = 'cogna-router-v2';
 
 const IGNORE_DOMAINS = [
     'aem.page',
