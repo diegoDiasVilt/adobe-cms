@@ -1,19 +1,40 @@
 (async () => {
-    function load() {
-        const params = new URLSearchParams(window.location.search);
-        const lesson = params.get('learningObj');
-        if (lesson) {
-            const classname = `section-${lesson}`
-            const main = document.querySelector('main')
-            Array.of(...main.children).forEach(child => {
-                if (!child.classList.contains(classname)) child.remove()
-            })
-        }
-    }
+    window.addEventListener('DOMContentLoaded', function route() {
+        const params = new URLSearchParams(window.location.search)
+        const lesson = params.get('learningObj')
+        if (!lesson) return;
+        const classname = `section-${lesson}`
+        const main = document.querySelector('main')
+        Array.from(main.children).forEach(child => {
+            if (!child.classList.contains(classname)) child.remove()
+        })
+    })
 
     if ('serviceWorker' in navigator) {
-        const reg = await navigator.serviceWorker.register('/sw.js');
-        if (navigator.serviceWorker.controller) load()
-        else window.addEventListener('load', load)
+        try {
+            const reg = await navigator.serviceWorker.register('/sw.js')
+        } catch (err) {
+            console.error('Erro SW:', err)
+        }
     }
 })()
+
+// (async () => {
+//     function load() {
+//         const params = new URLSearchParams(window.location.search);
+//         const lesson = params.get('learningObj');
+//         if (lesson) {
+//             const classname = `section-${lesson}`
+//             const main = document.querySelector('main')
+//             Array.from(main.children).forEach(child => {
+//                 if (!child.classList.contains(classname)) child.remove()
+//             })
+//         }
+//     }
+
+//     if ('serviceWorker' in navigator) {
+//         const reg = await navigator.serviceWorker.register('/sw.js');
+//         if (navigator.serviceWorker.controller) load()
+//         else window.addEventListener('load', load)
+//     }
+// })()

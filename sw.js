@@ -21,13 +21,13 @@ function getCacheKey(url) {
     return clone
 }
 
-self.addEventListener('fetch', async e => {
+self.addEventListener('fetch', e => {
     const url = new URL(e.request.url);
     const pwa = url.searchParams.get('pwa')
     switch (pwa) {
         case 'skip': return;
-        case 'drop': return caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))))
-        case 'refresh': caches.open(CACHE_NAME).then(c => c.delete(getCacheKey(url)))
+        case 'drop': return caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))));
+        case 'refresh': return caches.open(CACHE_NAME).then(c => c.delete(getCacheKey(url)));
     }
     if (e.request.method !== 'GET' || IGNORE_DOMAINS.some(d => url.hostname.includes(d))) return;
     if (url.pathname.startsWith('/conteudo/')) {
