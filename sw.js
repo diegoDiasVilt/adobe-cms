@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cogna-pwa-v3';
+const CACHE_NAME = 'cogna-pwa-v4';
 
 const IGNORE_DOMAINS = [
     'aem.page',
@@ -58,14 +58,24 @@ self.addEventListener('fetch', e => {
             e.respondWith((async () => {
                 try {
                     const cache = await caches.open(CACHE_NAME);
-                    console.log('search in cache')
                     const cached = await cache.match(e.request, { ignoreSearch: true });
-                    if (cached) return cached;
-
-                    console.log('search in net')
+                    const headers = new Headers(e.request.headers);
+                    if (cached) {
+                        const lastModified = cached.headers.get('last-modified');
+                        console.log(`found cache: ${lastModified}`)
+                        if (lastModified) headers.set('If-Modified-Since', lastModified);
+                    }
+                    console.log(`search in net: ${e.request.url}`)
                     const key = getCacheKey(url)
-                    const res = await fetch(e.request);
-                    if (res.ok) cache.put(key, res.clone());
+                    const res = await fetch(new Request(e.request, { headers }));
+                    if (res.status === 304) {
+                        console.log(`return cache: ${res.status} ${res.statusText}`);
+                        return cached;
+                    }
+                    if (res.status === 200) {
+                        console.log(`save in cache: ${key}`)
+                        cache.put(key, res.clone());
+                    }
                     return res
                 } catch (error) {
                     console.error(`Unable to fetch ${url}: ${error.message}`)
