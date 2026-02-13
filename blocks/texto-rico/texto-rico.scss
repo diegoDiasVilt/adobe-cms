@@ -99,3 +99,7 @@ body.theme-white .texto-rico:not(.deep-purple) {
 		opacity: 1;
 	}
 }
+
+.texto-rico span[style*="background-color"] {
+  background-color: var(--background-color) !important;
+}
