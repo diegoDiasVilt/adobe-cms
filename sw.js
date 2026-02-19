@@ -67,10 +67,14 @@ self.addEventListener('fetch', e => {
                     }
                     console.log(`search in net: ${e.request.url}`)
                     const key = getCacheKey(url)
-                    const res = await fetch(new Request(e.request, { headers }));
+                    let res = await fetch(new Request(e.request, { headers }));
                     if (res.status === 304) {
                         console.log(`return cache: ${res.status} ${res.statusText}`);
                         return cached;
+                    }
+                    if (res.status === 425) {
+                        console.log(`too early: ${key}`)
+                        res = await fetch(new Request(e.request, { headers }))
                     }
                     if (res.status === 200) {
                         console.log(`save in cache: ${key}`)
