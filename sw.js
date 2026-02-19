@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cogna-pwa-v5';
+const CACHE_NAME = 'cogna-pwa-v6';
 
 const IGNORE_DOMAINS = [
     'aem.page',
@@ -74,7 +74,9 @@ self.addEventListener('fetch', e => {
                     }
                     if (res.status === 425) {
                         console.log(`too early: ${key}`)
-                        res = await fetch(new Request(e.request, { headers }))
+                        headers.delete('Early-Data');
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                        res = await fetch(url, { headers })
                     }
                     if (res.status === 200) {
                         console.log(`save in cache: ${key}`)
