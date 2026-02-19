@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cogna-pwa-v4';
+const CACHE_NAME = 'cogna-pwa-v5';
 
 const IGNORE_DOMAINS = [
     'aem.page',
