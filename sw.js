@@ -2,6 +2,7 @@ const CACHE_NAME = 'cogna-pwa-v6';
 
 const IGNORE_DOMAINS = [
     'aem.page',
+    'adobeaemcloud.com',
     // 'aem.live',
     // 'localhost',
 ];
