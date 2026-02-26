@@ -73,6 +73,17 @@ self.addEventListener('fetch', e => {
                         headers.delete('Early-Data');
                         res = await fetch(new Request(url, { headers }))
                     }
+                    if (res.status === 429) {
+                        if (cached) {
+                            console.log(`too many requests: ${key}, fallback to cache`)
+                            return cached;
+                        }
+                        let retryAfter = parseInt(res.headers.get('retry-after') || '1', 10);
+                        if (retryAfter === 0) retryAfter = 1;
+                        console.log(`too many requests: ${key}, retry in ${retryAfter}s`)
+                        await new Promise((r) => setTimeout(r, retryAfter * 1000));
+                        res = await fetch(new Request(url, { headers }))
+                    }
                     if (res.status === 304) {
                         console.log(`return cache: ${res.status} ${res.statusText}`);
                         return cached;
