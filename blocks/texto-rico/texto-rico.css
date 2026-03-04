@@ -22,7 +22,6 @@
 .texto-rico span {
   font-size: 22px;
   font-family: var(--text-font-family);
-  color: #3a3a3a;
   margin: 30px auto;
 }
 
@@ -101,4 +100,8 @@ body.theme-white .texto-rico:not(.deep-purple) {
 }
 body.theme-white .texto-rico:not(.deep-purple) figure:has(img) figcaption {
   opacity: 1;
+}
+
+.texto-rico span[style*=background-color] {
+  background-color: var(--background-color) !important;
 }
