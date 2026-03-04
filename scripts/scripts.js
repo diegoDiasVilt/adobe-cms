@@ -128,6 +128,20 @@ function loadMathJax() {
       typeset: true,
     },
   };
+  // Intercepta erro de compilação
+  window.MathJax.config.options.compileError = function (doc, math, err) {
+    console.warn("Erro detectado:", err.message);
+
+    // Substitui pelo MathML original
+    math.typesetRoot.innerHTML = math.math;
+  };
+
+  // Intercepta erro de renderização
+  window.MathJax.config.options.typesetError = function (doc, math, err) {
+    console.warn("Erro ao renderizar:", err.message);
+
+    math.typesetRoot.innerHTML = math.math;
+  };
 }
 
 /**
