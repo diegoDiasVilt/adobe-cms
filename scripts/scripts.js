@@ -115,7 +115,7 @@ function loadMathJax() {
   window.mathJaxLoaded = true;
 
   const script = document.createElement("script");
-  script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js";
+  script.src = "https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js";
   // If PDF mode, we might want to wait for onload
   if (IS_PDF) {
     script.async = false; // Force synchronous-like behavior if possible
@@ -127,20 +127,15 @@ function loadMathJax() {
     startup: {
       typeset: true,
     },
-  };
-  // Intercepta erro de compilação
-  window.MathJax.config.options.compileError = function (doc, math, err) {
-    console.warn("Erro detectado:", err.message);
+    options: {
+      compileError: function (doc, math, err) {
+        // mantém o MathML original
+        setTimeout(() => {
+          math.typesetRoot.innerHTML = math.math;
+        }, 3000);
+      }
+    }
 
-    // Substitui pelo MathML original
-    math.typesetRoot.innerHTML = math.math;
-  };
-
-  // Intercepta erro de renderização
-  window.MathJax.config.options.typesetError = function (doc, math, err) {
-    console.warn("Erro ao renderizar:", err.message);
-
-    math.typesetRoot.innerHTML = math.math;
   };
 }
 
