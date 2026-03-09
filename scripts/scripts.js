@@ -1063,14 +1063,14 @@ if (!IS_PDF) {
         resetCustomizations();
       }
       if (eventName === "scroll_to_aula"){
-        const targetClass = data.target;
+        const targetText = data.target; 
         
-        if (targetClass) {
-          const targetElement = document.querySelector(`.${targetClass}`);
+        if (targetText) {
+          const targetElement = document.querySelector(`[class*="${targetText}"]`)
 
-          targetElement.style.scrollMarginTop = "100px";
-          
           if (targetElement) {
+            targetElement.style.scrollMarginTop = "100px";
+            
             targetElement.scrollIntoView({ 
               behavior: "smooth", 
               block: "start" 
