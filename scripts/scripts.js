@@ -1067,6 +1067,8 @@ if (!IS_PDF) {
         
         if (targetClass) {
           const targetElement = document.querySelector(`.${targetClass}`);
+
+          targetElement.style.scrollMarginTop = "100px";
           
           if (targetElement) {
             targetElement.scrollIntoView({ 
