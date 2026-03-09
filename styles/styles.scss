@@ -606,4 +606,12 @@ main [data-tab-id] {
   .font-options button:hover {
     background-color: #3a3a3a;
   }
+  
+  .section-aula-1-videoaula,
+	.section-aula-2-videoaula,
+	.section-aula-3-videoaula,
+	.section-aula-4-videoaula,
+	.section-aula-5-videoaula {
+		scroll-margin-top: 80px; 
+	}
 }

@@ -1062,27 +1062,22 @@ if (!IS_PDF) {
       if (eventName === "set_kindle_reset") {
         resetCustomizations();
       }
-      if (eventName === "scroll_to_aula") {
+      if (eventName === "scroll_to_aula"){
         const targetClass = data.target;
         
         if (targetClass) {
           const targetElement = document.querySelector(`.${targetClass}`);
           
           if (targetElement) {
-            const menuHeightOffset = 80; 
-          
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.scrollY - menuHeightOffset;
-            
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth"
+            targetElement.scrollIntoView({ 
+              behavior: "smooth", 
+              block: "start" 
             });
           } else {
             console.warn(`Elemento com a classe .${targetClass} não encontrado na página.`);
           }
         }
-      }    
+      }      
       
       // if (eventName === 'set_active_learning_obj') {
       //   setActiveLearningObject(data);
