@@ -56,7 +56,7 @@ export default async function decorate(block) {
         textWrapper.innerHTML = richtextDiv.innerHTML;
       } else if (contentParagraph && contentParagraph.textContent && contentParagraph.textContent.trim()) {
         try {
-          textWrapper.innerHTML = decodeBase64(contentParagraph.textContent.trim());
+          textWrapper.append(decodeBase64(contentParagraph))
         } catch (e) {
           textWrapper.innerHTML = contentTextAuthoredCell.innerHTML;
         }

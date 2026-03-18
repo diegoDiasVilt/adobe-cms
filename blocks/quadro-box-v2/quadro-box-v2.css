@@ -119,7 +119,7 @@
   width: 100%;
   object-fit: contain;
 }
-.quadro-box-v2-items .quadro-box-item-image p {
+.quadro-box-v2-items .quadro-box-item-image .quadro-box-item-image-description, .quadro-box-v2-items .quadro-box-item-image .quadro-box-item-image-title {
   text-align: center;
   font-size: 80%;
   color: var(--quadro-box-caption-color);
