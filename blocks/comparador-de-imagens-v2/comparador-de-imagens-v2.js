@@ -1,16 +1,22 @@
 import { decodeBase64 } from "../../scripts/scripts.js";
 
 export default function decorate(block) {
-  const imageBefore = block.children[0]?.querySelector('img');
-  const altImageBefore = block.children[1]?.querySelector('p').textContent.trim();
-  const titleBefore = block.children[2]?.querySelector('p').textContent.trim();
-  const textBefore = block.children[3]?.querySelector('p').textContent.trim();
-  const fontTextBefore = block.children[4]?.querySelector('p').textContent.trim();
-  const imageAfter = block.children[5]?.querySelector('img');
-  const altImageAfter = block.children[6]?.querySelector('p').textContent.trim();
-  const titleAfter = block.children[7]?.querySelector('p').textContent.trim();
-  const textAfter = block.children[8]?.querySelector('p').textContent.trim();
-  const fontTextAfter = block.children[9]?.querySelector('p').textContent.trim();
+  const getCellText = (index) => {
+    const cell = block.children[index];
+    const content = cell?.querySelector("p") || cell?.querySelector("div") || cell;
+    return content?.textContent?.trim() || "";
+  };
+
+  const imageBefore = block.children[0]?.querySelector("img");
+  const altImageBefore = getCellText(1);
+  const titleBefore = getCellText(2);
+  const textBefore = getCellText(3);
+  const fontTextBefore = getCellText(4);
+  const imageAfter = block.children[5]?.querySelector("img");
+  const altImageAfter = getCellText(6);
+  const titleAfter = getCellText(7);
+  const textAfter = getCellText(8);
+  const fontTextAfter = getCellText(9);
   const id = block?.children[10];
   
   const titleBeforeDecoded = decodeBase64(titleBefore || '');
