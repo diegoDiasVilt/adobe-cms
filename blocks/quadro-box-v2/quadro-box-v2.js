@@ -17,7 +17,7 @@ export default async function decorate(block) {
   const itemRowElements = Array.from(block.children);
 
   const itemsContainer = document.createElement('div');
-  itemsContainer.className = `quadro-box-items columns-${Math.min(itemRowElements.length, numCols)}`;
+  itemsContainer.className = `quadro-box-v2-items columns-${Math.min(itemRowElements.length, numCols)}`;
 
   const itemsToDisplay = itemRowElements.slice(0, numCols);
 
