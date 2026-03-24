@@ -1,5 +1,10 @@
 import { decodeBase64 } from '../../scripts/scripts.js';
 
+function getFirstNonEmptyHeading(element) {
+  return [...element.querySelectorAll('h1,h2,h3,h4,h5,h6')]
+    .find((heading) => heading.textContent?.trim());
+}
+
 export default function decorate(block) {
   const title = block?.children[0];
   const id = block?.children[1];
@@ -21,7 +26,11 @@ export default function decorate(block) {
 
   headerElement.innerHTML = `${decodeBase64(headerElement?.textContent?.trim())}`;
 
-  const sanitizedHeader = headerElement.querySelector('h1,h2,h3,h4,h5,h6');
+  const sanitizedHeader = getFirstNonEmptyHeading(headerElement);
+  if (!sanitizedHeader) {
+    return;
+  }
+
   headerElement.textContent = '';
   headerElement.append(sanitizedHeader);
 
