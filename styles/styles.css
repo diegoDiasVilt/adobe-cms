@@ -16,6 +16,7 @@
   --light-color: #eee;
   --dark-color: #ccc;
   --text-color: #3a3a3a;
+  --page-content-max-width: none;
   /* fonts */
   --body-font-family: "Open Sans", roboto, roboto-fallback;
   --heading-font-family: var(--body-font-family);
@@ -318,15 +319,45 @@ main .section {
   padding: 0 16px;
 }
 
-@media (width >= 600px) {
+main .section > div {
+  width: 100%;
+  max-width: var(--page-content-max-width);
+  margin: auto;
+}
+
+@media (width >= 768px) {
+  :root {
+    --page-content-max-width: 720px;
+  }
+
+  main .section {
+    padding: 0 24px;
+  }
+}
+
+@media (width >= 1024px) {
+  :root {
+    --page-content-max-width: 960px;
+  }
+
   main .section {
     padding: 0 32px;
   }
 }
-@media (width >= 900px) {
-  .section > div {
-    max-width: 1200px;
-    margin: auto;
+
+@media (width >= 1280px) {
+  :root {
+    --page-content-max-width: 940px;
+  }
+
+  main .section {
+    padding: 0;
+  }
+}
+
+@media (width >= 1366px) {
+  :root {
+    --page-content-max-width: 990px;
   }
 }
 /* section metadata */
@@ -343,7 +374,7 @@ main .section.columns-two {
   display: grid;
   gap: 10px;
   grid-template-columns: 1fr 1fr;
-  max-width: 1200px;
+  max-width: var(--page-content-max-width);
   margin: auto;
 }
 main .section.columns-two > * {
@@ -353,7 +384,7 @@ main .section.columns-three {
   display: grid;
   gap: 10px;
   grid-template-columns: 1fr 1fr 1fr;
-  max-width: 1200px;
+  max-width: var(--page-content-max-width);
   margin: auto;
 }
 main .section.columns-three > * {
