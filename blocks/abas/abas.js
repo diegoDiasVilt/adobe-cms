@@ -1,5 +1,40 @@
 import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
 
+function isNullishContent(value) {
+  if (!value) return true;
+  const normalizedValue = value.trim().toLowerCase();
+  return normalizedValue === '' || normalizedValue === 'null';
+}
+
+function sanitizeTabContent(element) {
+  element.querySelectorAll('p').forEach((paragraph) => {
+    if (isNullishContent(paragraph.textContent)) {
+      paragraph.remove();
+      return;
+    }
+
+    const richtextDiv = paragraph.closest('div[data-aue-type="richtext"]');
+    if (!richtextDiv) {
+      try {
+        const decodedContent = decodeBase64(paragraph.textContent.trim());
+        if (isNullishContent(decodedContent.replace(/<[^>]+>/g, ' '))) {
+          paragraph.remove();
+          return;
+        }
+        paragraph.outerHTML = decodedContent;
+      } catch (e) {
+        // Keep original paragraph when content is not base64-encoded HTML.
+      }
+    }
+  });
+
+  element.querySelectorAll('div[data-aue-type="richtext"]').forEach((richtextDiv) => {
+    if (isNullishContent(richtextDiv.textContent)) {
+      richtextDiv.remove();
+    }
+  });
+}
+
 export default function decorate(block) {
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -22,16 +57,7 @@ export default function decorate(block) {
     const titleText = title.textContent;
     title.remove();
 
-    const contentElements = element.querySelectorAll('p');
-    contentElements.forEach((paragraph) => {
-      if (paragraph.textContent && paragraph.textContent.trim()) {
-        const richtextDiv = paragraph.closest('div[data-aue-type="richtext"]');
-        if (!richtextDiv) {
-          const decodedContent = decodeBase64(paragraph.textContent.trim());
-          paragraph.outerHTML = decodedContent;
-        }
-      }
-    });
+    sanitizeTabContent(element);
 
     tabs.push({ title: titleText, body: element });
     if (isPdf) {
