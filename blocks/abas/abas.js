@@ -1,54 +1,9 @@
-import { decodeBase64, enhancedIsInEditor, htmlToElement } from '../../scripts/scripts.js';
-
-function decodeTextContent(text = '') {
-  const trimmedText = text?.trim?.() || '';
-  if (!trimmedText) return '';
-
-  try {
-    return decodeBase64(trimmedText);
-  } catch (e) {
-    return trimmedText;
-  }
-}
-
-function processRichTextContent(element) {
-  if (!element) return;
-
-  const paragraphs = element.matches('p') ? [element] : element.querySelectorAll('p');
-  paragraphs.forEach((paragraph) => {
-    if (paragraph.textContent && paragraph.textContent.trim()
-      && !paragraph.closest('div[data-aue-type="richtext"]')) {
-      paragraph.outerHTML = decodeTextContent(paragraph.textContent.trim());
-    }
-  });
-}
-
-function extractRichTextHtml(element) {
-  if (!element) return '';
-
-  const richtextDiv = element.matches('div[data-aue-type="richtext"]')
-    ? element
-    : element.querySelector('div[data-aue-type="richtext"]');
-  if (richtextDiv) {
-    return richtextDiv.innerHTML;
-  }
-
-  const paragraph = element.matches('p') ? element : element.querySelector('p');
-  if (paragraph && paragraph.textContent && paragraph.textContent.trim()) {
-    try {
-      return decodeBase64(paragraph.textContent.trim());
-    } catch (e) {
-      return element.innerHTML;
-    }
-  }
-
-  return element.innerHTML || '';
-}
+import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+
   const urlParams = new URLSearchParams(window.location.search);
   const isPdfParam = urlParams.get('mode') === 'pdf';
-  const isEditor = enhancedIsInEditor();
   if (isPdfParam) {
     document.body.classList.add('pdf-mode');
   }
@@ -64,76 +19,31 @@ export default function decorate(block) {
 
   Array.from(block?.children).forEach((element, index) => {
     const title = element.children[0];
-    const text = element.children[1];
-    const image = element.children[2];
-    const imgTitle = element.children[3];
-    const description = element.children[4];
-    const secondText = element.children[5];
-    const secondImage = element.children[6];
-    const secondImgTitle = element.children[7];
-    const secondDescription = element.children[8];
+    const titleText = title.textContent;
+    title.remove();
 
-    console.log('[abas] abaItem children', {
-      index,
-      childCount: element.children.length,
-      children: Array.from(element.children).map((child, childIndex) => ({
-        index: childIndex,
-        text: child.textContent?.trim(),
-        html: child.innerHTML,
-      })),
+    const contentElements = element.querySelectorAll('p');
+    contentElements.forEach((paragraph) => {
+      if (paragraph.textContent && paragraph.textContent.trim()) {
+        const richtextDiv = paragraph.closest('div[data-aue-type="richtext"]');
+        if (!richtextDiv) {
+          const decodedContent = decodeBase64(paragraph.textContent.trim());
+          paragraph.outerHTML = decodedContent;
+        }
+      }
     });
 
-    console.log('[abas] abaItem mapped fields', {
-      index,
-      title: title?.textContent?.trim(),
-      text: text?.innerHTML,
-      image: image?.innerHTML,
-      imgTitle: imgTitle?.textContent?.trim(),
-      description: description?.textContent?.trim(),
-      secondText: secondText?.innerHTML,
-      secondImage: secondImage?.innerHTML,
-      secondImgTitle: secondImgTitle?.textContent?.trim(),
-      secondDescription: secondDescription?.textContent?.trim(),
-    });
-
-    const titleText = decodeTextContent(title?.textContent);
-    const textHtml = extractRichTextHtml(text);
-    const secondTextHtml = extractRichTextHtml(secondText);
-    const imgTitleHtml = decodeTextContent(imgTitle?.textContent);
-    const descriptionHtml = decodeTextContent(description?.textContent);
-    const secondImgTitleHtml = decodeTextContent(secondImgTitle?.textContent);
-    const secondDescriptionHtml = decodeTextContent(secondDescription?.textContent);
-
-    const tabBody = element.cloneNode(false);
-    tabBody.innerHTML = `
-      ${textHtml}
-      ${image?.innerHTML || ''}
-      ${imgTitleHtml ? `<p>${imgTitleHtml}</p>` : ''}
-      ${descriptionHtml ? `<p>${descriptionHtml}</p>` : ''}
-      ${secondTextHtml}
-      ${secondImage?.innerHTML || ''}
-      ${secondImgTitleHtml ? `<p>${secondImgTitleHtml}</p>` : ''}
-      ${secondDescriptionHtml ? `<p>${secondDescriptionHtml}</p>` : ''}
-    `;
-
-    if (isEditor) {
-      element.classList.add('hidden');
-      element.insertAdjacentElement('afterend', tabBody);
-    } else {
-      element.replaceWith(tabBody);
-    }
-
-    tabs.push({ title: titleText, body: tabBody });
+    tabs.push({ title: titleText, body: element });
     if (isPdf) {
       // PDF MODE: Do NOT hide the content.
       const pdfTitle = document.createElement('h3');
       pdfTitle.classList.add('pdf-tab-title');
       pdfTitle.textContent = titleText;
-      tabBody.insertBefore(pdfTitle, tabBody.firstChild);
+      element.insertBefore(pdfTitle, element.firstChild);
       
-      tabBody.classList.add('pdf-tab-content');
+      element.classList.add('pdf-tab-content');
     } else {
-      if (index !== 0) { tabBody.classList.add('hidden'); }
+      if (index !== 0) { element.classList.add('hidden'); }
     }
   });
 
