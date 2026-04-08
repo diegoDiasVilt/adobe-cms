@@ -14,7 +14,7 @@ function decodeTextContent(text = '') {
 function processRichTextContent(element) {
   if (!element) return;
 
-  const paragraphs = element.querySelectorAll('p');
+  const paragraphs = element.matches('p') ? [element] : element.querySelectorAll('p');
   paragraphs.forEach((paragraph) => {
     if (paragraph.textContent && paragraph.textContent.trim()
       && !paragraph.closest('div[data-aue-type="richtext"]')) {
