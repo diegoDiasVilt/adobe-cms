@@ -1,7 +1,29 @@
 import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+function decodeTextContent(text = '') {
+  const trimmedText = text?.trim?.() || '';
+  if (!trimmedText) return '';
 
+  try {
+    return decodeBase64(trimmedText);
+  } catch (e) {
+    return trimmedText;
+  }
+}
+
+function processRichTextContent(element) {
+  if (!element) return;
+
+  const paragraphs = element.querySelectorAll('p');
+  paragraphs.forEach((paragraph) => {
+    if (paragraph.textContent && paragraph.textContent.trim()
+      && !paragraph.closest('div[data-aue-type="richtext"]')) {
+      paragraph.outerHTML = decodeTextContent(paragraph.textContent.trim());
+    }
+  });
+}
+
+export default function decorate(block) {
   const urlParams = new URLSearchParams(window.location.search);
   const isPdfParam = urlParams.get('mode') === 'pdf';
   if (isPdfParam) {
@@ -19,17 +41,55 @@ export default function decorate(block) {
 
   Array.from(block?.children).forEach((element, index) => {
     const title = element.children[0];
-    const titleText = title.textContent;
-    title.remove();
+    const text = element.children[1];
+    const image = element.children[2];
+    const imgTitle = element.children[4];
+    const description = element.children[5];
+    const secondText = element.children[6];
+    const secondImage = element.children[7];
+    const secondImgTitle = element.children[9];
+    const secondDescription = element.children[10];
 
-    const contentElements = element.querySelectorAll('p');
-    contentElements.forEach((paragraph) => {
-      if (paragraph.textContent && paragraph.textContent.trim()) {
-        const richtextDiv = paragraph.closest('div[data-aue-type="richtext"]');
-        if (!richtextDiv) {
-          const decodedContent = decodeBase64(paragraph.textContent.trim());
-          paragraph.outerHTML = decodedContent;
-        }
+    const titleText = decodeTextContent(title?.textContent);
+    title?.remove();
+
+    processRichTextContent(text);
+    processRichTextContent(secondText);
+
+    if (imgTitle) {
+      imgTitle.innerHTML = decodeTextContent(imgTitle.textContent);
+    }
+
+    if (description) {
+      description.innerHTML = decodeTextContent(description.textContent);
+    }
+
+    if (secondImgTitle) {
+      secondImgTitle.innerHTML = decodeTextContent(secondImgTitle.textContent);
+    }
+
+    if (secondDescription) {
+      secondDescription.innerHTML = decodeTextContent(secondDescription.textContent);
+    }
+
+    element.replaceChildren();
+
+    [
+      text,
+      image,
+      imgTitle,
+      description,
+      secondText,
+      secondImage,
+      secondImgTitle,
+      secondDescription,
+    ].forEach((child) => {
+      if (!child) return;
+      const hasText = child.textContent?.trim();
+      const hasImage = child.querySelector?.('img');
+      const hasRichtext = child.querySelector?.('div[data-aue-type="richtext"]');
+      if (hasText || hasImage || hasRichtext) {
+        element.appendChild(child);
       }
     });
 
