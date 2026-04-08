@@ -43,12 +43,35 @@ export default function decorate(block) {
     const title = element.children[0];
     const text = element.children[1];
     const image = element.children[2];
-    const imgTitle = element.children[4];
-    const description = element.children[5];
-    const secondText = element.children[6];
-    const secondImage = element.children[7];
-    const secondImgTitle = element.children[9];
-    const secondDescription = element.children[10];
+    const imgTitle = element.children[3];
+    const description = element.children[4];
+    const secondText = element.children[5];
+    const secondImage = element.children[6];
+    const secondImgTitle = element.children[7];
+    const secondDescription = element.children[8];
+
+    console.log('[abas] abaItem children', {
+      index,
+      childCount: element.children.length,
+      children: Array.from(element.children).map((child, childIndex) => ({
+        index: childIndex,
+        text: child.textContent?.trim(),
+        html: child.innerHTML,
+      })),
+    });
+
+    console.log('[abas] abaItem mapped fields', {
+      index,
+      title: title?.textContent?.trim(),
+      text: text?.innerHTML,
+      image: image?.innerHTML,
+      imgTitle: imgTitle?.textContent?.trim(),
+      description: description?.textContent?.trim(),
+      secondText: secondText?.innerHTML,
+      secondImage: secondImage?.innerHTML,
+      secondImgTitle: secondImgTitle?.textContent?.trim(),
+      secondDescription: secondDescription?.textContent?.trim(),
+    });
 
     const titleText = decodeTextContent(title?.textContent);
     title?.remove();
