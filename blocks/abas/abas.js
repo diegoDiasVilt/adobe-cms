@@ -23,6 +23,28 @@ function processRichTextContent(element) {
   });
 }
 
+function extractRichTextHtml(element) {
+  if (!element) return '';
+
+  const richtextDiv = element.matches('div[data-aue-type="richtext"]')
+    ? element
+    : element.querySelector('div[data-aue-type="richtext"]');
+  if (richtextDiv) {
+    return richtextDiv.innerHTML;
+  }
+
+  const paragraph = element.matches('p') ? element : element.querySelector('p');
+  if (paragraph && paragraph.textContent && paragraph.textContent.trim()) {
+    try {
+      return decodeBase64(paragraph.textContent.trim());
+    } catch (e) {
+      return element.innerHTML;
+    }
+  }
+
+  return element.innerHTML || '';
+}
+
 export default function decorate(block) {
   const urlParams = new URLSearchParams(window.location.search);
   const isPdfParam = urlParams.get('mode') === 'pdf';
@@ -75,42 +97,29 @@ export default function decorate(block) {
     });
 
     const titleText = decodeTextContent(title?.textContent);
-    let tabBody = element;
+    const textHtml = extractRichTextHtml(text);
+    const secondTextHtml = extractRichTextHtml(secondText);
+    const imgTitleHtml = decodeTextContent(imgTitle?.textContent);
+    const descriptionHtml = decodeTextContent(description?.textContent);
+    const secondImgTitleHtml = decodeTextContent(secondImgTitle?.textContent);
+    const secondDescriptionHtml = decodeTextContent(secondDescription?.textContent);
+
+    const tabBody = element.cloneNode(false);
+    tabBody.innerHTML = `
+      ${textHtml}
+      ${image?.innerHTML || ''}
+      ${imgTitleHtml ? `<p>${imgTitleHtml}</p>` : ''}
+      ${descriptionHtml ? `<p>${descriptionHtml}</p>` : ''}
+      ${secondTextHtml}
+      ${secondImage?.innerHTML || ''}
+      ${secondImgTitleHtml ? `<p>${secondImgTitleHtml}</p>` : ''}
+      ${secondDescriptionHtml ? `<p>${secondDescriptionHtml}</p>` : ''}
+    `;
 
     if (isEditor) {
-      title?.classList?.add('hidden');
+      element.classList.add('hidden');
+      element.insertAdjacentElement('afterend', tabBody);
     } else {
-      tabBody = element.cloneNode(true);
-
-      const renderedTitle = tabBody.children[0];
-      const renderedText = tabBody.children[1];
-      const renderedImgTitle = tabBody.children[3];
-      const renderedDescription = tabBody.children[4];
-      const renderedSecondText = tabBody.children[5];
-      const renderedSecondImgTitle = tabBody.children[7];
-      const renderedSecondDescription = tabBody.children[8];
-
-      renderedTitle?.remove();
-
-      processRichTextContent(renderedText);
-      processRichTextContent(renderedSecondText);
-
-      if (renderedImgTitle) {
-        renderedImgTitle.innerHTML = decodeTextContent(renderedImgTitle.textContent);
-      }
-
-      if (renderedDescription) {
-        renderedDescription.innerHTML = decodeTextContent(renderedDescription.textContent);
-      }
-
-      if (renderedSecondImgTitle) {
-        renderedSecondImgTitle.innerHTML = decodeTextContent(renderedSecondImgTitle.textContent);
-      }
-
-      if (renderedSecondDescription) {
-        renderedSecondDescription.innerHTML = decodeTextContent(renderedSecondDescription.textContent);
-      }
-
       element.replaceWith(tabBody);
     }
 
