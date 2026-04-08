@@ -75,61 +75,56 @@ export default function decorate(block) {
     });
 
     const titleText = decodeTextContent(title?.textContent);
-    if (!isEditor) {
-      const contentNodes = [
-        text?.cloneNode(true),
-        image?.cloneNode(true),
-        imgTitle?.cloneNode(true),
-        description?.cloneNode(true),
-        secondText?.cloneNode(true),
-        secondImage?.cloneNode(true),
-        secondImgTitle?.cloneNode(true),
-        secondDescription?.cloneNode(true),
-      ];
+    let tabBody = element;
 
-      processRichTextContent(contentNodes[0]);
-      processRichTextContent(contentNodes[4]);
+    if (isEditor) {
+      title?.classList?.add('hidden');
+    } else {
+      tabBody = element.cloneNode(true);
 
-      if (contentNodes[2]) {
-        contentNodes[2].innerHTML = decodeTextContent(contentNodes[2].textContent);
+      const renderedTitle = tabBody.children[0];
+      const renderedText = tabBody.children[1];
+      const renderedImgTitle = tabBody.children[3];
+      const renderedDescription = tabBody.children[4];
+      const renderedSecondText = tabBody.children[5];
+      const renderedSecondImgTitle = tabBody.children[7];
+      const renderedSecondDescription = tabBody.children[8];
+
+      renderedTitle?.remove();
+
+      processRichTextContent(renderedText);
+      processRichTextContent(renderedSecondText);
+
+      if (renderedImgTitle) {
+        renderedImgTitle.innerHTML = decodeTextContent(renderedImgTitle.textContent);
       }
 
-      if (contentNodes[3]) {
-        contentNodes[3].innerHTML = decodeTextContent(contentNodes[3].textContent);
+      if (renderedDescription) {
+        renderedDescription.innerHTML = decodeTextContent(renderedDescription.textContent);
       }
 
-      if (contentNodes[6]) {
-        contentNodes[6].innerHTML = decodeTextContent(contentNodes[6].textContent);
+      if (renderedSecondImgTitle) {
+        renderedSecondImgTitle.innerHTML = decodeTextContent(renderedSecondImgTitle.textContent);
       }
 
-      if (contentNodes[7]) {
-        contentNodes[7].innerHTML = decodeTextContent(contentNodes[7].textContent);
+      if (renderedSecondDescription) {
+        renderedSecondDescription.innerHTML = decodeTextContent(renderedSecondDescription.textContent);
       }
 
-      element.replaceChildren();
-
-      contentNodes.forEach((child) => {
-        if (!child) return;
-        const hasText = child.textContent?.trim();
-        const hasImage = child.querySelector?.('img');
-        const hasRichtext = child.querySelector?.('div[data-aue-type="richtext"]');
-        if (hasText || hasImage || hasRichtext) {
-          element.appendChild(child);
-        }
-      });
+      element.replaceWith(tabBody);
     }
 
-    tabs.push({ title: titleText, body: element });
+    tabs.push({ title: titleText, body: tabBody });
     if (isPdf) {
       // PDF MODE: Do NOT hide the content.
       const pdfTitle = document.createElement('h3');
       pdfTitle.classList.add('pdf-tab-title');
       pdfTitle.textContent = titleText;
-      element.insertBefore(pdfTitle, element.firstChild);
+      tabBody.insertBefore(pdfTitle, tabBody.firstChild);
       
-      element.classList.add('pdf-tab-content');
+      tabBody.classList.add('pdf-tab-content');
     } else {
-      if (index !== 0) { element.classList.add('hidden'); }
+      if (index !== 0) { tabBody.classList.add('hidden'); }
     }
   });
 
