@@ -1,4 +1,4 @@
-import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
+import { decodeBase64, enhancedIsInEditor, htmlToElement } from '../../scripts/scripts.js';
 
 function decodeTextContent(text = '') {
   const trimmedText = text?.trim?.() || '';
@@ -26,6 +26,7 @@ function processRichTextContent(element) {
 export default function decorate(block) {
   const urlParams = new URLSearchParams(window.location.search);
   const isPdfParam = urlParams.get('mode') === 'pdf';
+  const isEditor = enhancedIsInEditor();
   if (isPdfParam) {
     document.body.classList.add('pdf-mode');
   }
@@ -74,47 +75,49 @@ export default function decorate(block) {
     });
 
     const titleText = decodeTextContent(title?.textContent);
-    title?.remove();
+    if (!isEditor) {
+      const contentNodes = [
+        text?.cloneNode(true),
+        image?.cloneNode(true),
+        imgTitle?.cloneNode(true),
+        description?.cloneNode(true),
+        secondText?.cloneNode(true),
+        secondImage?.cloneNode(true),
+        secondImgTitle?.cloneNode(true),
+        secondDescription?.cloneNode(true),
+      ];
 
-    processRichTextContent(text);
-    processRichTextContent(secondText);
+      processRichTextContent(contentNodes[0]);
+      processRichTextContent(contentNodes[4]);
 
-    if (imgTitle) {
-      imgTitle.innerHTML = decodeTextContent(imgTitle.textContent);
-    }
-
-    if (description) {
-      description.innerHTML = decodeTextContent(description.textContent);
-    }
-
-    if (secondImgTitle) {
-      secondImgTitle.innerHTML = decodeTextContent(secondImgTitle.textContent);
-    }
-
-    if (secondDescription) {
-      secondDescription.innerHTML = decodeTextContent(secondDescription.textContent);
-    }
-
-    element.replaceChildren();
-
-    [
-      text,
-      image,
-      imgTitle,
-      description,
-      secondText,
-      secondImage,
-      secondImgTitle,
-      secondDescription,
-    ].forEach((child) => {
-      if (!child) return;
-      const hasText = child.textContent?.trim();
-      const hasImage = child.querySelector?.('img');
-      const hasRichtext = child.querySelector?.('div[data-aue-type="richtext"]');
-      if (hasText || hasImage || hasRichtext) {
-        element.appendChild(child);
+      if (contentNodes[2]) {
+        contentNodes[2].innerHTML = decodeTextContent(contentNodes[2].textContent);
       }
-    });
+
+      if (contentNodes[3]) {
+        contentNodes[3].innerHTML = decodeTextContent(contentNodes[3].textContent);
+      }
+
+      if (contentNodes[6]) {
+        contentNodes[6].innerHTML = decodeTextContent(contentNodes[6].textContent);
+      }
+
+      if (contentNodes[7]) {
+        contentNodes[7].innerHTML = decodeTextContent(contentNodes[7].textContent);
+      }
+
+      element.replaceChildren();
+
+      contentNodes.forEach((child) => {
+        if (!child) return;
+        const hasText = child.textContent?.trim();
+        const hasImage = child.querySelector?.('img');
+        const hasRichtext = child.querySelector?.('div[data-aue-type="richtext"]');
+        if (hasText || hasImage || hasRichtext) {
+          element.appendChild(child);
+        }
+      });
+    }
 
     tabs.push({ title: titleText, body: element });
     if (isPdf) {
