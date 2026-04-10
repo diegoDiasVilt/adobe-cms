@@ -1,4 +1,4 @@
-import { decodeBase64, htmlToElement, moveInstrumentation } from '../../scripts/scripts.js';
+import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
   const id = block.children[1];
@@ -22,10 +22,8 @@ export default async function decorate(block) {
   const itemsToDisplay = itemRowElements.slice(0, numCols);
 
   itemsToDisplay.forEach((itemRowDOM) => {
-    const itemDiv = document.createElement('div');
-    itemDiv.className = 'quadro-box-item';
-
-    moveInstrumentation(itemRowDOM, itemDiv);
+    const itemDiv = itemRowDOM;
+    itemDiv.classList.add('quadro-box-item');
 
     const cells = Array.from(itemRowDOM.children);
 
@@ -39,17 +37,18 @@ export default async function decorate(block) {
     const imgDescriptionDecoded = imgDescription ? decodeBase64(imgDescription) : null;
     const imageAltText = imageAltAuthoredCell?.textContent.trim();
     const itemSpecificBgColor = itemBackgroundColorAuthoredCell?.textContent.trim() || 'rgba(0,0,0,0)';
+    let textWrapper;
+    let imageWrapper;
 
     itemDiv.style.backgroundColor = itemSpecificBgColor;
 
     if (contentTextAuthoredCell) {
-      const textWrapper = document.createElement('div');
+      textWrapper = document.createElement('div');
       textWrapper.className = 'quadro-box-item-content';
       const contentParagraph = contentTextAuthoredCell.querySelector('p');
       const richtextDiv = contentTextAuthoredCell.querySelector('div[data-aue-type="richtext"]');
 
       if (richtextDiv) {
-        moveInstrumentation(contentTextAuthoredCell, textWrapper);
         textWrapper.append(...contentTextAuthoredCell.childNodes);
       } else if (contentParagraph && contentParagraph.textContent && contentParagraph.textContent.trim()) {
         try {
@@ -63,14 +62,10 @@ export default async function decorate(block) {
       } else {
         textWrapper.innerHTML = contentTextAuthoredCell.innerHTML;
       }
-
-      if (textWrapper.innerHTML.trim()) {
-        itemDiv.append(textWrapper);
-      }
     }
 
     if (imageAuthoredCell) {
-      const imageWrapper = document.createElement('div');
+      imageWrapper = document.createElement('div');
       imageWrapper.className = 'quadro-box-item-image';
       const pictureElement = imageAuthoredCell.querySelector('picture');
       const imgElement = imageAuthoredCell.querySelector('img');
@@ -79,13 +74,12 @@ export default async function decorate(block) {
         imageWrapper.append(htmlToElement(`<div class="quadro-box-item-image-title">${imgTitleDecoded}</div>`));
       }
       if (pictureElement) {
-        imageWrapper.append(pictureElement.cloneNode(true));
+        imageWrapper.append(pictureElement);
       } else if (imgElement) {
-        const clonedImg = imgElement.cloneNode(true);
-        if (imageAltText && !clonedImg.alt) {
-          clonedImg.alt = imageAltText;
+        if (imageAltText && !imgElement.alt) {
+          imgElement.alt = imageAltText;
         }
-        imageWrapper.append(clonedImg);
+        imageWrapper.append(imgElement);
       } else if (imageAuthoredCell.textContent && imageAuthoredCell.textContent.trim()) {
         const img = document.createElement('img');
         img.src = imageAuthoredCell.textContent.trim();
@@ -97,13 +91,18 @@ export default async function decorate(block) {
       if (imgDescriptionDecoded) {
         imageWrapper.append(htmlToElement(`<div class="quadro-box-item-image-description">${imgDescriptionDecoded}</div>`));
       }
-
-      if (imageWrapper.hasChildNodes()) {
-        itemDiv.append(imageWrapper);
-      }
     }
 
     itemDiv.setAttribute('data-quadro-box-item', 'true');
+    itemDiv.replaceChildren();
+
+    if (textWrapper?.hasChildNodes()) {
+      itemDiv.append(textWrapper);
+    }
+
+    if (imageWrapper?.hasChildNodes()) {
+      itemDiv.append(imageWrapper);
+    }
 
     if (itemDiv.hasChildNodes()) {
       itemsContainer.append(itemDiv);
