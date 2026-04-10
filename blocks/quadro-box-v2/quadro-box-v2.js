@@ -1,4 +1,4 @@
-import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
+import { decodeBase64, htmlToElement, moveInstrumentation } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
   const id = block.children[1];
@@ -25,11 +25,7 @@ export default async function decorate(block) {
     const itemDiv = document.createElement('div');
     itemDiv.className = 'quadro-box-item';
 
-    Array.from(itemRowDOM.attributes).forEach((attr) => {
-      if (attr.name.startsWith('data-')) {
-        itemDiv.setAttribute(attr.name, attr.value);
-      }
-    });
+    moveInstrumentation(itemRowDOM, itemDiv);
 
     const cells = Array.from(itemRowDOM.children);
 
@@ -53,6 +49,8 @@ export default async function decorate(block) {
       const richtextDiv = contentTextAuthoredCell.querySelector('div[data-aue-type="richtext"]');
 
       if (richtextDiv) {
+        moveInstrumentation(richtextDiv, textWrapper);
+        textWrapper.dataset.aueType = 'richtext';
         textWrapper.innerHTML = richtextDiv.innerHTML;
       } else if (contentParagraph && contentParagraph.textContent && contentParagraph.textContent.trim()) {
         try {
