@@ -1,17 +1,10 @@
-import {
-  decodeBase64,
-  enhancedIsInEditor,
-  htmlToElement,
-  moveInstrumentation,
-} from '../../scripts/scripts.js';
+import { decodeBase64, htmlToElement, moveInstrumentation } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
   const id = block.children[1];
   if (id && id?.querySelectorAll('div')?.length < 3) {
     id.remove();
-    if (!enhancedIsInEditor()) {
-      block.setAttribute('id', id?.textContent?.trim());
-    }
+    block.setAttribute('id', id?.textContent?.trim());
   }
 
   const originalBlockChildren = Array.from(block.children);
@@ -56,9 +49,8 @@ export default async function decorate(block) {
       const richtextDiv = contentTextAuthoredCell.querySelector('div[data-aue-type="richtext"]');
 
       if (richtextDiv) {
-        moveInstrumentation(richtextDiv, textWrapper);
-        textWrapper.dataset.aueType = 'richtext';
-        textWrapper.innerHTML = richtextDiv.innerHTML;
+        moveInstrumentation(contentTextAuthoredCell, textWrapper);
+        textWrapper.append(...contentTextAuthoredCell.childNodes);
       } else if (contentParagraph && contentParagraph.textContent && contentParagraph.textContent.trim()) {
         try {
           const decodedContent = decodeBase64(contentParagraph.textContent.trim());
