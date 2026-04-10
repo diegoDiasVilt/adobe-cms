@@ -1,49 +1,5 @@
 import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
 
-function remapResourceValue(node, attributeName, fromResource, toResource) {
-  const value = node.getAttribute(attributeName);
-  if (!value) return;
-
-  if (value === fromResource) {
-    node.setAttribute(attributeName, toResource);
-    return;
-  }
-
-  if (value.startsWith(`${fromResource}/`)) {
-    node.setAttribute(attributeName, value.replace(fromResource, toResource));
-  }
-}
-
-function remapItemResources(itemRowDOM, blockResource, index) {
-  if (!blockResource) return;
-
-  const currentItemResource = itemRowDOM.getAttribute('data-aue-resource');
-  const nextItemResource = `${blockResource}/item${index}`;
-
-  const nodesToRewrite = [
-    itemRowDOM,
-    ...itemRowDOM.querySelectorAll('[data-aue-resource], [data-richtext-resource], [data-richtext-id]'),
-  ];
-
-  nodesToRewrite.forEach((node) => {
-    if (currentItemResource) {
-      remapResourceValue(node, 'data-aue-resource', currentItemResource, nextItemResource);
-      remapResourceValue(node, 'data-richtext-resource', currentItemResource, nextItemResource);
-      remapResourceValue(node, 'data-richtext-id', currentItemResource, nextItemResource);
-    }
-
-    if (node.hasAttribute('data-aue-resource')) {
-      node.setAttribute('data-aue-resource', nextItemResource);
-    }
-    if (node.hasAttribute('data-richtext-resource')) {
-      node.setAttribute('data-richtext-resource', nextItemResource);
-    }
-    if (node.hasAttribute('data-richtext-id')) {
-      node.setAttribute('data-richtext-id', nextItemResource);
-    }
-  });
-}
-
 export default async function decorate(block) {
   const id = block.children[1];
   if (id && id?.querySelectorAll('div')?.length < 3) {
@@ -59,16 +15,13 @@ export default async function decorate(block) {
   numColumnsRow.remove();
 
   const itemRowElements = Array.from(block.children);
-  const blockResource = block.getAttribute('data-aue-resource');
 
   const itemsContainer = document.createElement('div');
   itemsContainer.className = `quadro-box-v2-items columns-${Math.min(itemRowElements.length, numCols)}`;
 
   const itemsToDisplay = itemRowElements.slice(0, numCols);
 
-  itemsToDisplay.forEach((itemRowDOM, index) => {
-    remapItemResources(itemRowDOM, blockResource, index);
-
+  itemsToDisplay.forEach((itemRowDOM) => {
     const itemDiv = document.createElement('div');
     itemDiv.className = 'quadro-box-item';
 
