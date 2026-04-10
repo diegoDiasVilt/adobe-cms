@@ -15,12 +15,10 @@ function remapResourceValue(node, attributeName, fromResource, toResource) {
 }
 
 function remapItemResources(itemRowDOM, blockResource, index) {
-  const currentItemResource = itemRowDOM.getAttribute('data-aue-resource');
-  if (!blockResource || !currentItemResource) return;
+  if (!blockResource) return;
 
-  const itemSuffix = currentItemResource.split('/').pop() || `item${index}`;
-  const nextItemResource = `${blockResource}/${itemSuffix}`;
-  if (nextItemResource === currentItemResource) return;
+  const currentItemResource = itemRowDOM.getAttribute('data-aue-resource');
+  const nextItemResource = `${blockResource}/item${index}`;
 
   const nodesToRewrite = [
     itemRowDOM,
@@ -28,9 +26,21 @@ function remapItemResources(itemRowDOM, blockResource, index) {
   ];
 
   nodesToRewrite.forEach((node) => {
-    remapResourceValue(node, 'data-aue-resource', currentItemResource, nextItemResource);
-    remapResourceValue(node, 'data-richtext-resource', currentItemResource, nextItemResource);
-    remapResourceValue(node, 'data-richtext-id', currentItemResource, nextItemResource);
+    if (currentItemResource) {
+      remapResourceValue(node, 'data-aue-resource', currentItemResource, nextItemResource);
+      remapResourceValue(node, 'data-richtext-resource', currentItemResource, nextItemResource);
+      remapResourceValue(node, 'data-richtext-id', currentItemResource, nextItemResource);
+    }
+
+    if (node.hasAttribute('data-aue-resource')) {
+      node.setAttribute('data-aue-resource', nextItemResource);
+    }
+    if (node.hasAttribute('data-richtext-resource')) {
+      node.setAttribute('data-richtext-resource', nextItemResource);
+    }
+    if (node.hasAttribute('data-richtext-id')) {
+      node.setAttribute('data-richtext-id', nextItemResource);
+    }
   });
 }
 
