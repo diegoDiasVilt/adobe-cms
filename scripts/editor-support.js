@@ -14,8 +14,6 @@ async function applyChanges(event) {
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
 
-  if (event.type === 'aue:content-add') return false;
-
   const resource = detail?.request?.target?.resource // update, patch components
     || detail?.request?.target?.container?.resource // update, patch, add to sections
     || detail?.request?.to?.container?.resource; // move in sections
@@ -26,9 +24,7 @@ async function applyChanges(event) {
   if (!content) return false;
 
   const parsedUpdate = new DOMParser().parseFromString(content, 'text/html');
-  const matchingElements = document.querySelectorAll(`[data-aue-resource="${resource}"]`);
-  if (matchingElements.length !== 1) return false;
-  const [element] = matchingElements;
+  const element = document.querySelector(`[data-aue-resource="${resource}"]`);
 
   if (element) {
     if (element.matches('main')) {

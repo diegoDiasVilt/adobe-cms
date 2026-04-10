@@ -1,10 +1,17 @@
-import { decodeBase64, htmlToElement, moveInstrumentation } from '../../scripts/scripts.js';
+import {
+  decodeBase64,
+  enhancedIsInEditor,
+  htmlToElement,
+  moveInstrumentation,
+} from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
   const id = block.children[1];
   if (id && id?.querySelectorAll('div')?.length < 3) {
     id.remove();
-    block.setAttribute('id', id?.textContent?.trim());
+    if (!enhancedIsInEditor()) {
+      block.setAttribute('id', id?.textContent?.trim());
+    }
   }
 
   const originalBlockChildren = Array.from(block.children);
