@@ -138,6 +138,9 @@
   margin-top: -9px;
 }
 @media (max-width: 575px) {
+  .timelines-v2::before {
+    display: none;
+  }
   .timelines-v2 .timeline .timeline-item {
     padding-top: 20px;
   }
