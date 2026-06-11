@@ -776,7 +776,8 @@
                   "model": "galeria",
                   "filter": "galeria",
                   "classes": "default",
-                  "variant": "text-only"
+                  "variant": "text-only",
+                  "style_layout_stacked": false
                 }
               }
             }

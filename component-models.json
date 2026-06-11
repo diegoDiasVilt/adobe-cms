@@ -2008,6 +2008,11 @@
         ]
       },
       {
+        "name": "style_layout_stacked",
+        "component": "boolean",
+        "label": "Layout vertical"
+      },
+      {
         "component": "text",
         "name": "id",
         "label": "Identificador do componente",

@@ -17,6 +17,18 @@
         }
       }
     }
+    &.one-image-many-texts{
+      .image__container{
+        align-self: center;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+
+        > div{
+          max-width: 100%;
+        }
+      }
+    }
     .text__container{
       align-self: center;
     }
@@ -193,6 +205,19 @@
 
 .galeria.deep-purple{
   border: 1px solid #b982ff;
+}
+
+.galeria.style_layout_stacked{
+  &.one-text-many-images,
+  &.one-image-many-texts{
+    grid-template-columns: 1fr;
+  }
+
+  .splide__slide__container{
+    &.text-and-image-1-1{
+      grid-template-columns: 1fr;
+    }
+  }
 }
 
 // PDF MODE
