@@ -207,7 +207,7 @@
   border: 1px solid #b982ff;
 }
 
-.galeria.style_layout_stacked{
+.galeria.layout_stacked{
   &.one-text-many-images,
   &.one-image-many-texts{
     grid-template-columns: 1fr;

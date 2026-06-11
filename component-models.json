@@ -2008,7 +2008,7 @@
         ]
       },
       {
-        "name": "style_layout_stacked",
+        "name": "classes_layout_stacked",
         "component": "boolean",
         "label": "Layout vertical"
       },
