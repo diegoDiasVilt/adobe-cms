@@ -186,10 +186,10 @@
   border: 1px solid #b982ff;
 }
 
-.galeria.layout_stacked.one-text-many-images, .galeria.layout_stacked.one-image-many-texts {
+.galeria.layout-stacked.one-text-many-images, .galeria.layout-stacked.one-image-many-texts {
   grid-template-columns: 1fr;
 }
-.galeria.layout_stacked .splide__slide__container.text-and-image-1-1 {
+.galeria.layout-stacked .splide__slide__container.text-and-image-1-1 {
   grid-template-columns: 1fr;
 }
 
