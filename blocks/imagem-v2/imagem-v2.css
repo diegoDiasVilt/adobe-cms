@@ -1,18 +1,12 @@
 .imagem-v2 {
   margin-top: 40px;
 }
-.imagem-v2 > * {
-  line-height: 0;
-}
 .imagem-v2 .image-title, .imagem-v2 .image-description {
   text-align: center;
   font-size: 80%;
   color: #6c757d;
   margin: 10px 0;
-  line-height: 1;
-}
-.imagem-v2 div {
-  line-height: 0 !important;
+  line-height: 1.4;
 }
 .imagem-v2 div div {
   display: flex;

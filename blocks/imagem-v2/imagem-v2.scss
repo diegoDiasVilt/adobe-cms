@@ -1,17 +1,13 @@
 .imagem-v2{
     margin-top: 40px;
-    > *{
-        line-height: 0;
-    }
     .image-title, .image-description {
         text-align: center;
         font-size: 80% ;
         color: #6c757d;
         margin: 10px 0;
-        line-height: 1;
+        line-height: 1.4;
     }
     div{
-        line-height: 0 !important;
         div{
             display: flex;
             justify-content: center;
