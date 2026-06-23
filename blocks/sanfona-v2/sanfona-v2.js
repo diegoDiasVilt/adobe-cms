@@ -72,6 +72,7 @@ export default function decorate(block) {
     }
     // header só aceita: negrito, itálico, sublinhado, tachado, sobrescrito, subscrito e cor — o resto (alinhamento, lista, tabela etc) é descartado
     headerText = headerText.replace(/<(?!\/?(?:strong|em|u|s|sub|sup|span)\b)[^>]+>/gi, '');
+    headerText = headerText.replace(/<(strong|em|u|s|sub|sup)([^>]*)>/gi, '<$1>');
     headerText = headerText.replace(/<span([^>]*)>/gi, (_, attrs) => {
       const colorMatch = attrs.match(/color\s*:\s*([^;}"]+)/i);
       return colorMatch ? `<span style="color:${colorMatch[1].trim()}">` : '<span>';
