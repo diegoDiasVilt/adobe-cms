@@ -70,9 +70,16 @@ export default function decorate(block) {
         }
       }
     }
-    // header só aceita: negrito, itálico, sublinhado, sobrescrito e subscrito — o resto (cor, alinhamento, lista, tabela etc) é descartado
-    headerText = headerText.replace(/<(?!\/?(?:strong|em|u|sub|sup)\b)[^>]+>/gi, '');
-    headerText = headerText.replace(/<(strong|em|u|sub|sup)([^>]*)>/gi, '<$1>');
+    // header só aceita: negrito, itálico, sobrescrito e subscrito (com cor opcional) — o resto (sublinhado, alinhamento, lista, tabela etc) é descartado
+    headerText = headerText.replace(/<(?!\/?(?:strong|em|sub|sup|span)\b)[^>]+>/gi, '');
+    headerText = headerText.replace(/<(strong|em|sub|sup)([^>]*)>/gi, (_, tag, attrs) => {
+      const colorMatch = attrs.match(/color\s*:\s*([^;}"]+)/i);
+      return colorMatch ? `<${tag} style="color:${colorMatch[1].trim()}">` : `<${tag}>`;
+    });
+    headerText = headerText.replace(/<span([^>]*)>/gi, (_, attrs) => {
+      const colorMatch = attrs.match(/color\s*:\s*([^;}"]+)/i);
+      return colorMatch ? `<span style="color:${colorMatch[1].trim()}">` : '<span>';
+    });
 
     const textParagraph = text?.querySelector('p');
     if (textParagraph) {
