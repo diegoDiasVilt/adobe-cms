@@ -109,7 +109,7 @@ export default function decorate(block) {
     const accordionItemElement = htmlToElement(`
         <div class="accordion-item ${isPdf ? 'active' : ''}">
             <div class="accordion-item-header">
-                <h5><a><span>${headerText}</span><i class="fa fa-${iconClosedText || 'plus-circle'}"></i></a></h5>
+                <h5><a><span></span><i class="fa fa-${iconClosedText || 'plus-circle'}"></i></a></h5>
             </div>
             <div class="accordion-item-body">
                 <div class="accordion-item-body-text">
@@ -132,6 +132,8 @@ export default function decorate(block) {
             </div>
         </div>
         `);
+
+    accordionItemElement.querySelector('.accordion-item-header h5 a span').innerHTML = headerText;
 
     if (zoomImagesVal === 'true') {
       accordionItemElement.querySelectorAll('.accordion-item-body-image picture').forEach((pictureElement) => {
