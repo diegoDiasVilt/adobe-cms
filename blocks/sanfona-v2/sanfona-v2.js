@@ -70,15 +70,17 @@ export default function decorate(block) {
         }
       }
     }
-    // header só aceita: negrito, itálico, sobrescrito e subscrito (com cor opcional) — o resto (sublinhado, alinhamento, lista, tabela etc) é descartado
-    headerText = headerText.replace(/<(?!\/?(?:strong|em|sub|sup|span)\b)[^>]+>/gi, '');
-    headerText = headerText.replace(/<(strong|em|sub|sup)([^>]*)>/gi, (_, tag, attrs) => {
-      const colorMatch = attrs.match(/color\s*:\s*([^;}"]+)/i);
-      return colorMatch ? `<${tag} style="color:${colorMatch[1].trim()}">` : `<${tag}>`;
-    });
-    headerText = headerText.replace(/<span([^>]*)>/gi, (_, attrs) => {
-      const colorMatch = attrs.match(/color\s*:\s*([^;}"]+)/i);
-      return colorMatch ? `<span style="color:${colorMatch[1].trim()}">` : '<span>';
+    // header só aceita: strong, em, sub, sup, span (cor opcional) — demais tags são descartadas
+    const HEADER_TAGS = ['strong', 'em', 'sub', 'sup', 'span'];
+    const headerTagsPattern = HEADER_TAGS.join('|');
+    const extractColor = (attrs) => {
+      const m = attrs.match(/color\s*:\s*([^;}"]+)/i);
+      return m ? `color:${m[1].trim()}` : null;
+    };
+    headerText = headerText.replace(new RegExp(`<(?!\\/?(?:${headerTagsPattern})\\b)[^>]+>`, 'gi'), '');
+    headerText = headerText.replace(new RegExp(`<(${headerTagsPattern})([^>]*)>`, 'gi'), (_, tag, attrs) => {
+      const color = extractColor(attrs);
+      return color ? `<${tag} style="${color}">` : `<${tag}>`;
     });
 
     const textParagraph = text?.querySelector('p');
