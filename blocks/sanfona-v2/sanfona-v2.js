@@ -28,7 +28,6 @@ export default function decorate(block) {
     const secondDescriptionElement = element?.children[8];
     const zoomImages = element?.children[9];
 
-    const headerText = headerTextElement?.textContent?.trim();
     const text = element?.children[1];
     const image = element?.children[2];
     const imgTitle = imgTitleElement?.textContent?.trim();
@@ -54,8 +53,24 @@ export default function decorate(block) {
     secondText.remove();
     secondImage.remove();
 
+    let headerText = '';
     let textContent = '';
     let secondTextContent = '';
+
+    const headerTextParagraph = headerTextElement?.querySelector('p');
+    if (headerTextParagraph) {
+      const headerRichtextDiv = headerTextElement?.querySelector('div[data-aue-type="richtext"]');
+      if (headerRichtextDiv) {
+        headerText = headerRichtextDiv.innerHTML;
+      } else if (headerTextParagraph.textContent && headerTextParagraph.textContent.trim()) {
+        try {
+          headerText = decodeBase64(headerTextParagraph.textContent.trim());
+        } catch (e) {
+          headerText = headerTextElement.innerHTML;
+        }
+      }
+    }
+    headerText = headerText.replace(/<(?!\/?(?:strong|em|u)\b)[^>]+>/gi, '');
 
     const textParagraph = text?.querySelector('p');
     if (textParagraph) {

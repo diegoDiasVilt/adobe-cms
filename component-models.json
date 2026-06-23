@@ -1710,7 +1710,7 @@
     "id": "sanfonaItem-v2",
     "fields": [
       {
-        "component": "text",
+        "component": "richtext",
         "name": "headerText",
         "label": "Texto do header"
       },
