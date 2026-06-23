@@ -1,5 +1,11 @@
 import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
 
+function getRichtextContent(richtextDiv) {
+  const content = richtextDiv?.textContent?.trim();
+  const decodedContent = decodeBase64(content);
+  return decodedContent !== content ? decodedContent : richtextDiv.innerHTML;
+}
+
 export default function decorate(block) {
   const openAll = block?.children[0];
   const iconOpen = block?.children[1];
@@ -61,7 +67,7 @@ export default function decorate(block) {
     if (textParagraph) {
       const richtextDiv = text?.querySelector('div[data-aue-type="richtext"]');
       if (richtextDiv) {
-        textContent = richtextDiv.innerHTML;
+        textContent = getRichtextContent(richtextDiv);
       } else if (textParagraph.textContent && textParagraph.textContent.trim()) {
         try {
           textContent = decodeBase64(textParagraph.textContent.trim());
@@ -75,7 +81,7 @@ export default function decorate(block) {
     if (secondTextParagraph) {
       const secondRichtextDiv = secondText?.querySelector('div[data-aue-type="richtext"]');
       if (secondRichtextDiv) {
-        secondTextContent = secondRichtextDiv.innerHTML;
+        secondTextContent = getRichtextContent(secondRichtextDiv);
       } else if (secondTextParagraph.textContent && secondTextParagraph.textContent.trim()) {
         try {
           secondTextContent = decodeBase64(secondTextParagraph.textContent.trim());
