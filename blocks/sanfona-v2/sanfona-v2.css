@@ -59,6 +59,12 @@
   display: flex;
   justify-content: center;
 }
+.sanfona-v2 .accordion-item-body-image picture.zoom-in {
+  overflow: hidden;
+}
+.sanfona-v2 .accordion-item-body-image picture.zoom-in img {
+  transition: transform 0.3s ease;
+}
 .sanfona-v2 .accordion-item.active .accordion-item-body {
   max-height: 200vw;
   transition: max-height 0.5s ease-in-out;

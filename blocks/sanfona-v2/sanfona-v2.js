@@ -26,6 +26,7 @@ export default function decorate(block) {
     const descriptionElement = element?.children[4];
     const secondImgTitleElement = element?.children[7];
     const secondDescriptionElement = element?.children[8];
+    const zoomImages = element?.children[9];
 
     const headerText = headerTextElement?.textContent?.trim();
     const text = element?.children[1];
@@ -40,12 +41,14 @@ export default function decorate(block) {
     const secondImgTitleDecoded = decodeBase64(secondImgTitle);
     const secondDescription = secondDescriptionElement?.textContent?.trim();
     const secondDescriptionDecoded = decodeBase64(secondDescription);
-    
+    const zoomImagesVal = zoomImages?.textContent?.trim();
+
     headerTextElement.remove();
     imgTitleElement.remove();
     descriptionElement.remove();
     secondImgTitleElement.remove();
     secondDescriptionElement.remove();
+    zoomImages?.remove();
     text.remove();
     image.remove();
     secondText.remove();
@@ -108,6 +111,34 @@ export default function decorate(block) {
             </div>
         </div>
         `);
+
+    if (zoomImagesVal === 'true') {
+      accordionItemElement.querySelectorAll('.accordion-item-body-image picture').forEach((pictureElement) => {
+        const imgElement = pictureElement.querySelector('img');
+        if (!imgElement) return;
+
+        pictureElement.classList.add('zoom-in');
+
+        pictureElement.addEventListener('mousemove', (e) => {
+          const rect = pictureElement.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const moveX = (x / pictureElement.offsetWidth) * 100;
+          const moveY = (y / pictureElement.offsetHeight) * 100;
+
+          imgElement.style.transformOrigin = `${moveX}% ${moveY}%`;
+        });
+
+        pictureElement.addEventListener('mouseenter', () => {
+          imgElement.style.transform = 'scale(1.5)';
+        });
+
+        pictureElement.addEventListener('mouseleave', () => {
+          imgElement.style.transform = 'scale(1)';
+        });
+      });
+    }
 
     return accordionItemElement;
   });
