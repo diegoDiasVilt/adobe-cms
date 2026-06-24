@@ -2,130 +2,13 @@
   {
     "id": "main",
     "components": [
-      "section",
-      "grid"
+      "section"
     ]
   },
   {
-    "id": "section",
-    "components": [
-      "timelines-v2",
-      "texto-rico",
-      "code-block",
-      "image-compare-v2",
-      "video-v2",
-      "titulo",
-      "imagem-v2",
-      "button-modal-v2",
-      "quote",
-      "embed",
-      "sanfona-v2",
-      "galeria",
-      "folhaDeCreditos",
-      "olho",
-      "abas",
-      "podcast",
-      "indice",
-      "banner",
-      "quadro-box-v2"
-    ]
+    "...": "./_section.json#/filters"
   },
   {
-    "id": "tab-section",
-    "components": [
-      "timelines-v2",
-      "texto-rico",
-      "code-block",
-      "image-compare-v2",
-      "video-v2",
-      "titulo",
-      "imagem-v2",
-      "button-modal-v2",
-      "quote",
-      "embed",
-      "sanfona-v2",
-      "galeria",
-      "olho"
-    ]
-  },
-  {
-    "id": "grid",
-    "components": [
-      "texto-rico",
-      "code-block",
-      "image-compare-v2",
-      "video-v2",
-      "imagem-v2",
-      "olho",
-      "playground"
-    ]
-  },
-  {
-    "id": "column",
-    "components": [
-      "text",
-      "image",
-      "button",
-      "title"
-    ]
-  },
-  {
-    "id": "timelines-v2",
-    "components": [
-      "timelineItem-v2"
-    ]
-  },
-  {
-    "id": "sanfona",
-    "components": [
-      "sanfonaItem"
-    ]
-  },
-  {
-    "id": "sanfona-v2",
-    "components": [
-      "sanfonaItem-v2"
-    ]
-  },
-  {
-    "id": "quadro-box",
-    "components": [
-      "quadro-box-item"
-    ]
-  },
-  {
-    "id": "quadro-box-v2",
-    "components": [
-      "quadro-box-item"
-    ]
-  },
-  {
-    "id": "folhaDeCreditos",
-    "components": [
-      "direitosReservados",
-      "informacoesDosResponsaveis",
-      "disclaimer",
-      "fichaCatalografica",
-      "rodapeFolhaDeCreditos"
-    ]
-  },
-  {
-    "id": "galeria",
-    "components": [
-      "galeriaItemImg",
-      "galeriaItemTxt"
-    ]
-  },
-  {
-    "id": "abas",
-    "components": [
-      "abaItem"
-    ]
-  },
-  {
-    "id": "indice",
-    "components": [
-      "indiceItem"
-    ]
+    "...": "../blocks/*/_*.json#/filters"
   }
 ]
