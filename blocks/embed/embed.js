@@ -24,7 +24,7 @@ export default function decorate(block) {
 
   block.textContent = '';
 
-  const allowedHostsForIframe = ['youtube', 'google', 'canva', 'genially', 'mdstrm', 'vimeo', 'twitter', 'instagram', 'facebook', 'giphy', 'sketchfab'];
+  const allowedHostsForIframe = ['youtube', 'google', 'canva', 'genially', 'mdstrm', 'vimeo', 'twitter', 'instagram', 'facebook', 'giphy', 'sketchfab', 'amazonaws'];
   let securityCheckPassed = true;
   const forbiddenTags = ['SCRIPT', 'STYLE'];
   const element = htmlToElement(code);
