@@ -21,7 +21,8 @@
           "component": "reference",
           "name": "image",
           "label": "Image",
-          "multi": false
+          "multi": false,
+          "rootPath": "/content/dam/adobe-cms"
         },
         {
           "component": "text",
