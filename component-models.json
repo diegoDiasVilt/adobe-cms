@@ -1710,7 +1710,7 @@
     "id": "sanfonaItem-v2",
     "fields": [
       {
-        "component": "text",
+        "component": "richtext",
         "name": "headerText",
         "label": "Texto do header"
       },
@@ -1768,6 +1768,13 @@
         "name": "secondDescription",
         "label": "Descrição da imagem 2",
         "description": "Fonte da imagem, por exemplo"
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "zoomImages",
+        "label": "Zoom nas imagens",
+        "description": "Quando estiver checkado o efeito de hover é um zoom de 50% nas imagens"
       }
     ]
   },
