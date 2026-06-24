@@ -61,6 +61,7 @@
 }
 .sanfona-v2 .accordion-item-body-image picture.zoom-in {
   overflow: hidden;
+  cursor: zoom-in;
 }
 .sanfona-v2 .accordion-item-body-image picture.zoom-in img {
   transition: transform 0.3s ease;

@@ -52,9 +52,6 @@ export default function decorate(block) {
   if (zoomInVal === 'true') {
     pictureElement?.classList?.add('zoom-in');
 
-    const zoomIcon = document.createElement('i');
-    pictureElement.append(zoomIcon);
-
     const imgElement = image?.querySelector('img');
 
     pictureElement.addEventListener('mousemove', (e) => {

@@ -68,6 +68,7 @@
 
           &.zoom-in {
             overflow: hidden;
+            cursor: zoom-in;
             img {
               transition: transform 0.3s ease;
             }
