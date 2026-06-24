@@ -36,6 +36,15 @@
   --abas-active-bg-color: #b982ff;
 }
 
+.abas.bordered .abas-header {
+  margin-bottom: 0.5rem;
+}
+.abas.bordered > div:not(.abas-header):not(.hidden) {
+  border: 2px solid var(--abas-active-bg-color);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+}
+
 body.theme-sepia .abas:not(.deep-purple),
 body.theme-gray .abas:not(.deep-purple),
 body.theme-dark .abas:not(.deep-purple) {

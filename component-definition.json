@@ -943,6 +943,7 @@
                   "model": "abas",
                   "filter": "abas",
                   "classes": "default",
+                  "classes_bordered": false,
                   "item0": {
                     "name": "abaItem",
                     "model": "abaItem",

@@ -2393,6 +2393,11 @@
         ]
       },
       {
+        "name": "classes_bordered",
+        "component": "boolean",
+        "label": "Borda no conteúdo"
+      },
+      {
         "component": "text",
         "name": "id",
         "label": "Identificador do componente",
