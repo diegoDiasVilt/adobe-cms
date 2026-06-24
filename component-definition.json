@@ -403,7 +403,7 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "SanfonaItem-v2",
+                  "name": "sanfonaItem-v2",
                   "model": "sanfonaItem-v2",
                   "headerText": "Header da seção 2",
                   "text": "Texto",
