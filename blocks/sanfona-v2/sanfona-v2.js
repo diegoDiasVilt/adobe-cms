@@ -61,7 +61,13 @@ export default function decorate(block) {
     if (headerTextParagraph) {
       const headerRichtextDiv = headerTextElement?.querySelector('div[data-aue-type="richtext"]');
       if (headerRichtextDiv) {
-        headerText = headerRichtextDiv.innerHTML;
+        const richChildren = Array.from(headerRichtextDiv.children);
+        const isSinglePlainP = richChildren.length === 1
+          && richChildren[0].tagName === 'P'
+          && richChildren[0].children.length === 0;
+        headerText = isSinglePlainP
+          ? decodeBase64(richChildren[0].textContent.trim())
+          : headerRichtextDiv.innerHTML;
       } else if (headerTextParagraph.textContent && headerTextParagraph.textContent.trim()) {
         try {
           headerText = decodeBase64(headerTextParagraph.textContent.trim());
