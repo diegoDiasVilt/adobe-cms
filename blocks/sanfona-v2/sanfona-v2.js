@@ -57,6 +57,12 @@ export default function decorate(block) {
     let textContent = '';
     let secondTextContent = '';
 
+    const isBase64 = (str) => /^[A-Za-z0-9+/]+=*$/.test(str) && str.length % 4 === 0 && str.length >= 8;
+    const safeDecode = (str) => {
+      const decoded = decodeBase64(str);
+      return decoded.includes('�') ? str : decoded;
+    };
+
     const headerTextParagraph = headerTextElement?.querySelector('p');
     if (headerTextParagraph) {
       const headerRichtextDiv = headerTextElement?.querySelector('div[data-aue-type="richtext"]');
@@ -65,15 +71,15 @@ export default function decorate(block) {
         const isSinglePlainP = richChildren.length === 1
           && richChildren[0].tagName === 'P'
           && richChildren[0].children.length === 0;
-        headerText = isSinglePlainP
-          ? decodeBase64(richChildren[0].textContent.trim())
-          : headerRichtextDiv.innerHTML;
-      } else if (headerTextParagraph.textContent && headerTextParagraph.textContent.trim()) {
-        try {
-          headerText = decodeBase64(headerTextParagraph.textContent.trim());
-        } catch (e) {
-          headerText = headerTextElement.innerHTML;
+        if (isSinglePlainP) {
+          const rawText = richChildren[0].textContent.trim();
+          headerText = isBase64(rawText) ? safeDecode(rawText) : rawText;
+        } else {
+          headerText = headerRichtextDiv.innerHTML;
         }
+      } else if (headerTextParagraph.textContent && headerTextParagraph.textContent.trim()) {
+        const rawText = headerTextParagraph.textContent.trim();
+        headerText = isBase64(rawText) ? safeDecode(rawText) : rawText;
       }
     }
     // header só aceita: strong, em, sub, sup, span (cor opcional) — demais tags são descartadas
@@ -116,7 +122,7 @@ export default function decorate(block) {
         }
       }
     }
-    
+
     const accordionItemElement = htmlToElement(`
         <div class="accordion-item ${isPdf ? 'active' : ''}">
             <div class="accordion-item-header">
