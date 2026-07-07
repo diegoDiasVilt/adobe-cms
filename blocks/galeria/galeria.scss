@@ -158,26 +158,23 @@
           height: fit-content;
         }
         &__container{
+          padding: 0 8% 40px 8%;
           picture{
-            position: relative;
             height: 100%;
             display: block;
             text-align: center;
             .img-footer{
-              position: absolute;
-              color: #343a40;
-              width: 100%;
               text-align: center;
-              bottom: 70px;
-              font-size: 18px;
+              font-size: 80%;
+              color: #6c757d;
+              margin: 10px 0;
+              line-height: 1;
             }
             .img-header{
-              position: absolute;
-              color: #343a40;
-              width: 100%;
               text-align: center;
-              bottom: 100px;
-              font-size: 1.75rem;
+              font-size: 1.25rem;
+              margin: 10px 0;
+              line-height: 1;
               font-weight: 500;
             }
           }
