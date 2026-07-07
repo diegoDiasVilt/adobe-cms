@@ -107,6 +107,47 @@ export function moveAttributes(from, to, attributes) {
 }
 
 /**
+ * Decodes the custom WIRIS attribute-escaping scheme back into real MathML markup.
+ * Inverse of the escaping applied server-side when the formula is generated.
+ */
+function decodeWirisMathml(escaped) {
+  return escaped
+    .replaceAll("«", "<")
+    .replaceAll("»", ">")
+    .replaceAll("§", "&")
+    .replaceAll("¨", "\"")
+    .replaceAll("`", "'");
+}
+
+/**
+ * Finds every WIRIS/MathType formula on the page (rendered as
+ * <img class="Wirisformula" data-mathml="...">, kept editable for authoring)
+ * and injects a real <math> element next to it so MathJax can typeset it
+ * immediately for readers. The original <img> is only hidden, never removed,
+ * so editing surfaces that read the underlying HTML are unaffected.
+ */
+function renderWirisFormulasAsMath() {
+  const formulas = document.querySelectorAll(".Wirisformula[data-mathml]");
+  formulas.forEach((img) => {
+    try {
+      const escaped = img.getAttribute("data-mathml");
+      if (!escaped) return;
+
+      const wrapper = document.createElement("span");
+      wrapper.innerHTML = decodeWirisMathml(escaped);
+      const mathEl = wrapper.firstElementChild;
+      if (!mathEl || mathEl.tagName.toLowerCase() !== "math") return;
+
+      img.insertAdjacentElement("afterend", mathEl);
+      img.style.display = "none";
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error("Falha ao renderizar fórmula WIRIS via MathJax", e);
+    }
+  });
+}
+
+/**
  * Helper to load MathJax
  * Refactored to allow immediate loading for PDF mode
  */
@@ -126,6 +167,15 @@ function loadMathJax() {
     loader: { load: ["input/mml", "output/chtml"] },
     startup: {
       typeset: true,
+      ready: () => {
+        try {
+          renderWirisFormulasAsMath();
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error("Falha ao preparar fórmulas WIRIS antes da tipografia do MathJax", e);
+        }
+        window.MathJax.startup.defaultReady();
+      },
     },
     options: {
       compileError: function (doc, math, err) {
