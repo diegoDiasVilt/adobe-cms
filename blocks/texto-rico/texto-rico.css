@@ -23,6 +23,7 @@
   font-size: 22px;
   font-family: var(--text-font-family);
   margin: 30px auto;
+  line-height: var(--kindle-line-height) !important;
 }
 
 .texto-rico table {
