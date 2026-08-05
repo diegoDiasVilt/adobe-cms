@@ -1,29 +1,30 @@
 .audiobook {
-  padding: 10px 0;
+    padding: 10px 0;
 }
 
 .audiobook .audiobook-title {
-  font-family: var(--body-font-family);
-  font-size: 18px;
-  margin-bottom: 4px;
+    font-family: var(--body-font-family);
+    font-size: 16px;
+    margin-bottom: 4px;
 }
 
 .audiobook audio {
-  width: 100%;
+    width: 100%;
 }
 
 .audiobook.full-width {
-  width: 100%;
+    width: 100%;
 }
 
-.audiobook.right, .audiobook.left {
-  width: 50%;
+.audiobook.right,
+.audiobook.left {
+    width: 50%;
 }
 
 .audiobook.right {
-  margin-left: auto;
+    margin-left: auto;
 }
 
 .audiobook.left {
-  margin-right: auto;
+    margin-right: auto;
 }
