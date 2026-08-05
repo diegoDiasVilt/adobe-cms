@@ -2496,7 +2496,8 @@
     "id": "audiobook",
     "fields": [
       {
-        "component": "richtext",
+        "component": "text",
+        "valueType": "string",
         "name": "title",
         "label": "Título"
       },

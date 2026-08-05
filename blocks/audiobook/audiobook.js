@@ -1,11 +1,3 @@
-import { decodeBase64 } from '../../scripts/scripts.js';
-
-function isNullishContent(value) {
-  if (!value) return true;
-  const normalizedValue = value.trim().toLowerCase();
-  return normalizedValue === '' || normalizedValue === 'null';
-}
-
 export default function decorate(block) {
   const title = block.children[0];
   const position = block.children[1];
@@ -29,14 +21,11 @@ export default function decorate(block) {
     block.classList.add(positionText);
   }
 
-  if (!isNullishContent(titleText)) {
-    const decodedTitle = decodeBase64(titleText);
-    if (!isNullishContent(decodedTitle.replace(/<[^>]+>/g, ' '))) {
-      const titleEl = document.createElement('div');
-      titleEl.className = 'audiobook-title';
-      titleEl.innerHTML = decodedTitle;
-      block.append(titleEl);
-    }
+  if (titleText) {
+    const titleEl = document.createElement('p');
+    titleEl.className = 'audiobook-title';
+    titleEl.textContent = titleText;
+    block.append(titleEl);
   }
 
   const audioEl = document.createElement('audio');
