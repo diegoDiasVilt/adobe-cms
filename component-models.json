@@ -2493,6 +2493,32 @@
     ]
   },
   {
+    "id": "audiobook",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "businessKey",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "audio",
+        "label": "Arquivo de áudio (MP3)",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Título"
+      }
+    ]
+  },
+  {
     "id": "podcast",
     "fields": [
       {
