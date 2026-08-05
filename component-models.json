@@ -2496,13 +2496,6 @@
     "id": "audiobook",
     "fields": [
       {
-        "component": "text",
-        "valueType": "string",
-        "name": "businessKey",
-        "label": "Identificador do componente",
-        "description": "Valor que pode ser usado em âncoras"
-      },
-      {
         "component": "reference",
         "valueType": "string",
         "name": "audio",
@@ -2513,8 +2506,16 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "title",
-        "label": "Título"
+        "name": "ariaLabel",
+        "label": "Descrição do áudio",
+        "description": "Informe uma descrição que identifique o conteúdo do áudio. Ela será utilizada por leitores de tela."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
       }
     ]
   },
