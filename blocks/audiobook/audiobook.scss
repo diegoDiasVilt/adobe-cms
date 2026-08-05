@@ -1,7 +1,9 @@
 .audiobook {
+  padding: 10px 0;
+
   .audiobook-title {
-    font-family: Orbitron-Regular, sans-serif;
-    font-size: 12px;
+    font-family: var(--body-font-family);
+    font-size: 18px;
     margin-bottom: 4px;
   }
 
