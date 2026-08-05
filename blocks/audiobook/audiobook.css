@@ -1,3 +1,19 @@
 .audiobook audio {
   width: 100%;
 }
+
+.audiobook.full-width {
+  width: 100%;
+}
+
+.audiobook.right, .audiobook.left {
+  width: 50%;
+}
+
+.audiobook.right {
+  margin-left: auto;
+}
+
+.audiobook.left {
+  margin-right: auto;
+}

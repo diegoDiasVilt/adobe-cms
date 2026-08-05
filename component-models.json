@@ -2496,6 +2496,31 @@
     "id": "audiobook",
     "fields": [
       {
+        "component": "richtext",
+        "name": "title",
+        "label": "Título"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "position",
+        "label": "Posição",
+        "options": [
+          {
+            "name": "Largura total",
+            "value": "full-width"
+          },
+          {
+            "name": "Direita",
+            "value": "right"
+          },
+          {
+            "name": "Esquerda",
+            "value": "left"
+          }
+        ]
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "audio",

@@ -2,4 +2,21 @@
   audio {
     width: 100%;
   }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &.right,
+  &.left {
+    width: 50%;
+  }
+
+  &.right {
+    margin-left: auto;
+  }
+
+  &.left {
+    margin-right: auto;
+  }
 }
