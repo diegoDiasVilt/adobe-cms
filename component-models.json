@@ -2493,7 +2493,7 @@
     ]
   },
   {
-    "id": "audiobook",
+    "id": "player-audio",
     "fields": [
       {
         "component": "text",
@@ -2526,7 +2526,7 @@
         "valueType": "string",
         "name": "audio",
         "label": "Arquivo de áudio (MP3)",
-        "description": "Selecione um arquivo do DAM ou, como alternativa, informe um link externo no campo abaixo.",
+        "description": "Selecione um arquivo do DAM ou informe um link externo no campo abaixo.",
         "multi": false,
         "condition": {
           "!": {

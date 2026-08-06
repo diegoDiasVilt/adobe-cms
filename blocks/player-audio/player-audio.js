@@ -18,7 +18,7 @@ export default function decorate(block) {
 
   if (titleText) {
     const titleEl = document.createElement('p');
-    titleEl.className = 'audiobook-title';
+    titleEl.className = 'player-audio-title';
     titleEl.textContent = titleText;
     block.append(titleEl);
   }
