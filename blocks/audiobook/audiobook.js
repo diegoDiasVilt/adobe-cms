@@ -31,7 +31,7 @@ export default function decorate(block) {
   const audioEl = document.createElement('audio');
   audioEl.setAttribute('controls', '');
   audioEl.setAttribute('controlsList', 'nodownload noremoteplayback');
-  audioEl.setAttribute('preload', 'none');
+  audioEl.setAttribute('preload', 'auto');
   if (ariaLabelText) audioEl.setAttribute('aria-label', ariaLabelText);
   audioEl.addEventListener('contextmenu', (e) => e.preventDefault());
 
