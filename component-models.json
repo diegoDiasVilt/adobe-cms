@@ -2527,7 +2527,23 @@
         "name": "audio",
         "label": "Arquivo de áudio (MP3)",
         "multi": false,
-        "required": true
+        "condition": {
+          "!": {
+            "var": "audioLink"
+          }
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "audioLink",
+        "label": "Link do MP3",
+        "description": "Informe a URL de um arquivo MP3 externo, caso não esteja usando um arquivo do DAM",
+        "condition": {
+          "!": {
+            "var": "audio"
+          }
+        }
       },
       {
         "component": "text",
@@ -2535,13 +2551,6 @@
         "name": "ariaLabel",
         "label": "Descrição do áudio",
         "description": "Informe uma descrição que identifique o conteúdo do áudio. Ela será utilizada por leitores de tela."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "id",
-        "label": "Identificador do componente",
-        "description": "Valor que pode ser usado em âncoras"
       }
     ]
   },
