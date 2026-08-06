@@ -2526,6 +2526,7 @@
         "valueType": "string",
         "name": "audio",
         "label": "Arquivo de áudio (MP3)",
+        "description": "Selecione um arquivo do DAM ou, como alternativa, informe um link externo no campo abaixo.",
         "multi": false,
         "condition": {
           "!": {
@@ -2537,8 +2538,8 @@
         "component": "text",
         "valueType": "string",
         "name": "audioLink",
-        "label": "Link do MP3",
-        "description": "Informe a URL de um arquivo MP3 externo, caso não esteja usando um arquivo do DAM",
+        "label": "Link externo do MP3",
+        "description": "Use este campo somente se não selecionar um arquivo de áudio do DAM.",
         "condition": {
           "!": {
             "var": "audio"
