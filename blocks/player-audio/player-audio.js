@@ -1,3 +1,20 @@
+import { isInEditor } from '../../scripts/scripts.js';
+
+const AEM_STAGE = 'publish-p136102-e1403942.adobeaemcloud.com';
+const AEM_PROD = 'content.cogna.com.br';
+
+const PUBLISH_HOST_BY_DOMAIN = {
+  'main--adobe-cms--diegodiasvilt.aem.page': AEM_STAGE,
+  'main--adobe-cms--diegodiasvilt.aem.live': AEM_STAGE,
+  'cms.cogna.com.br': AEM_PROD,
+};
+
+function resolveDamUrl(anchor) {
+  if (isInEditor()) return anchor.href;
+  const publishHost = PUBLISH_HOST_BY_DOMAIN[window.location.hostname];
+  return `https://${publishHost}${anchor.getAttribute('href')}`;
+}
+
 export default function decorate(block) {
   const title = block.children[0];
   const position = block.children[1];
@@ -7,7 +24,8 @@ export default function decorate(block) {
 
   const titleText = title?.textContent?.trim();
   const positionText = position?.textContent?.trim();
-  const audioSrc = audio?.querySelector('a')?.href || audioLink?.textContent?.trim();
+  const audioAnchor = audio?.querySelector('a');
+  const audioSrc = audioAnchor ? resolveDamUrl(audioAnchor) : audioLink?.textContent?.trim();
   const ariaLabelText = ariaLabel?.textContent?.trim();
 
   block.textContent = '';
