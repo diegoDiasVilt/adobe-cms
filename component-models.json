@@ -2493,6 +2493,69 @@
     ]
   },
   {
+    "id": "player-audio",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Título"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "position",
+        "label": "Posição",
+        "options": [
+          {
+            "name": "Largura total",
+            "value": "full-width"
+          },
+          {
+            "name": "Direita",
+            "value": "right"
+          },
+          {
+            "name": "Esquerda",
+            "value": "left"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "audio",
+        "label": "Arquivo de áudio (MP3)",
+        "description": "Selecione um arquivo do DAM ou informe um link externo no campo abaixo.",
+        "multi": false,
+        "condition": {
+          "!": {
+            "var": "audioLink"
+          }
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "audioLink",
+        "label": "Link externo do MP3",
+        "description": "Use este campo somente se não selecionar um arquivo de áudio do DAM.",
+        "condition": {
+          "!": {
+            "var": "audio"
+          }
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ariaLabel",
+        "label": "Descrição do áudio",
+        "description": "Informe uma descrição que identifique o conteúdo do áudio. Ela será utilizada por leitores de tela."
+      }
+    ]
+  },
+  {
     "id": "podcast",
     "fields": [
       {

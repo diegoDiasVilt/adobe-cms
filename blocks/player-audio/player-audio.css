@@ -1,0 +1,31 @@
+.player-audio {
+  padding: 10px 0;
+}
+
+.player-audio .player-audio-title {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.player-audio audio {
+  width: 100%;
+  background-color: #e7f0fe;
+  border-radius: 12px;
+}
+
+.player-audio.full-width {
+  width: 100%;
+}
+
+.player-audio.right, .player-audio.left {
+  width: 50%;
+}
+
+.player-audio.right {
+  margin-left: auto;
+}
+
+.player-audio.left {
+  margin-right: auto;
+}
