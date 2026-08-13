@@ -1025,6 +1025,7 @@
                   "model": "player-audio",
                   "title": "Player de Áudio:",
                   "position": "full-width",
+                  "cognaIaAudio": false,
                   "ariaLabel": "Áudio do conteúdo da aula"
                 }
               }
