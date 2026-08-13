@@ -18,9 +18,9 @@ function resolveDamUrl(anchor) {
 export default function decorate(block) {
   const title = block.children[0];
   const position = block.children[1];
-  const audio = block.children[2];
-  const audioLink = block.children[3];
-  const ariaLabel = block.children[4];
+  const audio = block.children[3];
+  const audioLink = block.children[4];
+  const ariaLabel = block.children[5];
 
   const titleText = title?.textContent?.trim();
   const positionText = position?.textContent?.trim();
