@@ -1,15 +1,25 @@
 import { randomString, htmlToElement, createOptimizedPicture } from '../../scripts/scripts.js';
 
+// A copy of the picture carries a second copy of the authoring instrumentation, which makes the
+// editor treat the copy as another instance of the same component.
+function stripInstrumentation(element) {
+  [element, ...element.querySelectorAll('*')].forEach((el) => {
+    [...el.attributes]
+      .filter(({ name }) => name.startsWith('data-aue') || name.startsWith('data-richtext'))
+      .forEach(({ name }) => el.removeAttribute(name));
+  });
+  return element;
+}
+
 export default function decorate(block) {
-  const image = block.children[0];
-  const title = block.children[1];
-  const description = block.children[2];
-  const zoomIn = block.children[3];
-  const openModal = block.children[4];
-  const uniquecss = block.children[5];
-  const id = block.children[6];
+  // Authoring only persists fields that hold a value, so an empty field produces no row and
+  // shifts every later index. Anchor on the image row instead of trusting children[0].
+  const rows = [...block.children];
+  const image = rows.find((row) => row.querySelector('picture')) || null;
+  const rest = rows.filter((row) => row !== image);
+  const [title, description, zoomIn, openModal, uniquecss, id] = rest;
+
   if (id) {
-    id.remove();
     block.setAttribute('id', id?.textContent?.trim());
   }
 
@@ -19,13 +29,10 @@ export default function decorate(block) {
   const openModalVal = openModal?.textContent.trim();
   const uniquecssText = uniquecss?.textContent?.trim();
 
-  title.remove();
-  description.remove();
-  zoomIn.remove();
-  openModal.remove();
-  uniquecss.remove();
+  // remove every row we just read, so none is left behind still carrying instrumentation
+  rest.forEach((row) => row.remove());
 
-  const pictureElement = image.querySelector('picture');
+  const pictureElement = image?.querySelector('picture');
 
   if (!pictureElement) return;
 
@@ -76,10 +83,12 @@ export default function decorate(block) {
     const zoomIconElement = document.createElement('i');
     pictureElement.append(zoomIconElement);
 
+    const modalPicture = stripInstrumentation(pictureElement.cloneNode(true));
+
     const modalElement = htmlToElement(`
             <div class="img-modal">
                 <div class="img-modal-content">
-                    ${pictureElement.outerHTML}
+                    ${modalPicture.outerHTML}
                     <div class="img-modal-content-footer">
                         <div class="img-modal-content-footer-wrapper">
                             <span>${titleText}</span>
