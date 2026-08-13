@@ -88,6 +88,12 @@ async function applyChanges(event) {
   return false;
 }
 
+// The editor fires more than one of these events for a single change, and applyChanges awaits
+// halfway through swapping a block. Run them one at a time: otherwise the second run still finds
+// the original block, inserts its own copy and then removes that same original, leaving one extra
+// copy in the DOM for every extra event.
+let pendingChanges = Promise.resolve();
+
 function attachEventListners(main) {
   [
     'aue:content-patch',
@@ -95,10 +101,19 @@ function attachEventListners(main) {
     'aue:content-add',
     'aue:content-move',
     'aue:content-remove',
-  ].forEach((eventType) => main?.addEventListener(eventType, async (event) => {
+  ].forEach((eventType) => main?.addEventListener(eventType, (event) => {
     event.stopPropagation();
-    const applied = await applyChanges(event);
-    if (!applied) window.location.reload();
+    // resolve the target lazily, so each run reads the DOM the previous run left behind
+    pendingChanges = pendingChanges
+      .then(() => applyChanges(event))
+      .then((applied) => {
+        if (!applied) window.location.reload();
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error('failed to apply editor changes', error);
+        window.location.reload();
+      });
   }));
 }
 
