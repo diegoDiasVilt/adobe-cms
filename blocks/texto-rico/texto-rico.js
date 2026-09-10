@@ -1,5 +1,14 @@
 import { decodeBase64 } from "../../scripts/scripts.js";
 
+function wrapTables(block) {
+  block.querySelectorAll("table").forEach((table) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "texto-rico-table-wrapper";
+    table.replaceWith(wrapper);
+    wrapper.append(table);
+  });
+}
+
 function normalizeNonBreakingSpaces(html) {
   const template = document.createElement("template");
   template.innerHTML = html;
@@ -35,4 +44,6 @@ export default function decorate(block) {
   } else {
     block.innerHTML = "";
   }
+
+  wrapTables(block);
 }

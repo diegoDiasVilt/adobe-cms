@@ -108,3 +108,9 @@ body.theme-white .texto-rico:not(.deep-purple) figure:has(img) figcaption {
 .texto-rico span[style*="background-color"] {
     background-color: var(--background-color) !important;
 }
+
+.texto-rico-table-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
