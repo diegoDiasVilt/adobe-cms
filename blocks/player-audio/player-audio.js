@@ -1,4 +1,4 @@
-import { isInEditor } from '../../scripts/scripts.js';
+import { isInEditor, enhancedIsInEditor } from '../../scripts/scripts.js';
 
 const AEM_STAGE = 'publish-p136102-e1403942.adobeaemcloud.com';
 const AEM_PROD = 'content.cogna.com.br';
@@ -29,6 +29,10 @@ export default function decorate(block) {
   const ariaLabelText = ariaLabel?.textContent?.trim();
 
   block.textContent = '';
+
+  if (!audioSrc && !enhancedIsInEditor()) {
+    block.closest('.player-audio-wrapper')?.classList.add('player-audio-empty');
+  }
 
   if (positionText) {
     block.classList.add(positionText);
