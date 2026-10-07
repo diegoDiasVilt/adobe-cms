@@ -17,7 +17,14 @@ function normalizeNonBreakingSpaces(html) {
   let textNode = walker.nextNode();
 
   while (textNode) {
-    textNode.nodeValue = textNode.nodeValue.replace(/\u00a0/g, " ");
+    const tableCell = textNode.parentElement?.closest("td, th");
+    const leadingWhitespace = tableCell ? textNode.nodeValue.match(/^[\u00a0 ]*/)[0] : "";
+    const normalizedContent = textNode.nodeValue
+      .slice(leadingWhitespace.length)
+      .replace(/\u00a0/g, " ");
+
+    textNode.nodeValue = leadingWhitespace + normalizedContent;
+
     textNode = walker.nextNode();
   }
 
