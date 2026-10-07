@@ -127,6 +127,14 @@ function loadMathJax() {
     startup: {
       typeset: true,
     },
+    output: {
+      // fórmulas em bloco mais largas que o container são reduzidas para caber (mobile)
+      displayOverflow: "scale",
+      linebreaks: {
+        inline: true, // quebra fórmulas inline longas dentro do parágrafo
+        width: "100%",
+      },
+    },
     options: {
       compileError: function (doc, math, err) {
         // mantém o MathML original

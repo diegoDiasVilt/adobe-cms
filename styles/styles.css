@@ -275,6 +275,19 @@ body.theme-white {
   --text-color: #212529;
 }
 
+/* fórmulas (MathJax / MathML): nunca ultrapassar a largura da página */
+main mjx-container[display="true"],
+main math[display="block"] {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+main mjx-container:not([display="true"]) {
+  max-width: 100%;
+}
+
 main pre {
   background-color: var(--light-color);
   padding: 1em;
