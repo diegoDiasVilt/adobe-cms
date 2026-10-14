@@ -1202,18 +1202,18 @@
                   "item0": {
                     "name": "Quadro Box Dinamico Item",
                     "model": "quadro-box-dinamico-item",
-                    "boxtitle": "<p><strong style=\"font-size: 24px;\">Título</strong></p>",
+                    "boxtitle": "PHA+PHN0cm9uZyBzdHlsZT0iZm9udC1zaXplOiAyNHB4OyI+VMOtdHVsbzwvc3Ryb25nPjwvcD4=",
                     "boxcontent": "<p>Conteúdo do item.</p>",
-                    "imagedescription": "<p style=\"text-align: center;\">Descrição da imagem</p>",
+                    "imagedescription": "PHAgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPkRlc2NyacOnw6NvIGRhIGltYWdlbTwvcD4=",
                     "imageposition": "bottom",
                     "backgroundcolor": "#b5d4ed"
                   },
                   "item1": {
                     "name": "Quadro Box Dinamico Item",
                     "model": "quadro-box-dinamico-item",
-                    "boxtitle": "<p><strong style=\"font-size: 24px;\">Título</strong></p>",
+                    "boxtitle": "PHA+PHN0cm9uZyBzdHlsZT0iZm9udC1zaXplOiAyNHB4OyI+VMOtdHVsbzwvc3Ryb25nPjwvcD4=",
                     "boxcontent": "<p>Conteúdo do item.</p>",
-                    "imagedescription": "<p style=\"text-align: center;\">Descrição da imagem</p>",
+                    "imagedescription": "PHAgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPkRlc2NyacOnw6NvIGRhIGltYWdlbTwvcD4=",
                     "imageposition": "bottom",
                     "backgroundcolor": "#b5d4ed"
                   }
@@ -1232,9 +1232,9 @@
                 "template": {
                   "name": "Quadro Box Dinamico Item",
                   "model": "quadro-box-dinamico-item",
-                  "boxtitle": "<p><strong style=\"font-size: 24px;\">Título</strong></p>",
+                  "boxtitle": "PHA+PHN0cm9uZyBzdHlsZT0iZm9udC1zaXplOiAyNHB4OyI+VMOtdHVsbzwvc3Ryb25nPjwvcD4=",
                   "boxcontent": "<p>Conteúdo do item.</p>",
-                  "imagedescription": "<p style=\"text-align: center;\">Descrição da imagem</p>",
+                  "imagedescription": "PHAgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPkRlc2NyacOnw6NvIGRhIGltYWdlbTwvcD4=",
                   "imageposition": "bottom",
                   "backgroundcolor": "#b5d4ed"
                 }
