@@ -1,19 +1,25 @@
 import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
 
 const DEFAULT_BACKGROUND = '#b5d4ed';
+const DEFAULT_COLUMNS = 3;
 const DEFAULT_IMAGE_POSITION = 'bottom';
 const IMAGE_POSITIONS = ['top', 'middle', 'bottom'];
+
+function isEmptyValue(value) {
+  return !value || ['null', 'undefined'].includes(value.trim().toLowerCase());
+}
 
 function readRichText(cell) {
   if (!cell) return '';
   const richtextDiv = cell.querySelector('div[data-aue-type="richtext"]');
   if (richtextDiv) return richtextDiv.innerHTML.trim();
 
-  const encoded = cell.querySelector('p')?.textContent.trim();
-  if (encoded) {
-    const decoded = decodeBase64(encoded);
-    if (/<[a-z][\s\S]*>/i.test(decoded)) return decoded.trim();
-  }
+  const encoded = cell.querySelector('p')?.textContent.trim() || cell.textContent.trim();
+  if (isEmptyValue(encoded)) return '';
+
+  const decoded = decodeBase64(encoded);
+  if (isEmptyValue(decoded)) return '';
+  if (/<[a-z][\s\S]*>/i.test(decoded)) return decoded.trim();
   return cell.innerHTML.trim();
 }
 
@@ -57,7 +63,9 @@ export default async function decorate(block) {
   }
 
   const numColumnsRow = block.children[0];
-  const numCols = parseInt(numColumnsRow?.children[1]?.textContent.trim() || '3', 10);
+  const numColumnsCell = numColumnsRow?.lastElementChild;
+  const parsedColumns = parseInt(numColumnsCell?.textContent.trim(), 10);
+  const numCols = Math.min(Math.max(parsedColumns || DEFAULT_COLUMNS, 1), 3);
   numColumnsRow.remove();
 
   const itemRows = Array.from(block.children);
