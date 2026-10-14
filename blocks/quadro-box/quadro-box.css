@@ -58,12 +58,14 @@
   grid-template-columns: 1fr;
 }
 .quadro-box-items.columns-2 {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .quadro-box-items.columns-3 {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .quadro-box-items .quadro-box-item {
+  min-width: 0;
+  overflow-wrap: break-word;
   padding: 20px;
   border-radius: 8px;
   display: flex;
@@ -127,19 +129,6 @@
   line-height: 1;
   transition: color 0.2s ease;
 }
-@media (max-width: 900px) {
-  .quadro-box-items .quadro-box-main-section {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .quadro-box-items .quadro-box-main-image {
-    margin-bottom: 15px;
-  }
-  .quadro-box-items .quadro-box-items.columns-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 @media (max-width: 600px) {
   .quadro-box-items .columns-1 .quadro-box-item {
     flex-direction: column;
@@ -153,20 +142,35 @@
   .quadro-box-items .columns-1 .quadro-box-item-image {
     margin-top: 15px;
   }
-  .quadro-box-items .quadro-box-items.columns-2, .quadro-box-items .quadro-box-items.columns-3 {
-    grid-template-columns: 1fr;
+}
+@media (max-width: 900px) {
+  .quadro-box .quadro-box-main-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  .quadro-box-items .quadro-box-main-heading {
+  .quadro-box .quadro-box-main-image {
+    margin-bottom: 15px;
+  }
+  .quadro-box .quadro-box-items.columns-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .quadro-box .quadro-box-items.columns-2, .quadro-box .quadro-box-items.columns-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .quadro-box .quadro-box-main-heading {
     font-size: 24px;
   }
-  .quadro-box-items .quadro-box-item-heading {
+  .quadro-box .quadro-box-items .quadro-box-item-heading {
     font-size: 18px;
   }
-  .quadro-box-items .quadro-box-main-section {
+  .quadro-box .quadro-box-main-section {
     padding: 20px;
   }
-  .quadro-box-items .quadro-box-items,
-  .quadro-box-items .quadro-box-item {
+  .quadro-box .quadro-box-items,
+  .quadro-box .quadro-box-items .quadro-box-item {
     padding: 15px;
   }
 }
