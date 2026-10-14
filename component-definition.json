@@ -1202,17 +1202,19 @@
                   "item0": {
                     "name": "Quadro Box Dinamico Item",
                     "model": "quadro-box-dinamico-item",
-                    "boxtitle": "<p>Título</p>",
+                    "boxtitle": "<p><strong style=\"font-size: 24px;\">Título</strong></p>",
                     "boxcontent": "<p>Conteúdo do item.</p>",
-                    "imagedescription": "<p>Descrição da imagem</p>",
+                    "imagedescription": "<p style=\"text-align: center;\">Descrição da imagem</p>",
+                    "imageposition": "bottom",
                     "backgroundcolor": "#b5d4ed"
                   },
                   "item1": {
                     "name": "Quadro Box Dinamico Item",
                     "model": "quadro-box-dinamico-item",
-                    "boxtitle": "<p>Título</p>",
+                    "boxtitle": "<p><strong style=\"font-size: 24px;\">Título</strong></p>",
                     "boxcontent": "<p>Conteúdo do item.</p>",
-                    "imagedescription": "<p>Descrição da imagem</p>",
+                    "imagedescription": "<p style=\"text-align: center;\">Descrição da imagem</p>",
+                    "imageposition": "bottom",
                     "backgroundcolor": "#b5d4ed"
                   }
                 }
@@ -1230,9 +1232,10 @@
                 "template": {
                   "name": "Quadro Box Dinamico Item",
                   "model": "quadro-box-dinamico-item",
-                  "boxtitle": "<p>Título</p>",
+                  "boxtitle": "<p><strong style=\"font-size: 24px;\">Título</strong></p>",
                   "boxcontent": "<p>Conteúdo do item.</p>",
-                  "imagedescription": "<p>Descrição da imagem</p>",
+                  "imagedescription": "<p style=\"text-align: center;\">Descrição da imagem</p>",
+                  "imageposition": "bottom",
                   "backgroundcolor": "#b5d4ed"
                 }
               }

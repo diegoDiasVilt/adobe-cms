@@ -2991,7 +2991,7 @@
         "valueType": "string",
         "name": "classes",
         "label": "Disposição dos cards",
-        "description": "Encaixados: cada card sobe para ocupar o espaço livre sob o card mais curto. No celular os cards ficam um embaixo do outro nas duas opções",
+        "description": "Encaixados: cada card sobe para ocupar o espaço livre sob o card mais curto.",
         "options": [
           {
             "name": "Linhas alinhadas",
@@ -3051,7 +3051,6 @@
         "valueType": "string",
         "name": "imageposition",
         "label": "Posição da imagem",
-        "description": "Padrão: abaixo do texto",
         "options": [
           {
             "name": "Acima do texto",
@@ -3081,7 +3080,7 @@
         "component": "text",
         "name": "backgroundcolor",
         "label": "Cor de fundo",
-        "description": "Padrão: #b5d4ed. Aceita HEX (#b5d4ed), rgb() ou nome da cor. Se vazio ou inválido, usa o padrão"
+        "description": "Aceita HEX (#b5d4ed), rgb(). Se vazio ou inválido, usa o padrão (#b5d4ed)"
       }
     ]
   }
