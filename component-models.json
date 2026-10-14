@@ -2957,5 +2957,100 @@
         "description": "Fonte da imagem, por exemplo"
       }
     ]
+  },
+  {
+    "id": "quadro-box-dinamico",
+    "fields": [
+      {
+        "component": "select",
+        "name": "numcolumns",
+        "label": "Número de colunas",
+        "options": [
+          {
+            "name": "1",
+            "value": "1"
+          },
+          {
+            "name": "2",
+            "value": "2"
+          },
+          {
+            "name": "3",
+            "value": "3"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Identificador do componente",
+        "description": "Valor que pode ser usado em âncoras"
+      }
+    ]
+  },
+  {
+    "id": "quadro-box-dinamico-item",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "boxtitle",
+        "label": "Título",
+        "description": "Opcional. Deixe vazio para não exibir",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "boxcontent",
+        "label": "Conteúdo",
+        "description": "Opcional. Deixe vazio para não exibir",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Imagem",
+        "description": "Opcional. Sem imagem, a descrição, a posição e o texto alternativo são ignorados",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "imagedescription",
+        "label": "Descrição da imagem",
+        "description": "Aparece abaixo da imagem. Fonte ou crédito, por exemplo",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "imageposition",
+        "label": "Posição da imagem",
+        "description": "Padrão: abaixo do texto",
+        "options": [
+          {
+            "name": "Acima do texto",
+            "value": "top"
+          },
+          {
+            "name": "Entre o título e o conteúdo",
+            "value": "middle"
+          },
+          {
+            "name": "Abaixo do texto",
+            "value": "bottom"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "imagealt",
+        "label": "Texto alternativo da imagem"
+      },
+      {
+        "component": "text",
+        "name": "backgroundcolor",
+        "label": "Cor de fundo",
+        "description": "Padrão: #b5d4ed. Aceita HEX (#b5d4ed), rgb() ou nome da cor. Se vazio ou inválido, usa o padrão"
+      }
+    ]
   }
 ]
