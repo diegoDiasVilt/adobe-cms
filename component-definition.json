@@ -1199,7 +1199,7 @@
                   "filter": "quadro-box-dinamico",
                   "numcolumns": "3",
                   "item0": {
-                    "name": "quadro-box-dinamico-item",
+                    "name": "Quadro Box Dinamico Item",
                     "model": "quadro-box-dinamico-item",
                     "boxtitle": "<p>Título</p>",
                     "boxcontent": "<p>Conteúdo do item.</p>",
@@ -1207,7 +1207,7 @@
                     "backgroundcolor": "#b5d4ed"
                   },
                   "item1": {
-                    "name": "quadro-box-dinamico-item",
+                    "name": "Quadro Box Dinamico Item",
                     "model": "quadro-box-dinamico-item",
                     "boxtitle": "<p>Título</p>",
                     "boxcontent": "<p>Conteúdo do item.</p>",
