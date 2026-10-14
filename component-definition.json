@@ -1198,6 +1198,7 @@
                   "model": "quadro-box-dinamico",
                   "filter": "quadro-box-dinamico",
                   "numcolumns": "3",
+                  "classes": "default",
                   "item0": {
                     "name": "Quadro Box Dinamico Item",
                     "model": "quadro-box-dinamico-item",
