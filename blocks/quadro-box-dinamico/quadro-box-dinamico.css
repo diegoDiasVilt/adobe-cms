@@ -6,6 +6,7 @@
 }
 .quadro-box-dinamico-items {
   display: grid;
+  align-items: start;
   gap: 20px;
   padding: 20px;
 }
@@ -17,6 +18,17 @@
 }
 .quadro-box-dinamico-items.columns-3 {
   grid-template-columns: repeat(3, 1fr);
+}
+.quadro-box-dinamico-items.is-masonry {
+  display: flex;
+  align-items: flex-start;
+}
+.quadro-box-dinamico-column {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
 }
 .quadro-box-dinamico-item {
   display: flex;

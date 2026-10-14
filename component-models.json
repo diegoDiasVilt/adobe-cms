@@ -2985,6 +2985,23 @@
         "name": "id",
         "label": "Identificador do componente",
         "description": "Valor que pode ser usado em âncoras"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Disposição dos cards",
+        "description": "Encaixados: cada card sobe para ocupar o espaço livre sob o card mais curto. No celular os cards ficam um embaixo do outro nas duas opções",
+        "options": [
+          {
+            "name": "Linhas alinhadas",
+            "value": "default"
+          },
+          {
+            "name": "Encaixados",
+            "value": "masonry"
+          }
+        ]
       }
     ]
   },

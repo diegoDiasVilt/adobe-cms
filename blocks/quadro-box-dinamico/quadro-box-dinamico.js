@@ -4,6 +4,8 @@ const DEFAULT_BACKGROUND = '#b5d4ed';
 const DEFAULT_COLUMNS = 3;
 const DEFAULT_IMAGE_POSITION = 'bottom';
 const IMAGE_POSITIONS = ['top', 'middle', 'bottom'];
+const MOBILE_QUERY = '(max-width: 600px)';
+const TABLET_QUERY = '(max-width: 900px)';
 
 function isEmptyValue(value) {
   return !value || ['null', 'undefined'].includes(value.trim().toLowerCase());
@@ -55,6 +57,63 @@ function buildImage(cell, altText) {
   return null;
 }
 
+function getColumnCount(maxColumns, itemCount) {
+  let count = maxColumns;
+  if (window.matchMedia(MOBILE_QUERY).matches) {
+    count = 1;
+  } else if (window.matchMedia(TABLET_QUERY).matches) {
+    count = Math.min(maxColumns, 2);
+  }
+  return Math.max(1, Math.min(count, itemCount));
+}
+
+function shortestColumn(columns) {
+  return columns.reduce((shortest, column) => {
+    const height = column.offsetHeight;
+    const shortestHeight = shortest.offsetHeight;
+    if (height !== shortestHeight) return height < shortestHeight ? column : shortest;
+    return column.children.length < shortest.children.length ? column : shortest;
+  });
+}
+
+function setupMasonry(container, items, maxColumns) {
+  container.classList.add('is-masonry');
+
+  let lastWidth = -1;
+  let frame = null;
+
+  const layout = () => {
+    frame = null;
+    const columns = Array.from({ length: getColumnCount(maxColumns, items.length) }, () => {
+      const column = document.createElement('div');
+      column.className = 'quadro-box-dinamico-column';
+      return column;
+    });
+    container.replaceChildren(...columns);
+    items.forEach((item) => shortestColumn(columns).append(item));
+  };
+
+  const scheduleLayout = () => {
+    if (!frame) frame = requestAnimationFrame(layout);
+  };
+
+  new ResizeObserver(([entry]) => {
+    const { width } = entry.contentRect;
+    if (width !== lastWidth) {
+      lastWidth = width;
+      scheduleLayout();
+    }
+  }).observe(container);
+
+  items.forEach((item) => {
+    item.querySelectorAll('img').forEach((img) => {
+      if (!img.complete) img.addEventListener('load', scheduleLayout, { once: true });
+    });
+  });
+
+  layout();
+}
+
 export default async function decorate(block) {
   const id = block.children[1];
   if (id && id?.querySelectorAll('div')?.length < 3) {
@@ -72,6 +131,8 @@ export default async function decorate(block) {
 
   const itemsContainer = document.createElement('div');
   itemsContainer.className = `quadro-box-dinamico-items columns-${Math.min(itemRows.length, numCols)}`;
+
+  const items = [];
 
   itemRows.forEach((itemRow) => {
     const [
@@ -136,6 +197,7 @@ export default async function decorate(block) {
     ordered.filter(Boolean).forEach((element) => itemDiv.append(element));
 
     if (itemDiv.hasChildNodes()) {
+      items.push(itemDiv);
       itemsContainer.append(itemDiv);
     }
   });
@@ -143,5 +205,8 @@ export default async function decorate(block) {
   block.innerHTML = '';
   if (itemsContainer.hasChildNodes()) {
     block.append(itemsContainer);
+    if (block.classList.contains('masonry')) {
+      setupMasonry(itemsContainer, items, numCols);
+    }
   }
 }

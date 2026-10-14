@@ -6,6 +6,7 @@
 
   &-items {
     display: grid;
+    align-items: start;
     gap: 20px;
     padding: 20px;
 
@@ -20,6 +21,19 @@
     &.columns-3 {
       grid-template-columns: repeat(3, 1fr);
     }
+
+    &.is-masonry {
+      display: flex;
+      align-items: flex-start;
+    }
+  }
+
+  &-column {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
   }
 
   &-item {
