@@ -1201,16 +1201,18 @@
                   "item0": {
                     "name": "quadro-box-dinamico-item",
                     "model": "quadro-box-dinamico-item",
-                    "boxtitle": "<p><br></p>",
-                    "boxcontent": "<p>Conteúdo do item 1.</p>",
-                    "imagedescription": "<p><br></p>"
+                    "boxtitle": "<p>Título</p>",
+                    "boxcontent": "<p>Conteúdo do item.</p>",
+                    "imagedescription": "<p>Descrição da imagem</p>",
+                    "backgroundcolor": "#b5d4ed"
                   },
                   "item1": {
                     "name": "quadro-box-dinamico-item",
                     "model": "quadro-box-dinamico-item",
-                    "boxtitle": "<p><br></p>",
-                    "boxcontent": "<p>Conteúdo do item 2.</p>",
-                    "imagedescription": "<p><br></p>"
+                    "boxtitle": "<p>Título</p>",
+                    "boxcontent": "<p>Conteúdo do item.</p>",
+                    "imagedescription": "<p>Descrição da imagem</p>",
+                    "backgroundcolor": "#b5d4ed"
                   }
                 }
               }
@@ -1227,9 +1229,10 @@
                 "template": {
                   "name": "Quadro Box Dinamico Item",
                   "model": "quadro-box-dinamico-item",
-                  "boxtitle": "<p><br></p>",
+                  "boxtitle": "<p>Título</p>",
                   "boxcontent": "<p>Conteúdo do item.</p>",
-                  "imagedescription": "<p><br></p>"
+                  "imagedescription": "<p>Descrição da imagem</p>",
+                  "backgroundcolor": "#b5d4ed"
                 }
               }
             }
