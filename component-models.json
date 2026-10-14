@@ -3009,6 +3009,11 @@
     "id": "quadro-box-dinamico-item",
     "fields": [
       {
+        "component": "tab",
+        "name": "tabtexto",
+        "label": "Texto"
+      },
+      {
         "component": "richtext",
         "name": "boxtitle",
         "label": "Título",
@@ -3021,6 +3026,11 @@
         "label": "Conteúdo",
         "description": "Opcional. Deixe vazio para não exibir",
         "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "name": "tabimagem",
+        "label": "Imagem"
       },
       {
         "component": "reference",
@@ -3061,6 +3071,11 @@
         "component": "text",
         "name": "imagealt",
         "label": "Texto alternativo da imagem"
+      },
+      {
+        "component": "tab",
+        "name": "tabestilo",
+        "label": "Estilo"
       },
       {
         "component": "text",
