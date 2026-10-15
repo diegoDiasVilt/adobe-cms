@@ -45,6 +45,32 @@
     border-radius: 8px;
     text-align: left;
     background-color: var(--quadro-box-dinamico-bg, #b5d4ed);
+
+    &.image-right {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &.image-left {
+      flex-direction: row-reverse;
+      align-items: center;
+    }
+
+    &.image-right,
+    &.image-left {
+      > .quadro-box-dinamico-item-image {
+        flex: 0 0 35%;
+        max-width: 35%;
+      }
+    }
+  }
+
+  &-item-text {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 0;
   }
 
   &-item-title {
@@ -119,6 +145,17 @@
 
     &-item {
       padding: 15px;
+
+      &.image-right,
+      &.image-left {
+        flex-direction: column-reverse;
+        align-items: stretch;
+
+        > .quadro-box-dinamico-item-image {
+          flex: 0 0 auto;
+          max-width: 100%;
+        }
+      }
     }
   }
 }

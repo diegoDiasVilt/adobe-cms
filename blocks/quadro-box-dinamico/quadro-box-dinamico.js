@@ -3,7 +3,8 @@ import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
 const DEFAULT_BACKGROUND = '#b5d4ed';
 const DEFAULT_COLUMNS = 3;
 const DEFAULT_IMAGE_POSITION = 'bottom';
-const IMAGE_POSITIONS = ['top', 'middle', 'bottom'];
+const SIDE_POSITIONS = ['left', 'right'];
+const IMAGE_POSITIONS = ['top', 'middle', 'bottom', ...SIDE_POSITIONS];
 const MOBILE_QUERY = '(max-width: 600px)';
 const TABLET_QUERY = '(max-width: 900px)';
 
@@ -188,13 +189,22 @@ export default async function decorate(block) {
 
     const requested = imagePositionCell?.textContent.trim();
     const position = IMAGE_POSITIONS.includes(requested) ? requested : DEFAULT_IMAGE_POSITION;
-    const ordered = {
-      top: [imageWrapper, title, content],
-      middle: [title, imageWrapper, content],
-      bottom: [title, content, imageWrapper],
-    }[position];
-
-    ordered.filter(Boolean).forEach((element) => itemDiv.append(element));
+    if (SIDE_POSITIONS.includes(position) && imageWrapper && (title || content)) {
+      const textWrapper = document.createElement('div');
+      textWrapper.className = 'quadro-box-dinamico-item-text';
+      [title, content].filter(Boolean).forEach((element) => textWrapper.append(element));
+      itemDiv.append(textWrapper, imageWrapper);
+      itemDiv.classList.add(`image-${position}`);
+    } else {
+      const stacked = {
+        top: [imageWrapper, title, content],
+        middle: [title, imageWrapper, content],
+        bottom: [title, content, imageWrapper],
+      };
+      (stacked[position] || stacked[DEFAULT_IMAGE_POSITION])
+        .filter(Boolean)
+        .forEach((element) => itemDiv.append(element));
+    }
 
     if (itemDiv.hasChildNodes()) {
       items.push(itemDiv);

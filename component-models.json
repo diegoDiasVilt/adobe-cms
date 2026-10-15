@@ -3063,6 +3063,14 @@
           {
             "name": "Abaixo do texto",
             "value": "bottom"
+          },
+          {
+            "name": "À direita do texto",
+            "value": "right"
+          },
+          {
+            "name": "À esquerda do texto",
+            "value": "left"
           }
         ]
       },
