@@ -33,7 +33,6 @@
 .quadro-box-dinamico-item {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 15px;
   padding: 20px;
   border-radius: 8px;
@@ -86,8 +85,7 @@
 .quadro-box-dinamico-item-content > *:last-child {
   margin-bottom: 0;
 }
-.quadro-box-dinamico-item-image img,
-.quadro-box-dinamico-item-image picture img {
+.quadro-box-dinamico-item-image img {
   display: block;
   width: 100%;
   height: auto;
