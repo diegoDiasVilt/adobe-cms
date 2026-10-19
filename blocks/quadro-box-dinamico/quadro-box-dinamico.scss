@@ -39,7 +39,6 @@
   &-item {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 15px;
     padding: 20px;
     border-radius: 8px;
@@ -106,8 +105,7 @@
   }
 
   &-item-image {
-    img,
-    picture img {
+    img {
       display: block;
       width: 100%;
       height: auto;

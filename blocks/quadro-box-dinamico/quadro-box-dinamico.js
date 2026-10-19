@@ -1,6 +1,5 @@
-import { decodeBase64, htmlToElement } from '../../scripts/scripts.js';
+import { decodeBase64 } from '../../scripts/scripts.js';
 
-const DEFAULT_BACKGROUND = '#b5d4ed';
 const DEFAULT_COLUMNS = 3;
 const DEFAULT_IMAGE_POSITION = 'bottom';
 const SIDE_POSITIONS = ['left', 'right'];
@@ -14,9 +13,6 @@ function isEmptyValue(value) {
 
 function readRichText(cell) {
   if (!cell) return '';
-  const richtextDiv = cell.querySelector('div[data-aue-type="richtext"]');
-  if (richtextDiv) return richtextDiv.innerHTML.trim();
-
   const encoded = cell.querySelector('p')?.textContent.trim() || cell.textContent.trim();
   if (isEmptyValue(encoded)) return '';
 
@@ -26,36 +22,39 @@ function readRichText(cell) {
   return cell.innerHTML.trim();
 }
 
-function hasVisibleContent(html) {
-  if (!html) return false;
-  const probe = document.createElement('div');
-  probe.innerHTML = html;
-  return !!(probe.textContent.trim() || probe.querySelector('img, picture, video, iframe'));
+function createRichTextElement(className, html) {
+  if (!html) return null;
+  const element = document.createElement('div');
+  element.className = className;
+  element.innerHTML = html;
+  const hasContent = element.textContent.trim() || element.querySelector('img, picture, video, iframe');
+  return hasContent ? element : null;
 }
 
-function resolveBackground(value) {
+function applyBackground(element, value) {
   const color = value?.trim();
-  return color && CSS.supports('color', color) ? color : DEFAULT_BACKGROUND;
+  if (color && CSS.supports('color', color)) {
+    element.style.setProperty('--quadro-box-dinamico-bg', color);
+  }
 }
 
 function buildImage(cell, altText) {
-  const picture = cell?.querySelector('picture');
-  const img = cell?.querySelector('img');
-  const src = cell?.textContent.trim();
+  if (!cell) return null;
+  const source = cell.querySelector('picture') || cell.querySelector('img');
+  const src = cell.textContent.trim();
 
-  if (picture) return picture.cloneNode(true);
-  if (img) {
-    const clone = img.cloneNode(true);
-    if (altText && !clone.alt) clone.alt = altText;
-    return clone;
+  let image = null;
+  if (source) {
+    image = source.cloneNode(true);
+  } else if (src) {
+    image = document.createElement('img');
+    image.src = src;
   }
-  if (src) {
-    const created = document.createElement('img');
-    created.src = src;
-    if (altText) created.alt = altText;
-    return created;
-  }
-  return null;
+  if (!image) return null;
+
+  const img = image.tagName === 'IMG' ? image : image.querySelector('img');
+  if (altText && img) img.alt = altText;
+  return image;
 }
 
 function getColumnCount(maxColumns, itemCount) {
@@ -116,23 +115,21 @@ function setupMasonry(container, items, maxColumns) {
 }
 
 export default async function decorate(block) {
-  const id = block.children[1];
-  if (id && id?.querySelectorAll('div')?.length < 3) {
-    id.remove();
-    block.setAttribute('id', id?.textContent?.trim());
+  const idRow = block.children[1];
+  if (idRow && idRow.querySelectorAll('div').length < 3) {
+    idRow.remove();
+    const id = idRow.textContent.trim();
+    if (id) block.id = id;
   }
 
   const numColumnsRow = block.children[0];
-  const numColumnsCell = numColumnsRow?.lastElementChild;
-  const parsedColumns = parseInt(numColumnsCell?.textContent.trim(), 10);
-  const numCols = Math.min(Math.max(parsedColumns || DEFAULT_COLUMNS, 1), 3);
+  if (!numColumnsRow) return;
+  const parsedColumns = parseInt(numColumnsRow.lastElementChild?.textContent.trim(), 10);
+  const numCols = Math.min(parsedColumns || DEFAULT_COLUMNS, 3);
   numColumnsRow.remove();
 
   const itemRows = Array.from(block.children);
-
   const itemsContainer = document.createElement('div');
-  itemsContainer.className = `quadro-box-dinamico-items columns-${Math.min(itemRows.length, numCols)}`;
-
   const items = [];
 
   itemRows.forEach((itemRow) => {
@@ -155,24 +152,10 @@ export default async function decorate(block) {
       }
     });
 
-    itemDiv.style.setProperty('--quadro-box-dinamico-bg', resolveBackground(backgroundCell?.textContent));
+    applyBackground(itemDiv, backgroundCell?.textContent);
 
-    const titleHtml = readRichText(titleCell);
-    const contentHtml = readRichText(contentCell);
-
-    let title = null;
-    if (hasVisibleContent(titleHtml)) {
-      title = document.createElement('div');
-      title.className = 'quadro-box-dinamico-item-title';
-      title.innerHTML = titleHtml;
-    }
-
-    let content = null;
-    if (hasVisibleContent(contentHtml)) {
-      content = document.createElement('div');
-      content.className = 'quadro-box-dinamico-item-content';
-      content.innerHTML = contentHtml;
-    }
+    const title = createRichTextElement('quadro-box-dinamico-item-title', readRichText(titleCell));
+    const content = createRichTextElement('quadro-box-dinamico-item-content', readRichText(contentCell));
 
     let imageWrapper = null;
     const image = buildImage(imageCell, imageAltCell?.textContent.trim());
@@ -181,10 +164,11 @@ export default async function decorate(block) {
       imageWrapper.className = 'quadro-box-dinamico-item-image';
       imageWrapper.append(image);
 
-      const descriptionHtml = readRichText(imageDescriptionCell);
-      if (hasVisibleContent(descriptionHtml)) {
-        imageWrapper.append(htmlToElement(`<div class="quadro-box-dinamico-item-image-description">${descriptionHtml}</div>`));
-      }
+      const description = createRichTextElement(
+        'quadro-box-dinamico-item-image-description',
+        readRichText(imageDescriptionCell),
+      );
+      if (description) imageWrapper.append(description);
     }
 
     const requested = imagePositionCell?.textContent.trim();
@@ -213,7 +197,8 @@ export default async function decorate(block) {
   });
 
   block.innerHTML = '';
-  if (itemsContainer.hasChildNodes()) {
+  if (items.length) {
+    itemsContainer.className = `quadro-box-dinamico-items columns-${Math.min(items.length, numCols)}`;
     block.append(itemsContainer);
     if (block.classList.contains('masonry')) {
       setupMasonry(itemsContainer, items, numCols);
