@@ -28,6 +28,7 @@
       "indice",
       "banner",
       "quadro-box-v2",
+      "quadro-box-dinamico",
       "player-audio"
     ]
   },
@@ -98,6 +99,12 @@
     "id": "quadro-box-v2",
     "components": [
       "quadro-box-item"
+    ]
+  },
+  {
+    "id": "quadro-box-dinamico",
+    "components": [
+      "quadro-box-dinamico-item"
     ]
   },
   {
