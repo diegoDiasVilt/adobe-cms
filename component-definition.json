@@ -1199,7 +1199,6 @@
                   "filter": "quadro-box-dinamico",
                   "numcolumns": "3",
                   "classes": "default",
-                  "margin": "m",
                   "gap": "m",
                   "item0": {
                     "name": "Quadro Box Dinamico Item",
@@ -1210,7 +1209,8 @@
                     "imageposition": "bottom",
                     "backgroundcolor": "#b5d4ed",
                     "itemgap": "default",
-                    "padding": "m"
+                    "padding": "m",
+                    "margin": "none"
                   },
                   "item1": {
                     "name": "Quadro Box Dinamico Item",
@@ -1221,7 +1221,8 @@
                     "imageposition": "bottom",
                     "backgroundcolor": "#b5d4ed",
                     "itemgap": "default",
-                    "padding": "m"
+                    "padding": "m",
+                    "margin": "none"
                   }
                 }
               }
@@ -1244,7 +1245,8 @@
                   "imageposition": "bottom",
                   "backgroundcolor": "#b5d4ed",
                   "itemgap": "default",
-                  "padding": "m"
+                  "padding": "m",
+                  "margin": "none"
                 }
               }
             }
