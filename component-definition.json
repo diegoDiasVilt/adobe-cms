@@ -1201,7 +1201,6 @@
                   "classes": "default",
                   "margin": "m",
                   "gap": "m",
-                  "padding": "m",
                   "item0": {
                     "name": "Quadro Box Dinamico Item",
                     "model": "quadro-box-dinamico-item",
@@ -1210,7 +1209,8 @@
                     "imagedescription": "PHAgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPkRlc2NyacOnw6NvIGRhIGltYWdlbTwvcD4=",
                     "imageposition": "bottom",
                     "backgroundcolor": "#b5d4ed",
-                    "itemgap": "default"
+                    "itemgap": "default",
+                    "padding": "m"
                   },
                   "item1": {
                     "name": "Quadro Box Dinamico Item",
@@ -1220,7 +1220,8 @@
                     "imagedescription": "PHAgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPkRlc2NyacOnw6NvIGRhIGltYWdlbTwvcD4=",
                     "imageposition": "bottom",
                     "backgroundcolor": "#b5d4ed",
-                    "itemgap": "default"
+                    "itemgap": "default",
+                    "padding": "m"
                   }
                 }
               }
@@ -1242,7 +1243,8 @@
                   "imagedescription": "PHAgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPkRlc2NyacOnw6NvIGRhIGltYWdlbTwvcD4=",
                   "imageposition": "bottom",
                   "backgroundcolor": "#b5d4ed",
-                  "itemgap": "default"
+                  "itemgap": "default",
+                  "padding": "m"
                 }
               }
             }
