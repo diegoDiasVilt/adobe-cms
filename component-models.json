@@ -3101,43 +3101,6 @@
             "value": "gg"
           }
         ]
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "itemgap",
-        "label": "Espaço entre os elementos do card",
-        "description": "Distância entre título, conteúdo e imagem. No celular, valores acima de 20px são reduzidos para 20px",
-        "options": [
-          {
-            "name": "Nenhum (0)",
-            "value": "none"
-          },
-          {
-            "name": "PP (8px)",
-            "value": "pp"
-          },
-          {
-            "name": "P (12px)",
-            "value": "p"
-          },
-          {
-            "name": "Padrão (15px)",
-            "value": "default"
-          },
-          {
-            "name": "M (20px)",
-            "value": "m"
-          },
-          {
-            "name": "G (32px)",
-            "value": "g"
-          },
-          {
-            "name": "GG (48px)",
-            "value": "gg"
-          }
-        ]
       }
     ]
   },
@@ -3225,6 +3188,43 @@
         "name": "backgroundcolor",
         "label": "Cor de fundo",
         "description": "Aceita HEX (#b5d4ed), rgb(). Se vazio ou inválido, usa o padrão (#b5d4ed)"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "itemgap",
+        "label": "Espaço entre os elementos do card",
+        "description": "Distância entre título, conteúdo e imagem. No celular, valores acima de 20px são reduzidos para 20px",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "PP (8px)",
+            "value": "pp"
+          },
+          {
+            "name": "P (12px)",
+            "value": "p"
+          },
+          {
+            "name": "Padrão (15px)",
+            "value": "default"
+          },
+          {
+            "name": "M (20px)",
+            "value": "m"
+          },
+          {
+            "name": "G (32px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (48px)",
+            "value": "gg"
+          }
+        ]
       }
     ]
   }

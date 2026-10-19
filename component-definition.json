@@ -1202,7 +1202,6 @@
                   "margin": "m",
                   "gap": "m",
                   "padding": "m",
-                  "itemgap": "default",
                   "item0": {
                     "name": "Quadro Box Dinamico Item",
                     "model": "quadro-box-dinamico-item",
@@ -1210,7 +1209,8 @@
                     "boxcontent": "PHA+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMTRweDsiPkNvbnRlw7pkbyBkbyBpdGVtLjwvc3Bhbj48L3A+",
                     "imagedescription": "PHAgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPkRlc2NyacOnw6NvIGRhIGltYWdlbTwvcD4=",
                     "imageposition": "bottom",
-                    "backgroundcolor": "#b5d4ed"
+                    "backgroundcolor": "#b5d4ed",
+                    "itemgap": "default"
                   },
                   "item1": {
                     "name": "Quadro Box Dinamico Item",
@@ -1219,7 +1219,8 @@
                     "boxcontent": "PHA+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMTRweDsiPkNvbnRlw7pkbyBkbyBpdGVtLjwvc3Bhbj48L3A+",
                     "imagedescription": "PHAgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPkRlc2NyacOnw6NvIGRhIGltYWdlbTwvcD4=",
                     "imageposition": "bottom",
-                    "backgroundcolor": "#b5d4ed"
+                    "backgroundcolor": "#b5d4ed",
+                    "itemgap": "default"
                   }
                 }
               }
@@ -1240,7 +1241,8 @@
                   "boxcontent": "PHA+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMTRweDsiPkNvbnRlw7pkbyBkbyBpdGVtLjwvc3Bhbj48L3A+",
                   "imagedescription": "PHAgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPkRlc2NyacOnw6NvIGRhIGltYWdlbTwvcD4=",
                   "imageposition": "bottom",
-                  "backgroundcolor": "#b5d4ed"
+                  "backgroundcolor": "#b5d4ed",
+                  "itemgap": "default"
                 }
               }
             }

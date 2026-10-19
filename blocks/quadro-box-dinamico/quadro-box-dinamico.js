@@ -1,6 +1,6 @@
 import { decodeBase64 } from '../../scripts/scripts.js';
 
-const BLOCK_CONFIG_FIELDS = ['numcolumns', 'id', 'margin', 'gap', 'padding', 'itemgap'];
+const BLOCK_CONFIG_FIELDS = ['numcolumns', 'id', 'margin', 'gap', 'padding'];
 const SPACING_SCALE = {
   none: '0px',
   pp: '8px',
@@ -13,7 +13,6 @@ const SPACING_VARIABLES = {
   margin: '--quadro-box-dinamico-margin',
   gap: '--quadro-box-dinamico-gap',
   padding: '--quadro-box-dinamico-item-padding',
-  itemgap: '--quadro-box-dinamico-item-gap',
 };
 const DEFAULT_COLUMNS = 3;
 const DEFAULT_IMAGE_POSITION = 'bottom';
@@ -140,11 +139,15 @@ function readBlockConfig(block) {
   );
 }
 
+function applySpacingValue(element, variable, key) {
+  if (Object.hasOwn(SPACING_SCALE, key)) {
+    element.style.setProperty(variable, SPACING_SCALE[key]);
+  }
+}
+
 function applySpacing(block, config) {
   Object.entries(SPACING_VARIABLES).forEach(([field, variable]) => {
-    if (Object.hasOwn(SPACING_SCALE, config[field])) {
-      block.style.setProperty(variable, SPACING_SCALE[config[field]]);
-    }
+    applySpacingValue(block, variable, config[field]);
   });
 }
 
@@ -167,6 +170,7 @@ export default async function decorate(block) {
       imagePositionCell,
       imageAltCell,
       backgroundCell,
+      itemGapCell,
     ] = Array.from(itemRow.children);
 
     const itemDiv = document.createElement('div');
@@ -179,6 +183,7 @@ export default async function decorate(block) {
     });
 
     applyBackground(itemDiv, backgroundCell?.textContent);
+    applySpacingValue(itemDiv, '--quadro-box-dinamico-item-gap', itemGapCell?.textContent.trim());
 
     const title = createRichTextElement('quadro-box-dinamico-item-title', readRichText(titleCell));
     const content = createRichTextElement('quadro-box-dinamico-item-content', readRichText(contentCell));
