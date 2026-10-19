@@ -1,5 +1,20 @@
 import { decodeBase64 } from '../../scripts/scripts.js';
 
+const BLOCK_CONFIG_FIELDS = ['numcolumns', 'id', 'margin', 'gap', 'padding', 'itemgap'];
+const SPACING_SCALE = {
+  none: '0px',
+  pp: '8px',
+  p: '12px',
+  m: '20px',
+  g: '32px',
+  gg: '48px',
+};
+const SPACING_VARIABLES = {
+  margin: '--quadro-box-dinamico-margin',
+  gap: '--quadro-box-dinamico-gap',
+  padding: '--quadro-box-dinamico-item-padding',
+  itemgap: '--quadro-box-dinamico-item-gap',
+};
 const DEFAULT_COLUMNS = 3;
 const DEFAULT_IMAGE_POSITION = 'bottom';
 const SIDE_POSITIONS = ['left', 'right'];
@@ -114,19 +129,30 @@ function setupMasonry(container, items, maxColumns) {
   layout();
 }
 
-export default async function decorate(block) {
-  const idRow = block.children[1];
-  if (idRow && idRow.querySelectorAll('div').length < 3) {
-    idRow.remove();
-    const id = idRow.textContent.trim();
-    if (id) block.id = id;
+function readBlockConfig(block) {
+  const configRows = [];
+  while (block.firstElementChild?.children.length === 1) {
+    configRows.push(block.firstElementChild);
+    block.firstElementChild.remove();
   }
+  return Object.fromEntries(
+    BLOCK_CONFIG_FIELDS.map((name, index) => [name, configRows[index]?.textContent.trim() || '']),
+  );
+}
 
-  const numColumnsRow = block.children[0];
-  if (!numColumnsRow) return;
-  const parsedColumns = parseInt(numColumnsRow.lastElementChild?.textContent.trim(), 10);
-  const numCols = Math.min(parsedColumns || DEFAULT_COLUMNS, 3);
-  numColumnsRow.remove();
+function applySpacing(block, config) {
+  Object.entries(SPACING_VARIABLES).forEach(([field, variable]) => {
+    if (Object.hasOwn(SPACING_SCALE, config[field])) {
+      block.style.setProperty(variable, SPACING_SCALE[config[field]]);
+    }
+  });
+}
+
+export default async function decorate(block) {
+  const config = readBlockConfig(block);
+  if (config.id) block.id = config.id;
+  applySpacing(block, config);
+  const numCols = Math.min(parseInt(config.numcolumns, 10) || DEFAULT_COLUMNS, 3);
 
   const itemRows = Array.from(block.children);
   const itemsContainer = document.createElement('div');

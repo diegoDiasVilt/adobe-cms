@@ -3002,6 +3002,142 @@
             "value": "masonry"
           }
         ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "margin",
+        "label": "Margem (acima e abaixo)",
+        "description": "No celular, valores acima de 24px são reduzidos para 24px",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "PP (8px)",
+            "value": "pp"
+          },
+          {
+            "name": "P (12px)",
+            "value": "p"
+          },
+          {
+            "name": "M (20px)",
+            "value": "m"
+          },
+          {
+            "name": "G (32px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (48px)",
+            "value": "gg"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "gap",
+        "label": "Espaço entre os cards",
+        "description": "No celular, valores acima de 20px são reduzidos para 20px",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "PP (8px)",
+            "value": "pp"
+          },
+          {
+            "name": "P (12px)",
+            "value": "p"
+          },
+          {
+            "name": "M (20px)",
+            "value": "m"
+          },
+          {
+            "name": "G (32px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (48px)",
+            "value": "gg"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "padding",
+        "label": "Espaçamento interno dos cards",
+        "description": "No celular, valores acima de 15px são reduzidos para 15px",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "PP (8px)",
+            "value": "pp"
+          },
+          {
+            "name": "P (12px)",
+            "value": "p"
+          },
+          {
+            "name": "M (20px)",
+            "value": "m"
+          },
+          {
+            "name": "G (32px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (48px)",
+            "value": "gg"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "itemgap",
+        "label": "Espaço entre os elementos do card",
+        "description": "Distância entre título, conteúdo e imagem. No celular, valores acima de 20px são reduzidos para 20px",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "PP (8px)",
+            "value": "pp"
+          },
+          {
+            "name": "P (12px)",
+            "value": "p"
+          },
+          {
+            "name": "Padrão (15px)",
+            "value": "default"
+          },
+          {
+            "name": "M (20px)",
+            "value": "m"
+          },
+          {
+            "name": "G (32px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (48px)",
+            "value": "gg"
+          }
+        ]
       }
     ]
   },

@@ -1,14 +1,24 @@
 .quadro-box-dinamico {
+  --quadro-box-dinamico-margin: 20px;
+  --quadro-box-dinamico-padding: 20px;
+  --quadro-box-dinamico-gap: 20px;
+  --quadro-box-dinamico-item-padding: 20px;
+  --quadro-box-dinamico-item-gap: 15px;
+  --quadro-box-dinamico-image-width: 35%;
+  --quadro-box-dinamico-mobile-padding-max: 15px;
+  --quadro-box-dinamico-mobile-gap-max: 20px;
+  --quadro-box-dinamico-mobile-margin-max: 24px;
+
   width: 100%;
-  margin: 20px auto;
+  margin: var(--quadro-box-dinamico-margin) auto;
   font-family: sans-serif;
   color: #3a3a3a;
 
   &-items {
     display: grid;
     align-items: start;
-    gap: 20px;
-    padding: 20px;
+    gap: var(--quadro-box-dinamico-gap);
+    padding: var(--quadro-box-dinamico-padding);
 
     &.columns-1 {
       grid-template-columns: 1fr;
@@ -32,15 +42,15 @@
     display: flex;
     flex: 1 1 0;
     flex-direction: column;
-    gap: 20px;
+    gap: var(--quadro-box-dinamico-gap);
     min-width: 0;
   }
 
   &-item {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    padding: 20px;
+    gap: var(--quadro-box-dinamico-item-gap);
+    padding: var(--quadro-box-dinamico-item-padding);
     border-radius: 8px;
     text-align: left;
     background-color: var(--quadro-box-dinamico-bg, #b5d4ed);
@@ -58,8 +68,8 @@
     &.image-right,
     &.image-left {
       > .quadro-box-dinamico-item-image {
-        flex: 0 0 35%;
-        max-width: 35%;
+        flex: 0 0 var(--quadro-box-dinamico-image-width);
+        max-width: var(--quadro-box-dinamico-image-width);
       }
     }
   }
@@ -68,7 +78,7 @@
     display: flex;
     flex: 1 1 0;
     flex-direction: column;
-    gap: 15px;
+    gap: var(--quadro-box-dinamico-item-gap);
     min-width: 0;
   }
 
@@ -132,8 +142,20 @@
   }
 
   @media (max-width: 600px) {
+    margin: min(var(--quadro-box-dinamico-margin), var(--quadro-box-dinamico-mobile-margin-max)) auto;
+
+    &-items,
+    &-column {
+      gap: min(var(--quadro-box-dinamico-gap), var(--quadro-box-dinamico-mobile-gap-max));
+    }
+
+    &-item,
+    &-item-text {
+      gap: min(var(--quadro-box-dinamico-item-gap), var(--quadro-box-dinamico-mobile-gap-max));
+    }
+
     &-items {
-      padding: 15px;
+      padding: min(var(--quadro-box-dinamico-padding), var(--quadro-box-dinamico-mobile-padding-max));
 
       &.columns-2,
       &.columns-3 {
@@ -142,7 +164,7 @@
     }
 
     &-item {
-      padding: 15px;
+      padding: min(var(--quadro-box-dinamico-item-padding), var(--quadro-box-dinamico-mobile-padding-max));
 
       &.image-right,
       &.image-left {
