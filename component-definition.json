@@ -1200,6 +1200,7 @@
                   "numcolumns": "3",
                   "classes": "default",
                   "gap": "m",
+                  "boxalign": "top",
                   "item0": {
                     "name": "Quadro Box Dinamico Item",
                     "model": "quadro-box-dinamico-item",
@@ -1210,7 +1211,9 @@
                     "backgroundcolor": "#b5d4ed",
                     "itemgap": "default",
                     "padding": "m",
-                    "margin": "none"
+                    "margin": "none",
+                    "contentvalign": "top",
+                    "contentalign": "left"
                   },
                   "item1": {
                     "name": "Quadro Box Dinamico Item",
@@ -1222,7 +1225,9 @@
                     "backgroundcolor": "#b5d4ed",
                     "itemgap": "default",
                     "padding": "m",
-                    "margin": "none"
+                    "margin": "none",
+                    "contentvalign": "top",
+                    "contentalign": "left"
                   }
                 }
               }
@@ -1246,7 +1251,9 @@
                   "backgroundcolor": "#b5d4ed",
                   "itemgap": "default",
                   "padding": "m",
-                  "margin": "none"
+                  "margin": "none",
+                  "contentvalign": "top",
+                  "contentalign": "left"
                 }
               }
             }

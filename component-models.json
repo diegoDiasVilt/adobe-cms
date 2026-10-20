@@ -3035,6 +3035,27 @@
             "value": "gg"
           }
         ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "boxalign",
+        "label": "Alinhamento dos cards",
+        "description": "Alinha cards de alturas diferentes na mesma linha. Não se aplica à disposição Encaixados",
+        "options": [
+          {
+            "name": "Topo",
+            "value": "top"
+          },
+          {
+            "name": "Meio",
+            "value": "middle"
+          },
+          {
+            "name": "Base",
+            "value": "bottom"
+          }
+        ]
       }
     ]
   },
@@ -3223,6 +3244,53 @@
           {
             "name": "GG (48px)",
             "value": "gg"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "name": "tabalinhamento",
+        "label": "Alinhamento"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "contentvalign",
+        "label": "Alinhamento vertical do conteúdo",
+        "description": "Só tem efeito quando o card é mais alto que o conteúdo",
+        "options": [
+          {
+            "name": "Topo",
+            "value": "top"
+          },
+          {
+            "name": "Meio",
+            "value": "middle"
+          },
+          {
+            "name": "Base",
+            "value": "bottom"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "contentalign",
+        "label": "Alinhamento horizontal do conteúdo",
+        "description": "Alinhamentos feitos no editor de texto têm prioridade",
+        "options": [
+          {
+            "name": "Esquerda",
+            "value": "left"
+          },
+          {
+            "name": "Centro",
+            "value": "center"
+          },
+          {
+            "name": "Direita",
+            "value": "right"
           }
         ]
       }

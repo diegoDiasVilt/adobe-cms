@@ -5,6 +5,9 @@
   --quadro-box-dinamico-item-padding: 20px;
   --quadro-box-dinamico-item-gap: 15px;
   --quadro-box-dinamico-item-margin: 0px;
+  --quadro-box-dinamico-box-align: flex-start;
+  --quadro-box-dinamico-content-valign: flex-start;
+  --quadro-box-dinamico-content-align: left;
   --quadro-box-dinamico-image-width: 35%;
   --quadro-box-dinamico-mobile-padding-max: 15px;
   --quadro-box-dinamico-mobile-gap-max: 20px;
@@ -16,7 +19,7 @@
 }
 .quadro-box-dinamico-items {
   display: grid;
-  align-items: start;
+  align-items: var(--quadro-box-dinamico-box-align);
   gap: var(--quadro-box-dinamico-gap);
   padding: var(--quadro-box-dinamico-padding);
 }
@@ -43,11 +46,12 @@
 .quadro-box-dinamico-item {
   display: flex;
   flex-direction: column;
+  justify-content: var(--quadro-box-dinamico-content-valign);
   gap: var(--quadro-box-dinamico-item-gap);
   margin: var(--quadro-box-dinamico-item-margin);
   padding: var(--quadro-box-dinamico-item-padding);
   border-radius: 8px;
-  text-align: left;
+  text-align: var(--quadro-box-dinamico-content-align);
   background-color: var(--quadro-box-dinamico-bg, #b5d4ed);
 }
 .quadro-box-dinamico-item.image-right {
