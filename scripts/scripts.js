@@ -106,6 +106,52 @@ export function moveAttributes(from, to, attributes) {
   });
 }
 
+function formulaBox(formula) {
+  let box = formula.parentElement;
+  while (box !== document.body && getComputedStyle(box).display.startsWith("inline")) {
+    box = box.parentElement;
+  }
+  return box;
+}
+
+function fitFormula(formula, box) {
+  const isDisplay = formula.getAttribute("display") === "true";
+  const { paddingLeft, paddingRight } = getComputedStyle(box);
+  const available = isDisplay
+    ? formula.clientWidth
+    : box.clientWidth - parseFloat(paddingLeft) - parseFloat(paddingRight);
+  if (!available) return;
+
+  formula.dataset.baseFontSize ??= parseFloat(formula.style.fontSize) || 100;
+  let size = Number(formula.dataset.baseFontSize);
+  formula.style.fontSize = `${size}%`;
+  for (let i = 0; i < 3; i += 1) {
+    const natural = isDisplay ? formula.scrollWidth : formula.getBoundingClientRect().width;
+    if (natural <= available) break;
+    size = Math.floor(size * (available / natural) * 10) / 10;
+    formula.style.fontSize = `${size}%`;
+  }
+}
+
+function fitFormulas() {
+  const formulasByBox = new Map();
+  document.querySelectorAll("main mjx-container").forEach((formula) => {
+    const box = formulaBox(formula);
+    if (!formulasByBox.has(box)) formulasByBox.set(box, []);
+    formulasByBox.get(box).push(formula);
+  });
+
+  const widths = new WeakMap();
+  const observer = new ResizeObserver((entries) => {
+    entries.forEach(({ target, contentRect }) => {
+      if (widths.get(target) === contentRect.width) return;
+      widths.set(target, contentRect.width);
+      formulasByBox.get(target).forEach((formula) => fitFormula(formula, target));
+    });
+  });
+  formulasByBox.forEach((_, box) => observer.observe(box));
+}
+
 /**
  * Helper to load MathJax
  * Refactored to allow immediate loading for PDF mode
@@ -126,10 +172,10 @@ function loadMathJax() {
     loader: { load: ["input/mml", "output/chtml"] },
     startup: {
       typeset: true,
+      pageReady: () => window.MathJax.startup.defaultPageReady().then(fitFormulas),
     },
     output: {
-      // fórmulas em bloco mais largas que o container são reduzidas para caber (mobile)
-      displayOverflow: "scale",
+      displayOverflow: "overflow",
       linebreaks: {
         inline: true, // quebra fórmulas inline longas dentro do parágrafo
         width: "100%",
