@@ -3041,7 +3041,7 @@
         "valueType": "string",
         "name": "boxalign",
         "label": "Alinhamento dos cards",
-        "description": "Alinha cards de alturas diferentes na mesma linha. Não se aplica à disposição Encaixados",
+        "description": "Alinha cards de alturas diferentes na mesma linha. Na disposição Encaixados, alinha as colunas entre si",
         "options": [
           {
             "name": "Topo",

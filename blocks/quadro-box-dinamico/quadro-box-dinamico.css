@@ -34,7 +34,6 @@
 }
 .quadro-box-dinamico-items.is-masonry {
   display: flex;
-  align-items: flex-start;
 }
 .quadro-box-dinamico-column {
   display: flex;
