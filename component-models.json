@@ -3041,7 +3041,7 @@
         "valueType": "string",
         "name": "boxalign",
         "label": "Alinhamento dos cards",
-        "description": "Alinha cards de alturas diferentes na mesma linha. Na disposição Encaixados, alinha as colunas entre si",
+        "description": "Alinha cards de alturas diferentes na mesma linha. Na disposição Encaixados, alinha as colunas entre si (sem efeito quando algum card tem largura definida)",
         "options": [
           {
             "name": "Topo",
@@ -3304,7 +3304,7 @@
         "valueType": "string",
         "name": "cardwidth",
         "label": "Largura do card",
-        "description": "Automático segue o número de colunas. Cards que somam até 100% ficam na mesma linha; acima disso, quebram para a linha de baixo. Ignorada na disposição Encaixados. No celular, todos os cards ocupam 100%",
+        "description": "Automático segue o número de colunas. Cards que somam até 100% ficam na mesma linha; acima disso, quebram para a linha de baixo. Na disposição Encaixados, cada card mantém a largura e sobe para o espaço livre mais alto. No celular, todos os cards ocupam 100%",
         "options": [
           {
             "name": "Automático",

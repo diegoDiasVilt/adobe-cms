@@ -50,6 +50,7 @@ const SIDE_POSITIONS = ['left', 'right'];
 const IMAGE_POSITIONS = ['top', 'middle', 'bottom', ...SIDE_POSITIONS];
 const MOBILE_QUERY = '(max-width: 600px)';
 const TABLET_QUERY = '(max-width: 900px)';
+const PACK_UNITS = 60;
 
 function isEmptyValue(value) {
   return !value || ['null', 'undefined'].includes(value.trim().toLowerCase());
@@ -120,25 +121,16 @@ function shortestColumn(columns) {
   });
 }
 
-function setupMasonry(container, items, maxColumns) {
-  container.classList.add('is-masonry');
-
+function keepLaidOut(container, items, layout) {
   let lastWidth = -1;
   let frame = null;
 
-  const layout = () => {
-    frame = null;
-    const columns = Array.from({ length: getColumnCount(maxColumns, items.length) }, () => {
-      const column = document.createElement('div');
-      column.className = 'quadro-box-dinamico-column';
-      return column;
-    });
-    container.replaceChildren(...columns);
-    items.forEach((item) => shortestColumn(columns).append(item));
-  };
-
   const scheduleLayout = () => {
-    if (!frame) frame = requestAnimationFrame(layout);
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      frame = null;
+      layout();
+    });
   };
 
   new ResizeObserver(([entry]) => {
@@ -156,6 +148,63 @@ function setupMasonry(container, items, maxColumns) {
   });
 
   layout();
+}
+
+function setupMasonry(container, items, maxColumns) {
+  container.classList.add('is-masonry');
+
+  keepLaidOut(container, items, () => {
+    const columns = Array.from({ length: getColumnCount(maxColumns, items.length) }, () => {
+      const column = document.createElement('div');
+      column.className = 'quadro-box-dinamico-column';
+      return column;
+    });
+    container.replaceChildren(...columns);
+    items.forEach((item) => shortestColumn(columns).append(item));
+  });
+}
+
+function setupPackedMasonry(container, items, maxColumns) {
+  container.classList.add('is-packed');
+
+  keepLaidOut(container, items, () => {
+    const styles = getComputedStyle(container);
+    const paddingLeft = parseFloat(styles.paddingLeft);
+    const paddingTop = parseFloat(styles.paddingTop);
+    const width = container.clientWidth - paddingLeft - parseFloat(styles.paddingRight);
+    const gap = parseFloat(styles.columnGap) || 0;
+    const minWidth = Math.min(parseFloat(styles.getPropertyValue('--quadro-box-dinamico-card-min-width')) || 0, width);
+    const isMobile = window.matchMedia(MOBILE_QUERY).matches;
+    const autoFraction = 1 / getColumnCount(maxColumns, items.length);
+    const pitch = (width + gap) / PACK_UNITS;
+    const skyline = new Array(PACK_UNITS).fill(0);
+
+    items.forEach((item) => {
+      const margin = parseFloat(getComputedStyle(item).marginLeft) || 0;
+      const fraction = isMobile
+        ? 1
+        : parseFloat(item.style.getPropertyValue('--quadro-box-dinamico-card-width')) || autoFraction;
+      let span = Math.min(PACK_UNITS, Math.max(1, Math.round(fraction * PACK_UNITS)));
+      while (span < PACK_UNITS && span * pitch - gap - 2 * margin < minWidth) span += 1;
+      item.style.width = `${Math.max(0, span * pitch - gap - 2 * margin)}px`;
+
+      let bestX = 0;
+      let bestY = Infinity;
+      for (let x = 0; x + span <= PACK_UNITS; x += 1) {
+        const y = Math.max(...skyline.slice(x, x + span));
+        if (y < bestY) {
+          bestY = y;
+          bestX = x;
+        }
+      }
+
+      item.style.left = `${paddingLeft + bestX * pitch}px`;
+      item.style.top = `${paddingTop + bestY}px`;
+      skyline.fill(bestY + item.offsetHeight + 2 * margin + gap, bestX, bestX + span);
+    });
+
+    container.style.height = `${Math.max(0, Math.max(...skyline) - gap)}px`;
+  });
 }
 
 function readBlockConfig(block) {
@@ -276,7 +325,11 @@ export default async function decorate(block) {
     itemsContainer.className = `quadro-box-dinamico-items columns-${Math.min(items.length, numCols)}`;
     block.append(itemsContainer);
     if (block.classList.contains('masonry')) {
-      setupMasonry(itemsContainer, items, numCols);
+      if (hasCustomWidth) {
+        setupPackedMasonry(itemsContainer, items, numCols);
+      } else {
+        setupMasonry(itemsContainer, items, numCols);
+      }
     } else if (hasCustomWidth) {
       itemsContainer.classList.add('has-custom-widths');
     }

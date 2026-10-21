@@ -41,6 +41,16 @@
       display: flex;
     }
 
+    &.is-packed {
+      position: relative;
+      display: block;
+
+      > .quadro-box-dinamico-item {
+        position: absolute;
+        box-sizing: border-box;
+      }
+    }
+
     &.has-custom-widths {
       --quadro-box-dinamico-auto-width: 1;
 

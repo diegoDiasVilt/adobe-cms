@@ -36,6 +36,14 @@
 .quadro-box-dinamico-items.is-masonry {
   display: flex;
 }
+.quadro-box-dinamico-items.is-packed {
+  position: relative;
+  display: block;
+}
+.quadro-box-dinamico-items.is-packed > .quadro-box-dinamico-item {
+  position: absolute;
+  box-sizing: border-box;
+}
 .quadro-box-dinamico-items.has-custom-widths {
   --quadro-box-dinamico-auto-width: 1;
   display: flex;
