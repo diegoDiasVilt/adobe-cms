@@ -138,17 +138,22 @@ function keepLaidOut(container, items, layout) {
     if (frame) return;
     frame = requestAnimationFrame(() => {
       frame = null;
-      layout();
+      if (container.isConnected) layout();
     });
   };
 
-  new ResizeObserver(([entry]) => {
+  const observer = new ResizeObserver(([entry]) => {
+    if (!container.isConnected) {
+      observer.disconnect();
+      return;
+    }
     const { width } = entry.contentRect;
     if (width !== lastWidth) {
       lastWidth = width;
       scheduleLayout();
     }
-  }).observe(container);
+  });
+  observer.observe(container);
 
   items.forEach((item) => {
     item.querySelectorAll('img').forEach((img) => {
@@ -173,46 +178,58 @@ function setupMasonry(container, items, maxColumns) {
   });
 }
 
+function measurePackingArea(container) {
+  const styles = getComputedStyle(container);
+  const left = parseFloat(styles.paddingLeft);
+  const width = container.clientWidth - left - parseFloat(styles.paddingRight);
+  const gap = parseFloat(styles.columnGap) || 0;
+  const cardMinWidth = parseFloat(styles.getPropertyValue('--quadro-box-dinamico-card-min-width')) || 0;
+  return {
+    left,
+    top: parseFloat(styles.paddingTop),
+    gap,
+    pitch: (width + gap) / PACK_UNITS,
+    minWidth: Math.min(cardMinWidth, width),
+  };
+}
+
+function getCardSpan(fraction, margin, { pitch, gap, minWidth }) {
+  let span = Math.min(PACK_UNITS, Math.max(1, Math.round(fraction * PACK_UNITS)));
+  while (span < PACK_UNITS && span * pitch - gap - 2 * margin < minWidth) span += 1;
+  return span;
+}
+
+function findHighestSlot(skyline, span) {
+  let slot = { x: 0, y: Infinity };
+  for (let x = 0; x + span <= PACK_UNITS; x += 1) {
+    const y = Math.max(...skyline.slice(x, x + span));
+    if (y < slot.y) slot = { x, y };
+  }
+  return slot;
+}
+
 function setupPackedMasonry(container, items, maxColumns) {
   container.classList.add('is-packed');
 
   keepLaidOut(container, items, () => {
-    const styles = getComputedStyle(container);
-    const paddingLeft = parseFloat(styles.paddingLeft);
-    const paddingTop = parseFloat(styles.paddingTop);
-    const width = container.clientWidth - paddingLeft - parseFloat(styles.paddingRight);
-    const gap = parseFloat(styles.columnGap) || 0;
-    const minWidth = Math.min(parseFloat(styles.getPropertyValue('--quadro-box-dinamico-card-min-width')) || 0, width);
+    const area = measurePackingArea(container);
     const isMobile = window.matchMedia(MOBILE_QUERY).matches;
     const autoFraction = 1 / getColumnCount(maxColumns, items.length);
-    const pitch = (width + gap) / PACK_UNITS;
     const skyline = new Array(PACK_UNITS).fill(0);
 
     items.forEach((item) => {
       const margin = parseFloat(getComputedStyle(item).marginLeft) || 0;
-      const fraction = isMobile
-        ? 1
-        : parseFloat(item.style.getPropertyValue('--quadro-box-dinamico-card-width')) || autoFraction;
-      let span = Math.min(PACK_UNITS, Math.max(1, Math.round(fraction * PACK_UNITS)));
-      while (span < PACK_UNITS && span * pitch - gap - 2 * margin < minWidth) span += 1;
-      item.style.width = `${Math.max(0, span * pitch - gap - 2 * margin)}px`;
+      const customFraction = parseFloat(item.style.getPropertyValue('--quadro-box-dinamico-card-width'));
+      const span = getCardSpan(isMobile ? 1 : customFraction || autoFraction, margin, area);
+      item.style.width = `${Math.max(0, span * area.pitch - area.gap - 2 * margin)}px`;
 
-      let bestX = 0;
-      let bestY = Infinity;
-      for (let x = 0; x + span <= PACK_UNITS; x += 1) {
-        const y = Math.max(...skyline.slice(x, x + span));
-        if (y < bestY) {
-          bestY = y;
-          bestX = x;
-        }
-      }
-
-      item.style.left = `${paddingLeft + bestX * pitch}px`;
-      item.style.top = `${paddingTop + bestY}px`;
-      skyline.fill(bestY + item.offsetHeight + 2 * margin + gap, bestX, bestX + span);
+      const { x, y } = findHighestSlot(skyline, span);
+      item.style.left = `${area.left + x * area.pitch}px`;
+      item.style.top = `${area.top + y}px`;
+      skyline.fill(y + item.offsetHeight + 2 * margin + area.gap, x, x + span);
     });
 
-    container.style.height = `${Math.max(0, Math.max(...skyline) - gap)}px`;
+    container.style.height = `${Math.max(0, Math.max(...skyline) - area.gap)}px`;
   });
 }
 
@@ -324,11 +341,9 @@ export default async function decorate(block) {
         .forEach((element) => itemDiv.append(element));
     }
 
-    if (itemDiv.hasChildNodes()) {
-      items.push(itemDiv);
-      itemsContainer.append(itemDiv);
-      if (itemDiv.style.getPropertyValue('--quadro-box-dinamico-card-width')) hasCustomWidth = true;
-    }
+    items.push(itemDiv);
+    itemsContainer.append(itemDiv);
+    if (Object.hasOwn(CARD_WIDTHS, cardWidthCell?.textContent.trim())) hasCustomWidth = true;
   });
 
   block.innerHTML = '';
