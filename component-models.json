@@ -3390,41 +3390,11 @@
         ]
       },
       {
-        "component": "select",
+        "component": "text",
         "valueType": "string",
         "name": "minheight",
         "label": "Altura mínima do card",
-        "description": "Altura do card inteiro. Se o conteúdo for maior, o card cresce. Use o alinhamento vertical do conteúdo para posicionar o conteúdo no espaço que sobrar",
-        "options": [
-          {
-            "name": "Automático",
-            "value": "auto"
-          },
-          {
-            "name": "100px",
-            "value": "100"
-          },
-          {
-            "name": "150px",
-            "value": "150"
-          },
-          {
-            "name": "200px",
-            "value": "200"
-          },
-          {
-            "name": "250px",
-            "value": "250"
-          },
-          {
-            "name": "300px",
-            "value": "300"
-          },
-          {
-            "name": "400px",
-            "value": "400"
-          }
-        ]
+        "description": "Em px, por exemplo 300. Vazio, auto ou valor inválido = Automático (altura do conteúdo). Aceita de 50 a 800px. Se o conteúdo for maior, o card cresce"
       }
     ]
   }

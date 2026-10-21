@@ -40,14 +40,7 @@ const IMAGE_WIDTHS = {
   40: '40%',
   50: '50%',
 };
-const MIN_HEIGHTS = {
-  100: '100px',
-  150: '150px',
-  200: '200px',
-  250: '250px',
-  300: '300px',
-  400: '400px',
-};
+const MIN_HEIGHT_RANGE = [50, 800];
 const BLOCK_OPTIONS = {
   gap: ['--quadro-box-dinamico-gap', SPACING_SCALE],
   boxalign: ['--quadro-box-dinamico-box-align', VERTICAL_ALIGN],
@@ -82,6 +75,14 @@ function createRichTextElement(className, html) {
   element.innerHTML = html;
   const hasContent = element.textContent.trim() || element.querySelector('img, picture, video, iframe');
   return hasContent ? element : null;
+}
+
+function applyMinHeight(element, value) {
+  const match = value?.trim().match(/^(\d+(?:\.\d+)?)\s*(px)?$/i);
+  if (!match) return;
+  const [min, max] = MIN_HEIGHT_RANGE;
+  const height = Math.min(Math.max(parseFloat(match[1]), min), max);
+  element.style.setProperty('--quadro-box-dinamico-min-height', `${height}px`);
 }
 
 function applyBackground(element, value) {
@@ -282,10 +283,10 @@ export default async function decorate(block) {
       ['--quadro-box-dinamico-content-align', HORIZONTAL_ALIGN, contentHorizontalAlignCell],
       ['--quadro-box-dinamico-card-width', CARD_WIDTHS, cardWidthCell],
       ['--quadro-box-dinamico-image-width', IMAGE_WIDTHS, imageWidthCell],
-      ['--quadro-box-dinamico-min-height', MIN_HEIGHTS, minHeightCell],
     ].forEach(([variable, options, cell]) => {
       applyOption(itemDiv, variable, options, cell?.textContent.trim());
     });
+    applyMinHeight(itemDiv, minHeightCell?.textContent);
 
     const title = createRichTextElement('quadro-box-dinamico-item-title', readRichText(titleCell));
     const content = createRichTextElement('quadro-box-dinamico-item-content', readRichText(contentCell));
