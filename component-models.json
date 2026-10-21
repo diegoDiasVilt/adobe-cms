@@ -3394,7 +3394,7 @@
         "valueType": "string",
         "name": "minheight",
         "label": "Altura mínima do card",
-        "description": "Em px, por exemplo 300. Vazio, auto ou valor inválido = Automático (altura do conteúdo). Aceita de 50 a 800px. Se o conteúdo for maior, o card cresce"
+        "description": "Em px, por exemplo 300. Deixe vazio para usar a altura do conteúdo. Aceita de 50 a 800px. Se o conteúdo for maior, o card cresce"
       }
     ]
   }
