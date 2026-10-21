@@ -3293,6 +3293,101 @@
             "value": "right"
           }
         ]
+      },
+      {
+        "component": "tab",
+        "name": "tabtamanho",
+        "label": "Tamanho"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "cardwidth",
+        "label": "Largura do card",
+        "description": "Automático segue o número de colunas. Cards que somam até 100% ficam na mesma linha; acima disso, quebram para a linha de baixo. Ignorada na disposição Encaixados. No celular, todos os cards ocupam 100%",
+        "options": [
+          {
+            "name": "Automático",
+            "value": "auto"
+          },
+          {
+            "name": "20%",
+            "value": "20"
+          },
+          {
+            "name": "25%",
+            "value": "25"
+          },
+          {
+            "name": "30%",
+            "value": "30"
+          },
+          {
+            "name": "33%",
+            "value": "33"
+          },
+          {
+            "name": "40%",
+            "value": "40"
+          },
+          {
+            "name": "50%",
+            "value": "50"
+          },
+          {
+            "name": "60%",
+            "value": "60"
+          },
+          {
+            "name": "66%",
+            "value": "66"
+          },
+          {
+            "name": "70%",
+            "value": "70"
+          },
+          {
+            "name": "75%",
+            "value": "75"
+          },
+          {
+            "name": "80%",
+            "value": "80"
+          },
+          {
+            "name": "100%",
+            "value": "100"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "imagewidth",
+        "label": "Largura da imagem lateral",
+        "description": "Só vale para imagem à direita ou à esquerda do texto. No celular, a imagem ocupa 100%",
+        "options": [
+          {
+            "name": "25%",
+            "value": "25"
+          },
+          {
+            "name": "30%",
+            "value": "30"
+          },
+          {
+            "name": "Padrão (35%)",
+            "value": "35"
+          },
+          {
+            "name": "40%",
+            "value": "40"
+          },
+          {
+            "name": "50%",
+            "value": "50"
+          }
+        ]
       }
     ]
   }

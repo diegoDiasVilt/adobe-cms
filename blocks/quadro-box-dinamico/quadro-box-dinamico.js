@@ -19,6 +19,27 @@ const HORIZONTAL_ALIGN = {
   center: 'center',
   right: 'right',
 };
+const CARD_WIDTHS = {
+  20: '0.2',
+  25: '0.25',
+  30: '0.3',
+  33: '0.3333',
+  40: '0.4',
+  50: '0.5',
+  60: '0.6',
+  66: '0.6667',
+  70: '0.7',
+  75: '0.75',
+  80: '0.8',
+  100: '1',
+};
+const IMAGE_WIDTHS = {
+  25: '25%',
+  30: '30%',
+  35: '35%',
+  40: '40%',
+  50: '50%',
+};
 const BLOCK_OPTIONS = {
   gap: ['--quadro-box-dinamico-gap', SPACING_SCALE],
   boxalign: ['--quadro-box-dinamico-box-align', VERTICAL_ALIGN],
@@ -165,6 +186,7 @@ export default async function decorate(block) {
   const itemRows = Array.from(block.children);
   const itemsContainer = document.createElement('div');
   const items = [];
+  let hasCustomWidth = false;
 
   itemRows.forEach((itemRow) => {
     const [
@@ -180,6 +202,8 @@ export default async function decorate(block) {
       marginCell,
       contentVerticalAlignCell,
       contentHorizontalAlignCell,
+      cardWidthCell,
+      imageWidthCell,
     ] = Array.from(itemRow.children);
 
     const itemDiv = document.createElement('div');
@@ -198,6 +222,8 @@ export default async function decorate(block) {
       ['--quadro-box-dinamico-item-margin', SPACING_SCALE, marginCell],
       ['--quadro-box-dinamico-content-valign', VERTICAL_ALIGN, contentVerticalAlignCell],
       ['--quadro-box-dinamico-content-align', HORIZONTAL_ALIGN, contentHorizontalAlignCell],
+      ['--quadro-box-dinamico-card-width', CARD_WIDTHS, cardWidthCell],
+      ['--quadro-box-dinamico-image-width', IMAGE_WIDTHS, imageWidthCell],
     ].forEach(([variable, options, cell]) => {
       applyOption(itemDiv, variable, options, cell?.textContent.trim());
     });
@@ -241,6 +267,7 @@ export default async function decorate(block) {
     if (itemDiv.hasChildNodes()) {
       items.push(itemDiv);
       itemsContainer.append(itemDiv);
+      if (itemDiv.style.getPropertyValue('--quadro-box-dinamico-card-width')) hasCustomWidth = true;
     }
   });
 
@@ -250,6 +277,8 @@ export default async function decorate(block) {
     block.append(itemsContainer);
     if (block.classList.contains('masonry')) {
       setupMasonry(itemsContainer, items, numCols);
+    } else if (hasCustomWidth) {
+      itemsContainer.classList.add('has-custom-widths');
     }
   }
 }
