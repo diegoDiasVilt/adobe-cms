@@ -3257,7 +3257,7 @@
         "valueType": "string",
         "name": "contentvalign",
         "label": "Alinhamento vertical do conteúdo",
-        "description": "Só tem efeito quando o card é mais alto que o conteúdo",
+        "description": "Só tem efeito quando o card é mais alto que o conteúdo, por exemplo com altura mínima ou alinhado a um card mais alto",
         "options": [
           {
             "name": "Topo",
@@ -3386,6 +3386,43 @@
           {
             "name": "50%",
             "value": "50"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "minheight",
+        "label": "Altura mínima do card",
+        "description": "Altura do card inteiro. Se o conteúdo for maior, o card cresce. Use o alinhamento vertical do conteúdo para posicionar o conteúdo no espaço que sobrar",
+        "options": [
+          {
+            "name": "Automático",
+            "value": "auto"
+          },
+          {
+            "name": "100px",
+            "value": "100"
+          },
+          {
+            "name": "150px",
+            "value": "150"
+          },
+          {
+            "name": "200px",
+            "value": "200"
+          },
+          {
+            "name": "250px",
+            "value": "250"
+          },
+          {
+            "name": "300px",
+            "value": "300"
+          },
+          {
+            "name": "400px",
+            "value": "400"
           }
         ]
       }

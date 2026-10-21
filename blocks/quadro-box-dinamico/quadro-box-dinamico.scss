@@ -47,7 +47,6 @@
 
       > .quadro-box-dinamico-item {
         position: absolute;
-        box-sizing: border-box;
       }
     }
 
@@ -73,7 +72,6 @@
           - var(--quadro-box-dinamico-gap) * (1 - var(--quadro-box-dinamico-width))
           - 2 * var(--quadro-box-dinamico-item-margin)
         );
-        box-sizing: border-box;
         min-width: min(100%, var(--quadro-box-dinamico-card-min-width));
       }
     }
@@ -92,6 +90,8 @@
     flex-direction: column;
     justify-content: var(--quadro-box-dinamico-content-valign);
     gap: var(--quadro-box-dinamico-item-gap);
+    box-sizing: border-box;
+    min-height: var(--quadro-box-dinamico-min-height, auto);
     margin: var(--quadro-box-dinamico-item-margin);
     padding: var(--quadro-box-dinamico-item-padding);
     border-radius: 8px;
@@ -110,6 +110,9 @@
 
     &.image-right,
     &.image-left {
+      flex-wrap: wrap;
+      align-content: var(--quadro-box-dinamico-content-valign);
+
       > .quadro-box-dinamico-item-image {
         flex: 0 0 var(--quadro-box-dinamico-image-width);
         max-width: var(--quadro-box-dinamico-image-width);
@@ -219,6 +222,7 @@
       &.image-right,
       &.image-left {
         flex-direction: column-reverse;
+        flex-wrap: nowrap;
         align-items: stretch;
 
         > .quadro-box-dinamico-item-image {

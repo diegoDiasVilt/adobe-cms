@@ -40,6 +40,14 @@ const IMAGE_WIDTHS = {
   40: '40%',
   50: '50%',
 };
+const MIN_HEIGHTS = {
+  100: '100px',
+  150: '150px',
+  200: '200px',
+  250: '250px',
+  300: '300px',
+  400: '400px',
+};
 const BLOCK_OPTIONS = {
   gap: ['--quadro-box-dinamico-gap', SPACING_SCALE],
   boxalign: ['--quadro-box-dinamico-box-align', VERTICAL_ALIGN],
@@ -253,6 +261,7 @@ export default async function decorate(block) {
       contentHorizontalAlignCell,
       cardWidthCell,
       imageWidthCell,
+      minHeightCell,
     ] = Array.from(itemRow.children);
 
     const itemDiv = document.createElement('div');
@@ -273,6 +282,7 @@ export default async function decorate(block) {
       ['--quadro-box-dinamico-content-align', HORIZONTAL_ALIGN, contentHorizontalAlignCell],
       ['--quadro-box-dinamico-card-width', CARD_WIDTHS, cardWidthCell],
       ['--quadro-box-dinamico-image-width', IMAGE_WIDTHS, imageWidthCell],
+      ['--quadro-box-dinamico-min-height', MIN_HEIGHTS, minHeightCell],
     ].forEach(([variable, options, cell]) => {
       applyOption(itemDiv, variable, options, cell?.textContent.trim());
     });
