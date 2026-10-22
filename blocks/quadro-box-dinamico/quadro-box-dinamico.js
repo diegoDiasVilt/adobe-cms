@@ -1,11 +1,57 @@
 import { decodeBase64 } from '../../scripts/scripts.js';
 
+const BLOCK_CONFIG_FIELDS = ['numcolumns', 'id', 'gap', 'boxalign'];
+const SPACING_SCALE = {
+  none: '0px',
+  pp: '8px',
+  p: '12px',
+  m: '20px',
+  g: '32px',
+  gg: '48px',
+};
+const VERTICAL_ALIGN = {
+  top: 'flex-start',
+  middle: 'center',
+  bottom: 'flex-end',
+};
+const HORIZONTAL_ALIGN = {
+  left: 'left',
+  center: 'center',
+  right: 'right',
+};
+const CARD_WIDTHS = {
+  20: '0.2',
+  25: '0.25',
+  30: '0.3',
+  33: '0.3333',
+  40: '0.4',
+  50: '0.5',
+  60: '0.6',
+  66: '0.6667',
+  70: '0.7',
+  75: '0.75',
+  80: '0.8',
+  100: '1',
+};
+const IMAGE_WIDTHS = {
+  25: '25%',
+  30: '30%',
+  35: '35%',
+  40: '40%',
+  50: '50%',
+};
+const MIN_HEIGHT_RANGE = [50, 800];
+const BLOCK_OPTIONS = {
+  gap: ['--quadro-box-dinamico-gap', SPACING_SCALE],
+  boxalign: ['--quadro-box-dinamico-box-align', VERTICAL_ALIGN],
+};
 const DEFAULT_COLUMNS = 3;
 const DEFAULT_IMAGE_POSITION = 'bottom';
 const SIDE_POSITIONS = ['left', 'right'];
 const IMAGE_POSITIONS = ['top', 'middle', 'bottom', ...SIDE_POSITIONS];
 const MOBILE_QUERY = '(max-width: 600px)';
 const TABLET_QUERY = '(max-width: 900px)';
+const PACK_UNITS = 60;
 
 function isEmptyValue(value) {
   return !value || ['null', 'undefined'].includes(value.trim().toLowerCase());
@@ -29,6 +75,14 @@ function createRichTextElement(className, html) {
   element.innerHTML = html;
   const hasContent = element.textContent.trim() || element.querySelector('img, picture, video, iframe');
   return hasContent ? element : null;
+}
+
+function applyMinHeight(element, value) {
+  const match = value?.trim().match(/^(\d+(?:\.\d+)?)\s*(px)?$/i);
+  if (!match) return;
+  const [min, max] = MIN_HEIGHT_RANGE;
+  const height = Math.min(Math.max(parseFloat(match[1]), min), max);
+  element.style.setProperty('--quadro-box-dinamico-min-height', `${height}px`);
 }
 
 function applyBackground(element, value) {
@@ -76,34 +130,30 @@ function shortestColumn(columns) {
   });
 }
 
-function setupMasonry(container, items, maxColumns) {
-  container.classList.add('is-masonry');
-
+function keepLaidOut(container, items, layout) {
   let lastWidth = -1;
   let frame = null;
 
-  const layout = () => {
-    frame = null;
-    const columns = Array.from({ length: getColumnCount(maxColumns, items.length) }, () => {
-      const column = document.createElement('div');
-      column.className = 'quadro-box-dinamico-column';
-      return column;
-    });
-    container.replaceChildren(...columns);
-    items.forEach((item) => shortestColumn(columns).append(item));
-  };
-
   const scheduleLayout = () => {
-    if (!frame) frame = requestAnimationFrame(layout);
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      frame = null;
+      if (container.isConnected) layout();
+    });
   };
 
-  new ResizeObserver(([entry]) => {
+  const observer = new ResizeObserver(([entry]) => {
+    if (!container.isConnected) {
+      observer.disconnect();
+      return;
+    }
     const { width } = entry.contentRect;
     if (width !== lastWidth) {
       lastWidth = width;
       scheduleLayout();
     }
-  }).observe(container);
+  });
+  observer.observe(container);
 
   items.forEach((item) => {
     item.querySelectorAll('img').forEach((img) => {
@@ -114,23 +164,104 @@ function setupMasonry(container, items, maxColumns) {
   layout();
 }
 
-export default async function decorate(block) {
-  const idRow = block.children[1];
-  if (idRow && idRow.querySelectorAll('div').length < 3) {
-    idRow.remove();
-    const id = idRow.textContent.trim();
-    if (id) block.id = id;
-  }
+function setupMasonry(container, items, maxColumns) {
+  container.classList.add('is-masonry');
 
-  const numColumnsRow = block.children[0];
-  if (!numColumnsRow) return;
-  const parsedColumns = parseInt(numColumnsRow.lastElementChild?.textContent.trim(), 10);
-  const numCols = Math.min(parsedColumns || DEFAULT_COLUMNS, 3);
-  numColumnsRow.remove();
+  keepLaidOut(container, items, () => {
+    const columns = Array.from({ length: getColumnCount(maxColumns, items.length) }, () => {
+      const column = document.createElement('div');
+      column.className = 'quadro-box-dinamico-column';
+      return column;
+    });
+    container.replaceChildren(...columns);
+    items.forEach((item) => shortestColumn(columns).append(item));
+  });
+}
+
+function measurePackingArea(container) {
+  const styles = getComputedStyle(container);
+  const left = parseFloat(styles.paddingLeft);
+  const width = container.clientWidth - left - parseFloat(styles.paddingRight);
+  const gap = parseFloat(styles.columnGap) || 0;
+  const cardMinWidth = parseFloat(styles.getPropertyValue('--quadro-box-dinamico-card-min-width')) || 0;
+  return {
+    left,
+    top: parseFloat(styles.paddingTop),
+    gap,
+    pitch: (width + gap) / PACK_UNITS,
+    minWidth: Math.min(cardMinWidth, width),
+  };
+}
+
+function getCardSpan(fraction, margin, { pitch, gap, minWidth }) {
+  let span = Math.min(PACK_UNITS, Math.max(1, Math.round(fraction * PACK_UNITS)));
+  while (span < PACK_UNITS && span * pitch - gap - 2 * margin < minWidth) span += 1;
+  return span;
+}
+
+function findHighestSlot(skyline, span) {
+  let slot = { x: 0, y: Infinity };
+  for (let x = 0; x + span <= PACK_UNITS; x += 1) {
+    const y = Math.max(...skyline.slice(x, x + span));
+    if (y < slot.y) slot = { x, y };
+  }
+  return slot;
+}
+
+function setupPackedMasonry(container, items, maxColumns) {
+  container.classList.add('is-packed');
+
+  keepLaidOut(container, items, () => {
+    const area = measurePackingArea(container);
+    const isMobile = window.matchMedia(MOBILE_QUERY).matches;
+    const autoFraction = 1 / getColumnCount(maxColumns, items.length);
+    const skyline = new Array(PACK_UNITS).fill(0);
+
+    items.forEach((item) => {
+      const margin = parseFloat(getComputedStyle(item).marginLeft) || 0;
+      const customFraction = parseFloat(item.style.getPropertyValue('--quadro-box-dinamico-card-width'));
+      const span = getCardSpan(isMobile ? 1 : customFraction || autoFraction, margin, area);
+      item.style.width = `${Math.max(0, span * area.pitch - area.gap - 2 * margin)}px`;
+
+      const { x, y } = findHighestSlot(skyline, span);
+      item.style.left = `${area.left + x * area.pitch}px`;
+      item.style.top = `${area.top + y}px`;
+      skyline.fill(y + item.offsetHeight + 2 * margin + area.gap, x, x + span);
+    });
+
+    container.style.height = `${Math.max(0, Math.max(...skyline) - area.gap)}px`;
+  });
+}
+
+function readBlockConfig(block) {
+  const configRows = [];
+  while (block.firstElementChild?.children.length === 1) {
+    configRows.push(block.firstElementChild);
+    block.firstElementChild.remove();
+  }
+  return Object.fromEntries(
+    BLOCK_CONFIG_FIELDS.map((name, index) => [name, configRows[index]?.textContent.trim() || '']),
+  );
+}
+
+function applyOption(element, variable, options, key) {
+  if (Object.hasOwn(options, key)) {
+    element.style.setProperty(variable, options[key]);
+  }
+}
+
+export default async function decorate(block) {
+  const config = readBlockConfig(block);
+  if (config.id) block.id = config.id;
+  Object.entries(BLOCK_OPTIONS).forEach(([field, [variable, options]]) => {
+    applyOption(block, variable, options, config[field]);
+  });
+  const numCols = Math.min(parseInt(config.numcolumns, 10) || DEFAULT_COLUMNS, 3);
 
   const itemRows = Array.from(block.children);
   const itemsContainer = document.createElement('div');
   const items = [];
+  let hasCustomWidth = false;
 
   itemRows.forEach((itemRow) => {
     const [
@@ -141,6 +272,14 @@ export default async function decorate(block) {
       imagePositionCell,
       imageAltCell,
       backgroundCell,
+      itemGapCell,
+      paddingCell,
+      marginCell,
+      contentVerticalAlignCell,
+      contentHorizontalAlignCell,
+      cardWidthCell,
+      imageWidthCell,
+      minHeightCell,
     ] = Array.from(itemRow.children);
 
     const itemDiv = document.createElement('div');
@@ -153,6 +292,18 @@ export default async function decorate(block) {
     });
 
     applyBackground(itemDiv, backgroundCell?.textContent);
+    [
+      ['--quadro-box-dinamico-item-gap', SPACING_SCALE, itemGapCell],
+      ['--quadro-box-dinamico-item-padding', SPACING_SCALE, paddingCell],
+      ['--quadro-box-dinamico-item-margin', SPACING_SCALE, marginCell],
+      ['--quadro-box-dinamico-content-valign', VERTICAL_ALIGN, contentVerticalAlignCell],
+      ['--quadro-box-dinamico-content-align', HORIZONTAL_ALIGN, contentHorizontalAlignCell],
+      ['--quadro-box-dinamico-card-width', CARD_WIDTHS, cardWidthCell],
+      ['--quadro-box-dinamico-image-width', IMAGE_WIDTHS, imageWidthCell],
+    ].forEach(([variable, options, cell]) => {
+      applyOption(itemDiv, variable, options, cell?.textContent.trim());
+    });
+    applyMinHeight(itemDiv, minHeightCell?.textContent);
 
     const title = createRichTextElement('quadro-box-dinamico-item-title', readRichText(titleCell));
     const content = createRichTextElement('quadro-box-dinamico-item-content', readRichText(contentCell));
@@ -190,10 +341,9 @@ export default async function decorate(block) {
         .forEach((element) => itemDiv.append(element));
     }
 
-    if (itemDiv.hasChildNodes()) {
-      items.push(itemDiv);
-      itemsContainer.append(itemDiv);
-    }
+    items.push(itemDiv);
+    itemsContainer.append(itemDiv);
+    if (Object.hasOwn(CARD_WIDTHS, cardWidthCell?.textContent.trim())) hasCustomWidth = true;
   });
 
   block.innerHTML = '';
@@ -201,7 +351,13 @@ export default async function decorate(block) {
     itemsContainer.className = `quadro-box-dinamico-items columns-${Math.min(items.length, numCols)}`;
     block.append(itemsContainer);
     if (block.classList.contains('masonry')) {
-      setupMasonry(itemsContainer, items, numCols);
+      if (hasCustomWidth) {
+        setupPackedMasonry(itemsContainer, items, numCols);
+      } else {
+        setupMasonry(itemsContainer, items, numCols);
+      }
+    } else if (hasCustomWidth) {
+      itemsContainer.classList.add('has-custom-widths');
     }
   }
 }

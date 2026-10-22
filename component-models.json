@@ -3002,6 +3002,60 @@
             "value": "masonry"
           }
         ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "gap",
+        "label": "Espaço entre os cards",
+        "description": "No celular, valores acima de 20px são reduzidos para 20px",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "PP (8px)",
+            "value": "pp"
+          },
+          {
+            "name": "P (12px)",
+            "value": "p"
+          },
+          {
+            "name": "M (20px)",
+            "value": "m"
+          },
+          {
+            "name": "G (32px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (48px)",
+            "value": "gg"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "boxalign",
+        "label": "Alinhamento dos cards",
+        "description": "Alinha cards de alturas diferentes na mesma linha. Na disposição Encaixados, alinha as colunas entre si e só funciona quando todos os cards estão com largura Automático",
+        "options": [
+          {
+            "name": "Topo",
+            "value": "top"
+          },
+          {
+            "name": "Meio",
+            "value": "middle"
+          },
+          {
+            "name": "Base",
+            "value": "bottom"
+          }
+        ]
       }
     ]
   },
@@ -3089,6 +3143,258 @@
         "name": "backgroundcolor",
         "label": "Cor de fundo",
         "description": "Aceita HEX (#b5d4ed), rgb(). Se vazio ou inválido, usa o padrão (#b5d4ed)"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "itemgap",
+        "label": "Espaço entre os elementos do card",
+        "description": "Distância entre título, conteúdo e imagem. No celular, valores acima de 20px são reduzidos para 20px",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "PP (8px)",
+            "value": "pp"
+          },
+          {
+            "name": "P (12px)",
+            "value": "p"
+          },
+          {
+            "name": "Padrão (15px)",
+            "value": "default"
+          },
+          {
+            "name": "M (20px)",
+            "value": "m"
+          },
+          {
+            "name": "G (32px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (48px)",
+            "value": "gg"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "padding",
+        "label": "Espaçamento interno dos cards",
+        "description": "No celular, valores acima de 15px são reduzidos para 15px",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "PP (8px)",
+            "value": "pp"
+          },
+          {
+            "name": "P (12px)",
+            "value": "p"
+          },
+          {
+            "name": "M (20px)",
+            "value": "m"
+          },
+          {
+            "name": "G (32px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (48px)",
+            "value": "gg"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "margin",
+        "label": "Margem do card",
+        "description": "Espaço por fora do card, em todos os lados. No celular, valores acima de 15px são reduzidos para 15px",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "PP (8px)",
+            "value": "pp"
+          },
+          {
+            "name": "P (12px)",
+            "value": "p"
+          },
+          {
+            "name": "M (20px)",
+            "value": "m"
+          },
+          {
+            "name": "G (32px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (48px)",
+            "value": "gg"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "name": "tabalinhamento",
+        "label": "Alinhamento"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "contentvalign",
+        "label": "Alinhamento vertical do conteúdo",
+        "description": "Só tem efeito quando o card é mais alto que o conteúdo, por exemplo com altura mínima ou alinhado a um card mais alto",
+        "options": [
+          {
+            "name": "Topo",
+            "value": "top"
+          },
+          {
+            "name": "Meio",
+            "value": "middle"
+          },
+          {
+            "name": "Base",
+            "value": "bottom"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "contentalign",
+        "label": "Alinhamento horizontal do conteúdo",
+        "description": "Alinhamentos feitos no editor de texto têm prioridade",
+        "options": [
+          {
+            "name": "Esquerda",
+            "value": "left"
+          },
+          {
+            "name": "Centro",
+            "value": "center"
+          },
+          {
+            "name": "Direita",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "name": "tabtamanho",
+        "label": "Tamanho"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "cardwidth",
+        "label": "Largura do card",
+        "description": "Automático segue o número de colunas. Cards que somam até 100% ficam na mesma linha; acima disso, quebram para a linha de baixo. Na disposição Encaixados, cada card mantém a largura e sobe para o espaço livre mais alto. No celular, todos os cards ocupam 100%",
+        "options": [
+          {
+            "name": "Automático",
+            "value": "auto"
+          },
+          {
+            "name": "20%",
+            "value": "20"
+          },
+          {
+            "name": "25%",
+            "value": "25"
+          },
+          {
+            "name": "30%",
+            "value": "30"
+          },
+          {
+            "name": "33%",
+            "value": "33"
+          },
+          {
+            "name": "40%",
+            "value": "40"
+          },
+          {
+            "name": "50%",
+            "value": "50"
+          },
+          {
+            "name": "60%",
+            "value": "60"
+          },
+          {
+            "name": "66%",
+            "value": "66"
+          },
+          {
+            "name": "70%",
+            "value": "70"
+          },
+          {
+            "name": "75%",
+            "value": "75"
+          },
+          {
+            "name": "80%",
+            "value": "80"
+          },
+          {
+            "name": "100%",
+            "value": "100"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "imagewidth",
+        "label": "Largura da imagem lateral",
+        "description": "Só vale para imagem à direita ou à esquerda do texto. No celular, a imagem ocupa 100%",
+        "options": [
+          {
+            "name": "25%",
+            "value": "25"
+          },
+          {
+            "name": "30%",
+            "value": "30"
+          },
+          {
+            "name": "Padrão (35%)",
+            "value": "35"
+          },
+          {
+            "name": "40%",
+            "value": "40"
+          },
+          {
+            "name": "50%",
+            "value": "50"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "minheight",
+        "label": "Altura mínima do card",
+        "description": "Em px, por exemplo 300. Deixe vazio para usar a altura do conteúdo. Aceita de 50 a 800px. Se o conteúdo for maior, o card cresce"
       }
     ]
   }
