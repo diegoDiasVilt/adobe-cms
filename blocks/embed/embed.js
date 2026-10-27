@@ -18,6 +18,8 @@ export default function decorate(block) {
   
   const idElement = block.children[3];
 
+  const alt = block.children[4]?.textContent?.trim();
+
   if (idElement) {
     block.setAttribute('id', idElement.textContent?.trim());
   }
@@ -58,10 +60,10 @@ export default function decorate(block) {
       placeholder.classList.add('embed-placeholder');
       block.append(placeholder);
     } else {
-      renderMainContent(block, code, securityCheckPassed);
+      renderMainContent(block, code, securityCheckPassed, alt);
     }
   } else {
-    renderMainContent(block, code, securityCheckPassed);
+    renderMainContent(block, code, securityCheckPassed, alt);
   }
 
   if (sourceDecoded) {
@@ -72,11 +74,15 @@ export default function decorate(block) {
   }
 }
 
-function renderMainContent(container, code, securityPassed) {
+function renderMainContent(container, code, securityPassed, alt) {
   if (securityPassed) {
     const wrapper = document.createElement('div');
     wrapper.classList.add('embed-content');
     wrapper.innerHTML = code;
+    const iframe = wrapper.querySelector('iframe');
+    if (iframe && alt) {
+      iframe.title = alt;
+    }
     container.appendChild(wrapper);
   } else if (isInEditor()) {
     const errorMsg = document.createElement('div');

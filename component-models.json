@@ -1912,6 +1912,11 @@
         "name": "id",
         "label": "Identificador do componente",
         "description": "Valor que pode ser usado em âncoras"
+      },
+      {
+        "component": "text",
+        "name": "alt",
+        "label": "Texto alternativo"
       }
     ]
   },
