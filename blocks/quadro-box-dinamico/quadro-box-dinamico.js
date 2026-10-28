@@ -287,14 +287,14 @@ export default async function decorate(block) {
       itemGapCell,
       paddingCell,
       marginCell,
+      borderCell,
+      borderColorCell,
+      borderRadiusCell,
       contentVerticalAlignCell,
       contentHorizontalAlignCell,
       cardWidthCell,
       imageWidthCell,
       minHeightCell,
-      borderCell,
-      borderColorCell,
-      borderRadiusCell,
     ] = Array.from(itemRow.children);
 
     const itemDiv = document.createElement('div');

@@ -1217,6 +1217,7 @@
                     "cardwidth": "auto",
                     "imagewidth": "35",
                     "border": "none",
+                    "bordercolor": "#94c1e5",
                     "borderradius": "m"
                   },
                   "item1": {
@@ -1235,6 +1236,7 @@
                     "cardwidth": "auto",
                     "imagewidth": "35",
                     "border": "none",
+                    "bordercolor": "#94c1e5",
                     "borderradius": "m"
                   }
                 }
@@ -1265,6 +1267,7 @@
                   "cardwidth": "auto",
                   "imagewidth": "35",
                   "border": "none",
+                  "bordercolor": "#94c1e5",
                   "borderradius": "m"
                 }
               }
