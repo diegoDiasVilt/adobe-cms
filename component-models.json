@@ -3400,6 +3400,70 @@
         "name": "minheight",
         "label": "Altura mínima do card",
         "description": "Em px, por exemplo 300. Deixe vazio para usar a altura do conteúdo. Aceita de 50 a 800px. Se o conteúdo for maior, o card cresce"
+      },
+      {
+        "component": "tab",
+        "name": "tabborda",
+        "label": "Borda"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "border",
+        "label": "Borda",
+        "options": [
+          {
+            "name": "Sem borda",
+            "value": "none"
+          },
+          {
+            "name": "Fina (1px)",
+            "value": "1"
+          },
+          {
+            "name": "Média (2px)",
+            "value": "2"
+          },
+          {
+            "name": "Grossa (4px)",
+            "value": "4"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bordercolor",
+        "label": "Cor da borda",
+        "description": "Aceita HEX (#3a3a3a) ou rgb(). Se vazio ou inválido, usa #3a3a3a. Só aparece quando há borda"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "borderradius",
+        "label": "Arredondamento dos cantos",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "P (4px)",
+            "value": "p"
+          },
+          {
+            "name": "M (8px)",
+            "value": "m"
+          },
+          {
+            "name": "G (16px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (24px)",
+            "value": "gg"
+          }
+        ]
       }
     ]
   }

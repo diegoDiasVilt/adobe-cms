@@ -1215,7 +1215,9 @@
                     "contentvalign": "top",
                     "contentalign": "left",
                     "cardwidth": "auto",
-                    "imagewidth": "35"
+                    "imagewidth": "35",
+                    "border": "none",
+                    "borderradius": "m"
                   },
                   "item1": {
                     "name": "Quadro Box Dinamico Item",
@@ -1231,7 +1233,9 @@
                     "contentvalign": "top",
                     "contentalign": "left",
                     "cardwidth": "auto",
-                    "imagewidth": "35"
+                    "imagewidth": "35",
+                    "border": "none",
+                    "borderradius": "m"
                   }
                 }
               }
@@ -1259,7 +1263,9 @@
                   "contentvalign": "top",
                   "contentalign": "left",
                   "cardwidth": "auto",
-                  "imagewidth": "35"
+                  "imagewidth": "35",
+                  "border": "none",
+                  "borderradius": "m"
                 }
               }
             }
