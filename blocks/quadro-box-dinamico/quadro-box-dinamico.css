@@ -75,7 +75,9 @@
   min-height: var(--quadro-box-dinamico-min-height, auto);
   margin: var(--quadro-box-dinamico-item-margin);
   padding: var(--quadro-box-dinamico-item-padding);
-  border-radius: 8px;
+  overflow: hidden;
+  border: var(--quadro-box-dinamico-border-width, 0) solid var(--quadro-box-dinamico-border-color, #94c1e5);
+  border-radius: var(--quadro-box-dinamico-radius, 8px);
   text-align: var(--quadro-box-dinamico-content-align);
   background-color: var(--quadro-box-dinamico-bg, #b5d4ed);
 }

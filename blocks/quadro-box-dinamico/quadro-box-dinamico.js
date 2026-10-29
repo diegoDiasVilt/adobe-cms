@@ -40,6 +40,18 @@ const IMAGE_WIDTHS = {
   40: '40%',
   50: '50%',
 };
+const BORDER_WIDTHS = {
+  1: '1px',
+  2: '2px',
+  4: '4px',
+};
+const RADIUS_SCALE = {
+  none: '0px',
+  p: '4px',
+  m: '8px',
+  g: '16px',
+  gg: '24px',
+};
 const MIN_HEIGHT_RANGE = [50, 800];
 const BLOCK_OPTIONS = {
   gap: ['--quadro-box-dinamico-gap', SPACING_SCALE],
@@ -85,10 +97,10 @@ function applyMinHeight(element, value) {
   element.style.setProperty('--quadro-box-dinamico-min-height', `${height}px`);
 }
 
-function applyBackground(element, value) {
+function applyColor(element, variable, value) {
   const color = value?.trim();
   if (color && CSS.supports('color', color)) {
-    element.style.setProperty('--quadro-box-dinamico-bg', color);
+    element.style.setProperty(variable, color);
   }
 }
 
@@ -275,6 +287,9 @@ export default async function decorate(block) {
       itemGapCell,
       paddingCell,
       marginCell,
+      borderCell,
+      borderColorCell,
+      borderRadiusCell,
       contentVerticalAlignCell,
       contentHorizontalAlignCell,
       cardWidthCell,
@@ -291,7 +306,8 @@ export default async function decorate(block) {
       }
     });
 
-    applyBackground(itemDiv, backgroundCell?.textContent);
+    applyColor(itemDiv, '--quadro-box-dinamico-bg', backgroundCell?.textContent);
+    applyColor(itemDiv, '--quadro-box-dinamico-border-color', borderColorCell?.textContent);
     [
       ['--quadro-box-dinamico-item-gap', SPACING_SCALE, itemGapCell],
       ['--quadro-box-dinamico-item-padding', SPACING_SCALE, paddingCell],
@@ -300,6 +316,8 @@ export default async function decorate(block) {
       ['--quadro-box-dinamico-content-align', HORIZONTAL_ALIGN, contentHorizontalAlignCell],
       ['--quadro-box-dinamico-card-width', CARD_WIDTHS, cardWidthCell],
       ['--quadro-box-dinamico-image-width', IMAGE_WIDTHS, imageWidthCell],
+      ['--quadro-box-dinamico-border-width', BORDER_WIDTHS, borderCell],
+      ['--quadro-box-dinamico-radius', RADIUS_SCALE, borderRadiusCell],
     ].forEach(([variable, options, cell]) => {
       applyOption(itemDiv, variable, options, cell?.textContent.trim());
     });
