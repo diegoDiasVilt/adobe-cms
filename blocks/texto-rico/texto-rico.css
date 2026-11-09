@@ -31,13 +31,11 @@
     border-spacing: 0px !important;
     border-collapse: collapse !important;
     font-size: 18px;
-    text-align: left !important;
 }
 
 .texto-rico table * span {
     font-size: 18px;
     font-family: var(--text-font-family);
-    text-align: left !important;
 }
 
 .texto-rico table td {
@@ -45,7 +43,7 @@
     padding: 0.75rem !important;
     transition: border-color 0.2s ease !important;
     font-family: var(--text-font-family);
-    text-align: left !important;
+    text-align: left;
     background-color: #ffffff;
 }
 
@@ -53,7 +51,6 @@
 .texto-rico table td > span {
     font-size: 18px;
     font-family: var(--text-font-family);
-    text-align: left !important;
     margin: 0 0 !important;
 }
 
