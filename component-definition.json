@@ -1218,7 +1218,9 @@
                     "imagewidth": "35",
                     "border": "none",
                     "bordercolor": "#94c1e5",
-                    "borderradius": "m"
+                    "borderradius": "m",
+                    "stylereference": false,
+                    "alignreference": false
                   },
                   "item1": {
                     "name": "Quadro Box Dinamico Item",
@@ -1237,7 +1239,9 @@
                     "imagewidth": "35",
                     "border": "none",
                     "bordercolor": "#94c1e5",
-                    "borderradius": "m"
+                    "borderradius": "m",
+                    "stylereference": false,
+                    "alignreference": false
                   }
                 }
               }
@@ -1268,7 +1272,9 @@
                   "imagewidth": "35",
                   "border": "none",
                   "bordercolor": "#94c1e5",
-                  "borderradius": "m"
+                  "borderradius": "m",
+                  "stylereference": false,
+                  "alignreference": false
                 }
               }
             }

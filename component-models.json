@@ -3312,6 +3312,13 @@
         ]
       },
       {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "stylereference",
+        "label": "Usar este estilo como padrão dos outros cards",
+        "description": "Os outros cards deste bloco passam a usar a cor de fundo, os espaçamentos, a margem e a borda deste card, e os campos de estilo deles deixam de valer. Se mais de um card estiver marcado, vale o primeiro"
+      },
+      {
         "component": "tab",
         "name": "tabalinhamento",
         "label": "Alinhamento"
@@ -3357,6 +3364,13 @@
             "value": "right"
           }
         ]
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "alignreference",
+        "label": "Usar este alinhamento como padrão dos outros cards",
+        "description": "Os outros cards deste bloco passam a usar o alinhamento vertical e horizontal deste card, e os campos de alinhamento deles deixam de valer. Se mais de um card estiver marcado, vale o primeiro"
       },
       {
         "component": "tab",

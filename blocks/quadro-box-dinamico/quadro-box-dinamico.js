@@ -57,6 +57,32 @@ const BLOCK_OPTIONS = {
   gap: ['--quadro-box-dinamico-gap', SPACING_SCALE],
   boxalign: ['--quadro-box-dinamico-box-align', VERTICAL_ALIGN],
 };
+const ITEM_FIELDS = [
+  'title',
+  'content',
+  'image',
+  'imageDescription',
+  'imagePosition',
+  'imageAlt',
+  'background',
+  'itemGap',
+  'padding',
+  'margin',
+  'border',
+  'borderColor',
+  'borderRadius',
+  'styleReference',
+  'contentVerticalAlign',
+  'contentHorizontalAlign',
+  'alignReference',
+  'cardWidth',
+  'imageWidth',
+  'minHeight',
+];
+const REFERENCE_GROUPS = [
+  ['styleReference', ['background', 'itemGap', 'padding', 'margin', 'border', 'borderColor', 'borderRadius']],
+  ['alignReference', ['contentVerticalAlign', 'contentHorizontalAlign']],
+];
 const DEFAULT_COLUMNS = 3;
 const DEFAULT_IMAGE_POSITION = 'bottom';
 const SIDE_POSITIONS = ['left', 'right'];
@@ -262,6 +288,90 @@ function applyOption(element, variable, options, key) {
   }
 }
 
+function readItem(row) {
+  const cells = Object.fromEntries(ITEM_FIELDS.map((name, index) => [name, row.children[index]]));
+  const values = Object.fromEntries(ITEM_FIELDS.map((name) => [name, cells[name]?.textContent.trim() || '']));
+  return { row, cells, values };
+}
+
+function applyStyleReferences(items) {
+  REFERENCE_GROUPS.forEach(([flag, fields]) => {
+    const reference = items.find(({ values }) => values[flag] === 'true');
+    if (!reference) return;
+    items.forEach((item) => {
+      if (item === reference) return;
+      fields.forEach((field) => {
+        item.values[field] = reference.values[field];
+      });
+    });
+  });
+}
+
+function buildItem({ row, cells, values }) {
+  const itemDiv = document.createElement('div');
+  itemDiv.className = 'quadro-box-dinamico-item';
+
+  Array.from(row.attributes).forEach((attr) => {
+    if (attr.name.startsWith('data-')) {
+      itemDiv.setAttribute(attr.name, attr.value);
+    }
+  });
+
+  applyColor(itemDiv, '--quadro-box-dinamico-bg', values.background);
+  applyColor(itemDiv, '--quadro-box-dinamico-border-color', values.borderColor);
+  [
+    ['--quadro-box-dinamico-item-gap', SPACING_SCALE, values.itemGap],
+    ['--quadro-box-dinamico-item-padding', SPACING_SCALE, values.padding],
+    ['--quadro-box-dinamico-item-margin', SPACING_SCALE, values.margin],
+    ['--quadro-box-dinamico-content-valign', VERTICAL_ALIGN, values.contentVerticalAlign],
+    ['--quadro-box-dinamico-content-align', HORIZONTAL_ALIGN, values.contentHorizontalAlign],
+    ['--quadro-box-dinamico-card-width', CARD_WIDTHS, values.cardWidth],
+    ['--quadro-box-dinamico-image-width', IMAGE_WIDTHS, values.imageWidth],
+    ['--quadro-box-dinamico-border-width', BORDER_WIDTHS, values.border],
+    ['--quadro-box-dinamico-radius', RADIUS_SCALE, values.borderRadius],
+  ].forEach(([variable, options, key]) => {
+    applyOption(itemDiv, variable, options, key);
+  });
+  applyMinHeight(itemDiv, values.minHeight);
+
+  const title = createRichTextElement('quadro-box-dinamico-item-title', readRichText(cells.title));
+  const content = createRichTextElement('quadro-box-dinamico-item-content', readRichText(cells.content));
+
+  let imageWrapper = null;
+  const image = buildImage(cells.image, values.imageAlt);
+  if (image) {
+    imageWrapper = document.createElement('div');
+    imageWrapper.className = 'quadro-box-dinamico-item-image';
+    imageWrapper.append(image);
+
+    const description = createRichTextElement(
+      'quadro-box-dinamico-item-image-description',
+      readRichText(cells.imageDescription),
+    );
+    if (description) imageWrapper.append(description);
+  }
+
+  const position = IMAGE_POSITIONS.includes(values.imagePosition) ? values.imagePosition : DEFAULT_IMAGE_POSITION;
+  if (SIDE_POSITIONS.includes(position) && imageWrapper && (title || content)) {
+    const textWrapper = document.createElement('div');
+    textWrapper.className = 'quadro-box-dinamico-item-text';
+    [title, content].filter(Boolean).forEach((element) => textWrapper.append(element));
+    itemDiv.append(textWrapper, imageWrapper);
+    itemDiv.classList.add(`image-${position}`);
+  } else {
+    const stacked = {
+      top: [imageWrapper, title, content],
+      middle: [title, imageWrapper, content],
+      bottom: [title, content, imageWrapper],
+    };
+    (stacked[position] || stacked[DEFAULT_IMAGE_POSITION])
+      .filter(Boolean)
+      .forEach((element) => itemDiv.append(element));
+  }
+
+  return itemDiv;
+}
+
 export default async function decorate(block) {
   const config = readBlockConfig(block);
   if (config.id) block.id = config.id;
@@ -270,99 +380,12 @@ export default async function decorate(block) {
   });
   const numCols = Math.min(parseInt(config.numcolumns, 10) || DEFAULT_COLUMNS, 3);
 
-  const itemRows = Array.from(block.children);
+  const itemData = Array.from(block.children).map(readItem);
+  applyStyleReferences(itemData);
+  const items = itemData.map(buildItem);
+  const hasCustomWidth = itemData.some(({ values }) => Object.hasOwn(CARD_WIDTHS, values.cardWidth));
   const itemsContainer = document.createElement('div');
-  const items = [];
-  let hasCustomWidth = false;
-
-  itemRows.forEach((itemRow) => {
-    const [
-      titleCell,
-      contentCell,
-      imageCell,
-      imageDescriptionCell,
-      imagePositionCell,
-      imageAltCell,
-      backgroundCell,
-      itemGapCell,
-      paddingCell,
-      marginCell,
-      borderCell,
-      borderColorCell,
-      borderRadiusCell,
-      contentVerticalAlignCell,
-      contentHorizontalAlignCell,
-      cardWidthCell,
-      imageWidthCell,
-      minHeightCell,
-    ] = Array.from(itemRow.children);
-
-    const itemDiv = document.createElement('div');
-    itemDiv.className = 'quadro-box-dinamico-item';
-
-    Array.from(itemRow.attributes).forEach((attr) => {
-      if (attr.name.startsWith('data-')) {
-        itemDiv.setAttribute(attr.name, attr.value);
-      }
-    });
-
-    applyColor(itemDiv, '--quadro-box-dinamico-bg', backgroundCell?.textContent);
-    applyColor(itemDiv, '--quadro-box-dinamico-border-color', borderColorCell?.textContent);
-    [
-      ['--quadro-box-dinamico-item-gap', SPACING_SCALE, itemGapCell],
-      ['--quadro-box-dinamico-item-padding', SPACING_SCALE, paddingCell],
-      ['--quadro-box-dinamico-item-margin', SPACING_SCALE, marginCell],
-      ['--quadro-box-dinamico-content-valign', VERTICAL_ALIGN, contentVerticalAlignCell],
-      ['--quadro-box-dinamico-content-align', HORIZONTAL_ALIGN, contentHorizontalAlignCell],
-      ['--quadro-box-dinamico-card-width', CARD_WIDTHS, cardWidthCell],
-      ['--quadro-box-dinamico-image-width', IMAGE_WIDTHS, imageWidthCell],
-      ['--quadro-box-dinamico-border-width', BORDER_WIDTHS, borderCell],
-      ['--quadro-box-dinamico-radius', RADIUS_SCALE, borderRadiusCell],
-    ].forEach(([variable, options, cell]) => {
-      applyOption(itemDiv, variable, options, cell?.textContent.trim());
-    });
-    applyMinHeight(itemDiv, minHeightCell?.textContent);
-
-    const title = createRichTextElement('quadro-box-dinamico-item-title', readRichText(titleCell));
-    const content = createRichTextElement('quadro-box-dinamico-item-content', readRichText(contentCell));
-
-    let imageWrapper = null;
-    const image = buildImage(imageCell, imageAltCell?.textContent.trim());
-    if (image) {
-      imageWrapper = document.createElement('div');
-      imageWrapper.className = 'quadro-box-dinamico-item-image';
-      imageWrapper.append(image);
-
-      const description = createRichTextElement(
-        'quadro-box-dinamico-item-image-description',
-        readRichText(imageDescriptionCell),
-      );
-      if (description) imageWrapper.append(description);
-    }
-
-    const requested = imagePositionCell?.textContent.trim();
-    const position = IMAGE_POSITIONS.includes(requested) ? requested : DEFAULT_IMAGE_POSITION;
-    if (SIDE_POSITIONS.includes(position) && imageWrapper && (title || content)) {
-      const textWrapper = document.createElement('div');
-      textWrapper.className = 'quadro-box-dinamico-item-text';
-      [title, content].filter(Boolean).forEach((element) => textWrapper.append(element));
-      itemDiv.append(textWrapper, imageWrapper);
-      itemDiv.classList.add(`image-${position}`);
-    } else {
-      const stacked = {
-        top: [imageWrapper, title, content],
-        middle: [title, imageWrapper, content],
-        bottom: [title, content, imageWrapper],
-      };
-      (stacked[position] || stacked[DEFAULT_IMAGE_POSITION])
-        .filter(Boolean)
-        .forEach((element) => itemDiv.append(element));
-    }
-
-    items.push(itemDiv);
-    itemsContainer.append(itemDiv);
-    if (Object.hasOwn(CARD_WIDTHS, cardWidthCell?.textContent.trim())) hasCustomWidth = true;
-  });
+  itemsContainer.append(...items);
 
   block.innerHTML = '';
   if (items.length) {
