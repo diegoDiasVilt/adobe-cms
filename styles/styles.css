@@ -383,6 +383,39 @@ main .section.deep-purple {
   background-color: #b982ff;
 }
 
+main .section.section-padding-p {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+main .section.section-padding-m {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+main .section.section-padding-g,
+main .section.section-padding-gg {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+@media (width >= 768px) {
+  main .section.section-padding-m {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  main .section.section-padding-g {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  main .section.section-padding-gg {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+}
+
 main .section.columns-two {
   display: grid;
   gap: 10px;

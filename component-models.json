@@ -99,6 +99,11 @@
     "id": "section",
     "fields": [
       {
+        "component": "tab",
+        "name": "tabgeral",
+        "label": "Geral"
+      },
+      {
         "component": "multiselect",
         "name": "style",
         "label": "Style",
@@ -108,12 +113,92 @@
             "value": "highlight"
           }
         ]
+      },
+      {
+        "component": "tab",
+        "name": "tabfundo",
+        "label": "Fundo"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "backgroundtype",
+        "label": "Tipo de fundo",
+        "value": "none",
+        "options": [
+          {
+            "name": "Nenhum",
+            "value": "none"
+          },
+          {
+            "name": "Cor",
+            "value": "color"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "backgroundcolor",
+        "label": "Cor de fundo",
+        "description": "Aceita HEX (#b5d4ed) ou rgb(). Se vazio ou inválido, a seção fica sem fundo",
+        "condition": {
+          "===": [
+            {
+              "var": "backgroundtype"
+            },
+            "color"
+          ]
+        }
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "backgroundpadding",
+        "label": "Espaçamento interno",
+        "description": "Espaço acima e abaixo do conteúdo. No celular, M vira 24px e G e GG viram 32px",
+        "value": "none",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "P (16px)",
+            "value": "p"
+          },
+          {
+            "name": "M (32px)",
+            "value": "m"
+          },
+          {
+            "name": "G (48px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (64px)",
+            "value": "gg"
+          }
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "backgroundtype"
+            },
+            "color"
+          ]
+        }
       }
     ]
   },
   {
     "id": "tab-section",
     "fields": [
+      {
+        "component": "tab",
+        "name": "tabgeral",
+        "label": "Geral"
+      },
       {
         "component": "multiselect",
         "name": "style",
@@ -140,6 +225,81 @@
         "label": "Título da aba",
         "name": "tab-title",
         "required": true
+      },
+      {
+        "component": "tab",
+        "name": "tabfundo",
+        "label": "Fundo"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "backgroundtype",
+        "label": "Tipo de fundo",
+        "value": "none",
+        "options": [
+          {
+            "name": "Nenhum",
+            "value": "none"
+          },
+          {
+            "name": "Cor",
+            "value": "color"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "backgroundcolor",
+        "label": "Cor de fundo",
+        "description": "Aceita HEX (#b5d4ed) ou rgb(). Se vazio ou inválido, a seção fica sem fundo",
+        "condition": {
+          "===": [
+            {
+              "var": "backgroundtype"
+            },
+            "color"
+          ]
+        }
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "backgroundpadding",
+        "label": "Espaçamento interno",
+        "description": "Espaço acima e abaixo do conteúdo. No celular, M vira 24px e G e GG viram 32px",
+        "value": "none",
+        "options": [
+          {
+            "name": "Nenhum (0)",
+            "value": "none"
+          },
+          {
+            "name": "P (16px)",
+            "value": "p"
+          },
+          {
+            "name": "M (32px)",
+            "value": "m"
+          },
+          {
+            "name": "G (48px)",
+            "value": "g"
+          },
+          {
+            "name": "GG (64px)",
+            "value": "gg"
+          }
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "backgroundtype"
+            },
+            "color"
+          ]
+        }
       }
     ]
   },
