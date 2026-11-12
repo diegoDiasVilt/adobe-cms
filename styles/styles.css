@@ -383,6 +383,16 @@ main .section.deep-purple {
   background-color: #b982ff;
 }
 
+main .section.section-bg-color {
+  background-color: var(--section-bg-color);
+}
+
+body.theme-sepia main .section.section-bg-color,
+body.theme-gray main .section.section-bg-color,
+body.theme-dark main .section.section-bg-color {
+  background-color: transparent;
+}
+
 main .section.section-padding-p {
   padding-top: 16px;
   padding-bottom: 16px;

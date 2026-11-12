@@ -21,7 +21,8 @@ export default function decorateSectionBackgrounds(main) {
     if (backgroundtype === 'color') {
       const color = getSectionBackgroundColor(backgroundcolor);
       if (color) {
-        section.style.backgroundColor = color;
+        section.style.setProperty('--section-bg-color', color);
+        section.classList.add('section-bg-color');
         applied = true;
       }
     }
