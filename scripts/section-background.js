@@ -1,5 +1,14 @@
 const SECTION_BG_PADDINGS = ['p', 'm', 'g', 'gg'];
 
+function getSectionBackgroundColor(value) {
+  const raw = (value || '').trim();
+  if (!raw) return null;
+  const candidates = [raw];
+  const hashIndex = raw.lastIndexOf('#');
+  if (hashIndex > 0) candidates.push(raw.slice(hashIndex));
+  return candidates.find((candidate) => CSS.supports('color', candidate)) || null;
+}
+
 export default function decorateSectionBackgrounds(main) {
   main.querySelectorAll(':scope > .section[data-backgroundtype]').forEach((section) => {
     const {
@@ -10,8 +19,8 @@ export default function decorateSectionBackgrounds(main) {
     let applied = false;
 
     if (backgroundtype === 'color') {
-      const color = (backgroundcolor || '').trim();
-      if (color && CSS.supports('color', color)) {
+      const color = getSectionBackgroundColor(backgroundcolor);
+      if (color) {
         section.style.backgroundColor = color;
         applied = true;
       }
