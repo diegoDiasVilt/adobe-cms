@@ -133,6 +133,10 @@
           {
             "name": "Cor",
             "value": "color"
+          },
+          {
+            "name": "Imagem",
+            "value": "image"
           }
         ]
       },
@@ -148,6 +152,75 @@
               "var": "backgroundtype"
             },
             "color"
+          ]
+        }
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "backgroundimage",
+        "label": "Imagem de fundo",
+        "multi": false,
+        "condition": {
+          "===": [
+            {
+              "var": "backgroundtype"
+            },
+            "image"
+          ]
+        }
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "backgroundsize",
+        "label": "Tamanho da imagem",
+        "value": "cover",
+        "options": [
+          {
+            "name": "Preencher a seção (cover)",
+            "value": "cover"
+          },
+          {
+            "name": "Imagem inteira (contain)",
+            "value": "contain"
+          }
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "backgroundtype"
+            },
+            "image"
+          ]
+        }
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "backgroundposition",
+        "label": "Posição da imagem",
+        "value": "center",
+        "options": [
+          {
+            "name": "Centro",
+            "value": "center"
+          },
+          {
+            "name": "Topo",
+            "value": "top"
+          },
+          {
+            "name": "Base",
+            "value": "bottom"
+          }
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "backgroundtype"
+            },
+            "image"
           ]
         }
       },
@@ -181,11 +254,23 @@
           }
         ],
         "condition": {
-          "===": [
+          "or": [
             {
-              "var": "backgroundtype"
+              "===": [
+                {
+                  "var": "backgroundtype"
+                },
+                "color"
+              ]
             },
-            "color"
+            {
+              "===": [
+                {
+                  "var": "backgroundtype"
+                },
+                "image"
+              ]
+            }
           ]
         }
       }
@@ -245,6 +330,10 @@
           {
             "name": "Cor",
             "value": "color"
+          },
+          {
+            "name": "Imagem",
+            "value": "image"
           }
         ]
       },
@@ -260,6 +349,75 @@
               "var": "backgroundtype"
             },
             "color"
+          ]
+        }
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "backgroundimage",
+        "label": "Imagem de fundo",
+        "multi": false,
+        "condition": {
+          "===": [
+            {
+              "var": "backgroundtype"
+            },
+            "image"
+          ]
+        }
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "backgroundsize",
+        "label": "Tamanho da imagem",
+        "value": "cover",
+        "options": [
+          {
+            "name": "Preencher a seção (cover)",
+            "value": "cover"
+          },
+          {
+            "name": "Imagem inteira (contain)",
+            "value": "contain"
+          }
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "backgroundtype"
+            },
+            "image"
+          ]
+        }
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "backgroundposition",
+        "label": "Posição da imagem",
+        "value": "center",
+        "options": [
+          {
+            "name": "Centro",
+            "value": "center"
+          },
+          {
+            "name": "Topo",
+            "value": "top"
+          },
+          {
+            "name": "Base",
+            "value": "bottom"
+          }
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "backgroundtype"
+            },
+            "image"
           ]
         }
       },
@@ -293,11 +451,23 @@
           }
         ],
         "condition": {
-          "===": [
+          "or": [
             {
-              "var": "backgroundtype"
+              "===": [
+                {
+                  "var": "backgroundtype"
+                },
+                "color"
+              ]
             },
-            "color"
+            {
+              "===": [
+                {
+                  "var": "backgroundtype"
+                },
+                "image"
+              ]
+            }
           ]
         }
       }
