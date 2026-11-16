@@ -1,6 +1,7 @@
 const SECTION_BG_SIZES = ['cover', 'contain'];
 const SECTION_BG_POSITIONS = ['center', 'top', 'bottom'];
 const SECTION_BG_PADDINGS = ['p', 'm', 'g', 'gg'];
+const SECTION_BG_IMAGE_WIDTH = '2000';
 
 function getSectionBackgroundColor(value) {
   const raw = (value || '').trim();
@@ -18,7 +19,7 @@ function getSectionBackgroundImageUrl(value) {
     const url = new URL(raw, window.location.href);
     if (!['http:', 'https:'].includes(url.protocol)) return null;
     if (url.searchParams.has('optimize')) {
-      url.searchParams.set('width', '2000');
+      url.searchParams.set('width', SECTION_BG_IMAGE_WIDTH);
       url.searchParams.set('format', 'webply');
     }
     return url.href;
@@ -49,10 +50,10 @@ export default function decorateSectionBackgrounds(main) {
     } else if (backgroundtype === 'image') {
       const url = getSectionBackgroundImageUrl(backgroundimage);
       if (url) {
-        section.style.backgroundImage = `url("${url.replace(/"/g, '%22')}")`;
-        section.style.backgroundSize = SECTION_BG_SIZES.includes(backgroundsize) ? backgroundsize : 'cover';
-        section.style.backgroundPosition = SECTION_BG_POSITIONS.includes(backgroundposition) ? backgroundposition : 'center';
-        section.classList.add('section-bg-image');
+        const size = SECTION_BG_SIZES.includes(backgroundsize) ? backgroundsize : 'cover';
+        const position = SECTION_BG_POSITIONS.includes(backgroundposition) ? backgroundposition : 'center';
+        section.style.setProperty('--section-bg-image', `url("${url}")`);
+        section.classList.add('section-bg-image', `section-bg-size-${size}`, `section-bg-position-${position}`);
         applied = true;
       }
     }
