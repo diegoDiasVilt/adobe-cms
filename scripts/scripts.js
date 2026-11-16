@@ -11,6 +11,7 @@ import {
   loadBlocks,
   loadCSS,
 } from "./aem.js";
+import decorateSectionBackgrounds from "./section-background.js";
 
 const IS_PDF =
   new URLSearchParams(window.location.search).get("mode") === "pdf";
@@ -260,6 +261,7 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  decorateSectionBackgrounds(main);
   decorateBlocks(main);
 }
 
