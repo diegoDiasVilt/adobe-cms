@@ -58,7 +58,7 @@ export default function decorate(block) {
                   </div>
                   ${imageBefore?.src ? `<img src="${imageBefore?.src}" alt="${altImageBefore ? altImageBefore : ''}" class="img-front"/>` : ''}
                 </div>
-                <div class="divider" style="left: 50%;"></div>
+                <div class="divider" style="left: 50%;" role="slider" tabindex="0" aria-label="Controle de comparação das imagens" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50%"></div>
             </div>
             <div class="font-text-container">
               <div class="font-text-before"><p class="font-text">${fontTextBeforeDecoded ? fontTextBeforeDecoded : ''}</p></div>
@@ -107,24 +107,21 @@ export default function decorate(block) {
   }
 
   let isDragging = false;
+  let position = 50;
 
-  const slide = (x) => {
-    const rect = slider.getBoundingClientRect();
-    let posX = x - rect.left;
-    
-    // Bounds check
-    if (posX < 0) posX = 0;
-    if (posX > rect.width) posX = rect.width;
-
-    const percentage = (posX / rect.width) * 100;
-
-    resizeDiv.style.width = `${percentage}%`;
-    divider.style.left = `${percentage}%`;
+  const setPosition = (value) => {
+    position = Math.min(100, Math.max(0, value));
+    resizeDiv.style.width = `${position}%`;
+    divider.style.left = `${position}%`;
+    const rounded = Math.round(position);
+    divider.setAttribute('aria-valuenow', rounded);
+    divider.setAttribute('aria-valuetext', `${rounded}%`);
   };
 
-  const startDrag = () => {
-    isDragging = true;
-    divider.classList.add('draggable');
+  const slide = (clientX) => {
+    const rect = slider.getBoundingClientRect();
+    if (!rect.width) return;
+    setPosition(((clientX - rect.left) / rect.width) * 100);
   };
 
   const stopDrag = () => {
@@ -132,25 +129,38 @@ export default function decorate(block) {
     divider.classList.remove('draggable');
   };
 
-  const moveDrag = (e) => {
-    if (!isDragging) return;
-    
-    // Support Touch or Mouse
-    let pageX = e.pageX;
-    if (e.touches && e.touches.length > 0) {
-      pageX = e.touches[0].pageX;
-    }
-    
-    slide(pageX);
+  divider.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    isDragging = true;
+    divider.classList.add('draggable');
+    divider.setPointerCapture(e.pointerId);
+  });
+
+  divider.addEventListener('pointermove', (e) => {
+    if (isDragging) slide(e.clientX);
+  });
+
+  divider.addEventListener('pointerup', stopDrag);
+  divider.addEventListener('pointercancel', stopDrag);
+  divider.addEventListener('lostpointercapture', stopDrag);
+  slider.addEventListener('dragstart', (e) => e.preventDefault());
+
+  const keySteps = {
+    ArrowLeft: -5,
+    ArrowDown: -5,
+    ArrowRight: 5,
+    ArrowUp: 5,
+    PageDown: -10,
+    PageUp: 10,
   };
 
-  // Event Listeners
-  divider.addEventListener('mousedown', startDrag);
-  divider.addEventListener('touchstart', startDrag);
-
-  window.addEventListener('mouseup', stopDrag);
-  window.addEventListener('touchend', stopDrag);
-
-  window.addEventListener('mousemove', moveDrag);
-  window.addEventListener('touchmove', moveDrag);
+  divider.addEventListener('keydown', (e) => {
+    let next;
+    if (keySteps[e.key] !== undefined) next = position + keySteps[e.key];
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = 100;
+    else return;
+    e.preventDefault();
+    setPosition(next);
+  });
 }
