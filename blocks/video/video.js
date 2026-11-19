@@ -61,10 +61,9 @@ export default function decorate(block) {
           mdstrmPlayer.on('seeked', () => { window.parent.postMessage(['onSeeked', { mediastreamId, time: mdstrmPlayer?.currentTime }], '*'); });
           mdstrmPlayer.on('timeupdate', (time) => {
             window.parent.postMessage(['onTimeUpdate', { mediastreamId, time }], '*');
-            if (isThefirstTimeShowingDuration) {
-              window.parent.postMessage(['videoDuration', { mediastreamId, duration: mdstrmPlayer?.duration }], '*');
-              isThefirstTimeShowingDuration = false;
-            }
+            window.parent.postMessage(['videoDuration', { mediastreamId, duration: mdstrmPlayer?.duration }], '*');
+            isThefirstTimeShowingDuration = false;
+            
           });
           mdstrmPlayer.on('error', (error) => {
             if (isThefirstError) {
