@@ -4,7 +4,7 @@ import { isInEditor } from '../../scripts/scripts.js';
 const BRACE_LANGUAGES = ['c', 'cpp', 'csharp', 'cs', 'dotnet', 'arduino', 'ino', 'java', 'javascript', 'js', 'typescript', 'ts', 'php', 'css', 'scss', 'less', 'json', 'json5', 'kotlin', 'kt', 'kts', 'swift', 'go', 'dart'];
 const PREPROCESSOR_LANGUAGES = ['c', 'cpp', 'csharp', 'cs', 'dotnet', 'arduino', 'ino'];
 const TEMPLATE_LANGUAGES = ['javascript', 'js', 'typescript', 'ts', 'go'];
-const INDENT_UNITS = { 2: '  ', 4: '    ', tab: '\t' };
+const INDENT_UNITS = { 2: '  ', 4: '    ' };
 const OPENERS = '{([';
 const CLOSERS = '})]';
 const CASE_LABEL = /^(case\b|default\s*:)/;
