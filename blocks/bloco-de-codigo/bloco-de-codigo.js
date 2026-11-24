@@ -4,7 +4,6 @@ import { isInEditor } from '../../scripts/scripts.js';
 const BRACE_LANGUAGES = ['c', 'cpp', 'csharp', 'cs', 'dotnet', 'arduino', 'ino', 'java', 'javascript', 'js', 'typescript', 'ts', 'php', 'css', 'scss', 'less', 'json', 'json5', 'kotlin', 'kt', 'kts', 'swift', 'go', 'dart'];
 const PREPROCESSOR_LANGUAGES = ['c', 'cpp', 'csharp', 'cs', 'dotnet', 'arduino', 'ino'];
 const TEMPLATE_LANGUAGES = ['javascript', 'js', 'typescript', 'ts', 'go'];
-const INDENT_UNITS = { 2: '  ', 4: '    ' };
 const OPENERS = '{([';
 const CLOSERS = '})]';
 const CASE_LABEL = /^(case\b|default\s*:)/;
@@ -20,45 +19,43 @@ function levelOf(stack) {
 }
 
 function scanLine(line, lineIndex, state, language) {
-  const next = { ...state, stack: [...state.stack] };
   let quote = null;
   let i = 0;
   while (i < line.length) {
     const ch = line[i];
     const pair = line.slice(i, i + 2);
     let step = 1;
-    if (next.inBlockComment) {
+    if (state.inBlockComment) {
       if (pair === '*/') {
-        next.inBlockComment = false;
+        state.inBlockComment = false;
         step = 2;
       }
-    } else if (next.inTemplate || quote) {
+    } else if (state.inTemplate || quote) {
       if (ch === '\\') step = 2;
-      else if (next.inTemplate && ch === '`') next.inTemplate = false;
+      else if (state.inTemplate && ch === '`') state.inTemplate = false;
       else if (quote === ch) quote = null;
     } else if (pair === '/*') {
-      next.inBlockComment = true;
+      state.inBlockComment = true;
       step = 2;
     } else if ((pair === '//' && allowsLineComment(language, line, i)) || (ch === '#' && language === 'php')) {
       step = line.length;
     } else if (ch === '`' && TEMPLATE_LANGUAGES.includes(language)) {
-      next.inTemplate = true;
+      state.inTemplate = true;
     } else if (ch === '"' || ch === "'") {
       quote = ch;
     } else if (OPENERS.includes(ch)) {
-      next.stack.push(lineIndex);
+      state.stack.push(lineIndex);
     } else if (CLOSERS.includes(ch)) {
-      next.stack.pop();
+      state.stack.pop();
     }
     i += step;
   }
-  return next;
 }
 
 function indentCode(code, language, size) {
-  const unit = INDENT_UNITS[size] || INDENT_UNITS[4];
+  const unit = size === '2' ? '  ' : '    ';
   const preprocessor = PREPROCESSOR_LANGUAGES.includes(language);
-  let state = { stack: [], inBlockComment: false, inTemplate: false };
+  const state = { stack: [], inBlockComment: false, inTemplate: false };
   let caseDepths = [];
   const labelBlockLines = [];
   return code.split('\n').map((line, lineIndex) => {
@@ -75,31 +72,25 @@ function indentCode(code, language, size) {
       const labelBlocks = levelOf(state.stack.filter((l) => labelBlockLines.includes(l)));
       const extra = caseDepths.filter((d) => d < level || (d === level && !isLabel)).length
         - labelBlocks;
-      const prefix = unit.repeat(level + extra);
+      const prefix = unit.repeat(Math.max(0, level + extra));
       if (!manual) {
         if (inComment) result = `${prefix}${trimmed.startsWith('*') ? ' ' : ''}${trimmed}`;
         else if (preprocessor && trimmed.startsWith('#')) result = trimmed;
         else result = `${prefix}${trimmed}`;
       }
     }
-    state = scanLine(line, lineIndex, state, language);
+    scanLine(line, lineIndex, state, language);
     if (isLabel && state.stack.includes(lineIndex)) labelBlockLines.push(lineIndex);
     caseDepths = caseDepths.filter((d) => d <= levelOf(state.stack));
     return result;
   }).join('\n');
 }
 
-function getCodeText(codeElement) {
-  const clone = codeElement.cloneNode(true);
-  clone.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
-  return clone.textContent.replace(/\r\n?/g, '\n');
-}
-
 export default function decorate(block) {
-  const autoIndent = block?.children[4]?.textContent?.trim() === 'true';
-  const indentSize = block?.children[5]?.textContent?.trim();
-  block?.children[5]?.remove();
-  block?.children[4]?.remove();
+  const autoIndent = block.children[4]?.textContent.trim() === 'true';
+  const indentSize = block.children[5]?.textContent.trim();
+  block.children[5]?.remove();
+  block.children[4]?.remove();
 
   const language = block?.children[1]?.textContent?.trim();
   // eslint-disable-next-line radix
@@ -124,7 +115,8 @@ export default function decorate(block) {
 
   const normalizedLanguage = language?.toLowerCase();
   if (autoIndent && BRACE_LANGUAGES.includes(normalizedLanguage)) {
-    codeElement.textContent = indentCode(getCodeText(codeElement), normalizedLanguage, indentSize);
+    codeElement.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
+    codeElement.textContent = indentCode(codeElement.textContent, normalizedLanguage, indentSize);
   }
 
   block?.classList?.add('line-numbers');
