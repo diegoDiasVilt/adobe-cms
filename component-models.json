@@ -1168,6 +1168,30 @@
         "name": "id",
         "label": "Identificador do componente",
         "description": "Valor que pode ser usado em âncoras"
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "autoIndent",
+        "label": "Indentar automaticamente",
+        "description": "Indenta o código pelas chaves { }, ( ) e [ ] em linguagens como C, C++, C#, Java, JavaScript, TypeScript, PHP, CSS e JSON. Linhas que já começam com espaço ou tab são mantidas como foram escritas."
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "indentSize",
+        "label": "Tamanho da indentação",
+        "value": "4",
+        "options": [
+          {
+            "name": "2 espaços",
+            "value": "2"
+          },
+          {
+            "name": "4 espaços",
+            "value": "4"
+          }
+        ]
       }
     ]
   },
