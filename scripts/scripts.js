@@ -740,30 +740,62 @@ function applyFontSizeDelta(delta) {
   });
 }
 
+const RICH_TEXT_THEME_COLORS = {
+  sepia: "#3D3025",
+  neutral: "#F2F2F2",
+  dark: "#E6E6E6",
+  white: "#212529",
+};
+const RICH_TEXT_HIGHLIGHT_HIDDEN_THEMES = ["sepia", "neutral", "dark"];
+const RICH_TEXT_NEUTRAL_MAX_CHROMA = 20;
+let richTextColorParser;
+
+function parseRichTextColor(value) {
+  if (!richTextColorParser) {
+    richTextColorParser = document.createElement("canvas").getContext("2d");
+  }
+  richTextColorParser.fillStyle = "transparent";
+  richTextColorParser.fillStyle = value;
+  const parsed = richTextColorParser.fillStyle;
+  if (parsed.startsWith("#")) {
+    return [1, 3, 5].map((i) => parseInt(parsed.slice(i, i + 2), 16)).concat(1);
+  }
+  return parsed.match(/[\d.]+/g).map(Number);
+}
+
+function isNeutralRichTextColor(value) {
+  const [r, g, b, a] = parseRichTextColor(value);
+  return (
+    a === 0 ||
+    Math.max(r, g, b) - Math.min(r, g, b) <= RICH_TEXT_NEUTRAL_MAX_CHROMA
+  );
+}
+
+function hasRichTextHighlight(el) {
+  return (
+    el.matches('span[style*="background-color"]') &&
+    parseRichTextColor(el.style.backgroundColor)[3] > 0
+  );
+}
+
+function getRichTextAuthorColor(el) {
+  return el.dataset.originalColor ?? el.style.color;
+}
+
+function findInRichTextBlock(el, block, getValue) {
+  for (let node = el; node !== block; node = node.parentElement) {
+    const value = getValue(node);
+    if (value) return value;
+  }
+  return "";
+}
+
 function forceRichTextTheme(payload) {
   const richTextBlocks = document.querySelectorAll(".texto-rico");
   if (richTextBlocks.length === 0) return;
 
-  let newColor = "";
-  let isReset = false;
-  switch (payload) {
-    case "sepia":
-      newColor = "#3D3025";
-      break;
-    case "neutral":
-      newColor = "#F2F2F2";
-      break;
-    case "dark":
-      newColor = "#E6E6E6";
-      break;
-    case "white":
-      newColor = "#212529";
-      break;
-    case "default":
-    default:
-      isReset = true;
-      break;
-  }
+  const themeColor = RICH_TEXT_THEME_COLORS[payload];
+  const hideHighlight = RICH_TEXT_HIGHLIGHT_HIDDEN_THEMES.includes(payload);
 
   richTextBlocks.forEach((block) => {
     const allElements = block.querySelectorAll(
@@ -771,27 +803,16 @@ function forceRichTextTheme(payload) {
     );
 
     allElements.forEach((el) => {
-      if (isReset) {
-        if (el.dataset.originalColor) {
-          el.style.setProperty("color", el.dataset.originalColor);
-          el.removeAttribute("data-original-Color");
-        } else {
-          if (el.style.getPropertyPriority("color") === "important") {
-            el.style.removeProperty("color");
-          }
-        }
+      el.dataset.originalColor = getRichTextAuthorColor(el);
+      const authorColor = findInRichTextBlock(el, block, getRichTextAuthorColor);
+      const keepsAuthorColor =
+        !isNeutralRichTextColor(authorColor) &&
+        !(hideHighlight && findInRichTextBlock(el, block, hasRichTextHighlight));
+
+      if (themeColor && !keepsAuthorColor) {
+        el.style.setProperty("color", themeColor, "important");
       } else {
-        const currentInlineColor = el.style.color;
-
-        if (
-          currentInlineColor &&
-          !el.dataset.originalColor &&
-          el.style.getPropertyPriority("color") !== "important"
-        ) {
-          el.dataset.originalColor = currentInlineColor;
-        }
-
-        el.style.setProperty("color", newColor, "important");
+        el.style.color = el.dataset.originalColor;
       }
     });
   });
