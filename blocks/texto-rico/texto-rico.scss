@@ -98,7 +98,9 @@ body.theme-white .texto-rico:not(.deep-purple) {
 	}
 }
 
-.texto-rico span[style*="background-color"] {
+body.theme-sepia .texto-rico span[style*="background-color"],
+body.theme-gray .texto-rico span[style*="background-color"],
+body.theme-dark .texto-rico span[style*="background-color"] {
   background-color: var(--background-color) !important;
 }
 
