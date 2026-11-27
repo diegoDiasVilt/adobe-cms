@@ -804,12 +804,16 @@ function forceRichTextTheme(payload) {
 
     allElements.forEach((el) => {
       el.dataset.originalColor = getRichTextAuthorColor(el);
-      const authorColor = findInRichTextBlock(el, block, getRichTextAuthorColor);
-      const keepsAuthorColor =
-        !isNeutralRichTextColor(authorColor) &&
-        !(hideHighlight && findInRichTextBlock(el, block, hasRichTextHighlight));
+      const inHighlight = findInRichTextBlock(el, block, hasRichTextHighlight);
+      const authorColor =
+        el.tagName === "A"
+          ? el.dataset.originalColor
+          : findInRichTextBlock(el, block, getRichTextAuthorColor);
+      const followsTheme = inHighlight
+        ? hideHighlight
+        : isNeutralRichTextColor(authorColor);
 
-      if (themeColor && !keepsAuthorColor) {
+      if (themeColor && followsTheme) {
         el.style.setProperty("color", themeColor, "important");
       } else {
         el.style.color = el.dataset.originalColor;
